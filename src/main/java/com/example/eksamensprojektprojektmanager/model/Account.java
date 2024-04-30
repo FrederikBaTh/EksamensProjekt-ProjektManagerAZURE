@@ -2,12 +2,12 @@ package com.example.eksamensprojektprojektmanager.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Account")
+@Table(name = "users")
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int user_id;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -16,7 +16,7 @@ public class Account {
     private String password;
 
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "is_admin")
     private boolean isAdmin;
 
 
@@ -30,12 +30,12 @@ public class Account {
     }
 
 
-    public Long getId() {
-        return id;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUser_id(int userid) {
+        this.user_id = userid;
     }
 
     public String getUsername() {
@@ -66,7 +66,7 @@ public class Account {
     @Override
     public String toString() {
         return "UserAccount{" +
-                "id=" + id +
+                "id=" + user_id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
