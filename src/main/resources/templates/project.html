@@ -2,10 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Project</title>
 </head>
 <body>
-<h2>hej med dig</h2>
-
+<h1>Add Project</h1>
+<form action="/addProject" method="post">
+    <div>
+        <label for="projectName">Project Name:</label><br>
+        <input type="text" id="projectName" name="projectName" required>
+    </div>
+    <div>
+        <label for="startDate">Start Date:</label><br>
+        <input type="date" id="startDate" name="startDate" required>
+    </div>
+    <div>
+        <label for="projectDeadline">Project Deadline:</label><br>
+        <input type="date" id="projectDeadline" name="projectDeadline">
+    </div>
+    <div>
+        <label for="projectStatus">Project Status:</label><br>
+        <input type="text" id="projectStatus" name="projectStatus">
+    </div>
+    <br>
+    <button type="submit">Add Project</button>
+</form>
 </body>
 </html>

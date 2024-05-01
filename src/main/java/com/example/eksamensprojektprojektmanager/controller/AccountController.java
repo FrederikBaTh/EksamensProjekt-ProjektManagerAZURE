@@ -50,9 +50,9 @@ public class AccountController {
     @PostMapping("/login")
     public String login(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, RedirectAttributes redirectAttributes) {
         if (accountService.isValidUser(username, password)) {
-            String user_Id = accountService.getUserIdByUsername(username);
-            request.getSession().setAttribute("user_Id", user_Id);
-            return "redirect:/project";
+            String userId = accountService.getUserIdByUsername(username); // Retrieve user ID
+            request.getSession().setAttribute("userId", userId); // Set user ID in session
+            return "redirect:/seeProjects"; // Redirect to projects page after successful login
         } else {
             redirectAttributes.addFlashAttribute("error", "Invalid login");
             return "redirect:/login";

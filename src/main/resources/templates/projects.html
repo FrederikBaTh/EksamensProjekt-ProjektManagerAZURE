@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+</head>
+<body>
+<h1>Projects</h1>
+<ul>
+    <a href="/project" class="btn">Add Project</a>
+    <!-- Iterate over projects and display them -->
+    <li th:each="project : ${projects}">
+        <span th:text="${project.projectName}"></span> -
+        <span th:text="${#dates.format(project.startDate, 'dd-MM-yyyy')}"></span> to
+        <span th:text="${#dates.format(project.projectDeadline, 'dd-MM-yyyy')}"></span> |
+        <span th:text="${project.projectStatus}"></span>
+    </li>
+</ul>
+</body>
+</html>
