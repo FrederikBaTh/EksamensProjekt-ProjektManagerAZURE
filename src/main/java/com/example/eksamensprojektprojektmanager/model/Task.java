@@ -12,9 +12,19 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "project_id")
+    private Long projectId;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = true)
     private String description;
+
+    @Column(nullable = false)
     private LocalDateTime date;
+
+    @Column(nullable = false)
     private LocalDateTime deadline;
 
     public Task(String name, String description, LocalDateTime date, LocalDateTime deadline) {
@@ -68,5 +78,13 @@ public class Task {
 
     public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
+    }
+
+    public Task(String name, String description, LocalDateTime date, LocalDateTime deadline, Long projectId) {
+        this.name = name;
+        this.description = description;
+        this.date = date;
+        this.deadline = deadline;
+        this.projectId = projectId;
     }
 }

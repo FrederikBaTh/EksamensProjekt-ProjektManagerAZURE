@@ -4,40 +4,39 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Project {
 
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long projectId;
+    private Long project_id;
 
     @Column(nullable = false, unique = false)
     public String projectName;
 
     @Column(nullable = false)
-    public Date startDate;
+    public LocalDate startDate;
 
     @Column(nullable = true)
-    public Date projectDeadline;
+    public LocalDate projectDeadline;
 
     @Column(nullable = true)
     public String projectStatus;
 
-
-    public Project(String projectName, Date startDate, Date projectDeadline, String projectStatus) {
+    public Project(String projectName, LocalDate startDate, LocalDate projectDeadline, String projectStatus) {
         this.projectName = projectName;
         this.startDate = startDate;
         this.projectDeadline = projectDeadline;
         this.projectStatus = projectStatus;
     }
 
-    public Long getProjectId() {
-        return projectId;
+    public Long getProject_id() {
+        return project_id;
     }
 
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
+    public void setProject_id(Long project_id) {
+        this.project_id = project_id;
     }
 
     public String getProjectName() {
@@ -48,19 +47,19 @@ public class Project {
         this.projectName = projectName;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getProjectDeadline() {
+    public LocalDate getProjectDeadline() {
         return projectDeadline;
     }
 
-    public void setProjectDeadline(Date projectDeadline) {
+    public void setProjectDeadline(LocalDate projectDeadline) {
         this.projectDeadline = projectDeadline;
     }
 
@@ -78,7 +77,7 @@ public class Project {
     @Override
     public String toString() {
         return "Project{" +
-                "projectId=" + projectId +
+                "projectId=" + project_id +
                 ", projectName='" + projectName + '\'' +
                 ", startDate=" + startDate +
                 ", projectDeadline=" + projectDeadline +
