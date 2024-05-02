@@ -9,7 +9,7 @@
 <h1>Projects</h1>
 <ul>
     <a href="/project" class="btn">Add Project</a>
-    <!-- Iterate over projects and display them -->
+
     <li th:each="project : ${projects}">
         <span th:text="${project.projectName}"></span> -
         <span th:if="${project.startDate != null}" th:text="${#temporals.format(project.startDate, 'dd-MM-yyyy')}"></span>
