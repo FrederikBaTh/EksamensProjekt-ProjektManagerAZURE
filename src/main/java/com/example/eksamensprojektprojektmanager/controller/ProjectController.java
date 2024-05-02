@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 public class ProjectController {
-
+    private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
     @Autowired
     public ProjectService projectService;
 
@@ -42,14 +42,14 @@ public class ProjectController {
 
 
 
-    private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
+    @GetMapping("/addProject")
+    public String showProjectPage() {
+        return "addProject";
+    }
+
 
     @PostMapping("/addProject")
-    public String addProject(@RequestParam("projectName") String projectName,
-                             @RequestParam("startDate") String startDate,
-                             @RequestParam("projectDeadline") String projectDeadline,
-                             HttpServletRequest request,
-                             RedirectAttributes redirectAttributes) {
+    public String addProject(@RequestParam("projectName") String projectName, @RequestParam("startDate") String startDate, @RequestParam("projectDeadline") String projectDeadline, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String userIdString = (String) request.getSession().getAttribute("userId");
 
         if (userIdString == null || userIdString.isEmpty()) {
@@ -84,10 +84,12 @@ public class ProjectController {
         }
     }
 
-    @GetMapping("/project")
-    public String showProjectPage() {
-        return "addProject";
-    }
+
+
+
+
+
+
 
 
 }

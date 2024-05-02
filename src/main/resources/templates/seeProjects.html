@@ -8,7 +8,7 @@
 <body>
 <h1>Projects</h1>
 <ul>
-    <a href="/project" class="btn">Add Project</a>
+    <a href="/addProject" class="btn">Add Project</a>
     <!-- Iterate over projects and display them -->
     <li th:each="project : ${projects}">
         <a th:href="@{/task/{id}(id=${project.project_id})}">
