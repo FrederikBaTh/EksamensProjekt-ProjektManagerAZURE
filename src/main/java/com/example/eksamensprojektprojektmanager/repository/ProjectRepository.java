@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,49 +44,24 @@ public class ProjectRepository {
     }
 
 
-
     public boolean existsByNameAndUserId(String name, int userId) {
         String query = "SELECT COUNT(*) FROM projects WHERE name = ? AND user_id = ?";
-        try (Connection connection = DriverManager.getConnection(db_url, username, password);
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, name);
-            statement.setInt(2, userId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                return resultSet.next() && resultSet.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        Integer count = jdbcTemplate.queryForObject(query, Integer.class, name, userId);
+        return count != null && count > 0;
     }
 
 
     public List<Project> getProjectsByUserId(int userId) {
-        List<Project> projects = new ArrayList<>();
         String query = "SELECT * FROM projects WHERE user_id = ?";
-        try (Connection connection = DriverManager.getConnection(db_url, username, password);
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Project project = new Project();
-                    project.setProject_id(resultSet.getLong("project_id")); // Set projectId as int
-                    project.setProjectName(resultSet.getString("name")); // Set ProjectName
-                    project.setStartDate(resultSet.getDate("startDate").toLocalDate()); // Set startDate
-                    project.setProjectDeadline(resultSet.getDate("deadline").toLocalDate());
-                    projects.add(project);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return projects;
+        return jdbcTemplate.query(query, (resultSet, rowNum) -> {
+            Project project = new Project();
+            project.setProject_id(resultSet.getLong("project_id"));
+            project.setProjectName(resultSet.getString("name"));
+            project.setStartDate(resultSet.getDate("startDate").toLocalDate());
+            project.setProjectDeadline(resultSet.getDate("deadline").toLocalDate());
+            return project;
+        }, userId);
     }
-
-
-
-
-
 
 
 }

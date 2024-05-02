@@ -38,28 +38,18 @@ public class TaskRepository {
         }
     }
 
-    public List<Task> findByProjectId(Long projectId) {
-        List<Task> tasks = new ArrayList<>();
-        String query = "SELECT * FROM tasks WHERE project_id = ?";
-        try (Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, projectId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Task task = new Task();
-                    task.setId(resultSet.getLong("id"));
-                    task.setName(resultSet.getString("name"));
-                    task.setDescription(resultSet.getString("description"));
-                    task.setDate(LocalDateTime.from(resultSet.getDate("date").toLocalDate()));
-                    task.setDeadline(LocalDateTime.from(resultSet.getDate("deadline").toLocalDate()));
-                    tasks.add(task);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return tasks;
-    }
 
+    public List<Task> findByProjectId(Long projectId) {
+        String query = "SELECT * FROM tasks WHERE project_id = ?";
+        return jdbcTemplate.query(query, new Object[]{projectId}, (resultSet, i) -> {
+            Task task = new Task();
+            task.setId(resultSet.getLong("id"));
+            task.setName(resultSet.getString("name"));
+            task.setDescription(resultSet.getString("description"));
+            task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
+            task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+            return task;
+        });
+    }
 
 }
