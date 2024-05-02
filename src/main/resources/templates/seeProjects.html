@@ -11,13 +11,14 @@
     <a href="/project" class="btn">Add Project</a>
     <!-- Iterate over projects and display them -->
     <li th:each="project : ${projects}">
-        <span th:text="${project.projectName}"></span> -
-        <span th:if="${project.startDate != null}" th:text="${#temporals.format(project.startDate, 'dd-MM-yyyy')}"></span>
-        <span th:unless="${project.startDate != null}">Start Date Not Provided</span>
-        to
-        <span th:if="${project.projectDeadline != null}" th:text="${#temporals.format(project.projectDeadline, 'dd-MM-yyyy')}"></span>
-        <span th:unless="${project.projectDeadline != null}">Deadline Not Provided</span>
-        |
+        <a th:href="@{/task/{id}(id=${project.project_id})}">
+            <span th:text="${project.projectName}"></span> -
+            <span th:if="${project.startDate != null}" th:text="${#temporals.format(project.startDate, 'dd-MM-yyyy')}"></span>
+            <span th:unless="${project.startDate != null}">Start Date Not Provided</span>
+            to
+            <span th:if="${project.projectDeadline != null}" th:text="${#temporals.format(project.projectDeadline, 'dd-MM-yyyy')}"></span>
+            <span th:unless="${project.projectDeadline != null}">Deadline Not Provided</span>
+        </a>
     </li>
 </ul>
 </body>
