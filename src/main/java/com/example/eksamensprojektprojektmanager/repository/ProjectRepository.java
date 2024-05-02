@@ -29,8 +29,9 @@ public class ProjectRepository {
     }
 
     public Project addProject(Project project) {
-        String insertQuery = "INSERT INTO projects (name, startDate, deadline, description) VALUES (?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO projects (name, user_id, startDate, deadline, description) VALUES (?, ?, ?, ?, ?)";
         int rowsInserted = jdbcTemplate.update(insertQuery, project.getProjectName(),
+                project.getUser_id(),
                 java.sql.Date.valueOf(project.getStartDate()),
                 java.sql.Date.valueOf(project.getProjectDeadline()),
                 project.getProjectStatus());

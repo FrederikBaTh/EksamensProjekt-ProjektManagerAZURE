@@ -19,19 +19,17 @@ public class ProjectService {
     }
 
 
-    public Project addProject(Project project) {
-        return projectRepository.addProject(project);
-    }
 
     public Project addProject(Project project, String userIdString) {
         if (userIdString != null && !userIdString.isEmpty()) {
-            int userId = Integer.parseInt(userIdString);
+            int user_id = Integer.parseInt(userIdString);
+            project.setUserId(user_id);
 
             if (project.getProjectName() == null || project.getProjectName().isEmpty() || project.getProjectName().length() > 100) {
                 throw new IllegalArgumentException("Project name must be between 1 and 100 characters.");
             }
 
-            if (projectRepository.existsByNameAndUserId(project.getProjectName(), userId)) {
+            if (projectRepository.existsByNameAndUserId(project.getProjectName(), user_id)) {
                 throw new IllegalStateException("Project with the same name already exists for this user.");
             }
 

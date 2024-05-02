@@ -24,6 +24,15 @@ public class Project {
     @Column(nullable = true)
     public String projectStatus;
 
+    private int user_id;
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUserId(int user_id) {
+        this.user_id = user_id;
+    }
     public Project(String projectName, LocalDate startDate, LocalDate projectDeadline, String projectStatus) {
         this.projectName = projectName;
         this.startDate = startDate;
