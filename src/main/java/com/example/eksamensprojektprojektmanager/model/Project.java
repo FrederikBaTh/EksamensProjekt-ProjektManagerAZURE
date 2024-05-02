@@ -33,11 +33,10 @@ public class Project {
     public void setUserId(int user_id) {
         this.user_id = user_id;
     }
-    public Project(String projectName, LocalDate startDate, LocalDate projectDeadline, String projectStatus) {
+    public Project(String projectName, LocalDate startDate, LocalDate projectDeadline ) {
         this.projectName = projectName;
         this.startDate = startDate;
         this.projectDeadline = projectDeadline;
-        this.projectStatus = projectStatus;
     }
 
     public Long getProject_id() {

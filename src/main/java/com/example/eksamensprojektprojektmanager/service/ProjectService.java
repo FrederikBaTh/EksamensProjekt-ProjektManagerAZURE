@@ -40,7 +40,7 @@ public class ProjectService {
     }
 
     public List<Project> getProjectsByUserId(int userId) {
-        List<Project> projects = projectRepository.findByUserId(userId);
+        List<Project> projects = projectRepository.getProjectsByUserId(userId);
         return projects;
     }
 

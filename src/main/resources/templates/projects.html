@@ -12,9 +12,12 @@
     <!-- Iterate over projects and display them -->
     <li th:each="project : ${projects}">
         <span th:text="${project.projectName}"></span> -
-        <span th:text="${#dates.format(project.startDate, 'dd-MM-yyyy')}"></span> to
-        <span th:text="${#dates.format(project.projectDeadline, 'dd-MM-yyyy')}"></span> |
-        <span th:text="${project.projectStatus}"></span>
+        <span th:if="${project.startDate != null}" th:text="${#temporals.format(project.startDate, 'dd-MM-yyyy')}"></span>
+        <span th:unless="${project.startDate != null}">Start Date Not Provided</span>
+        to
+        <span th:if="${project.projectDeadline != null}" th:text="${#temporals.format(project.projectDeadline, 'dd-MM-yyyy')}"></span>
+        <span th:unless="${project.projectDeadline != null}">Deadline Not Provided</span>
+        |
     </li>
 </ul>
 </body>

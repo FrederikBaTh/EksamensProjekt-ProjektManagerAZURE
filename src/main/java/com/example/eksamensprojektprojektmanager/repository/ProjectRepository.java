@@ -60,7 +60,7 @@ public class ProjectRepository {
     }
 
 
-    public List<Project> findByUserId(int userId) {
+    public List<Project> getProjectsByUserId(int userId) {
         List<Project> projects = new ArrayList<>();
         String query = "SELECT * FROM projects WHERE user_id = ?";
         try (Connection connection = DriverManager.getConnection(db_url, username, password);
@@ -71,6 +71,8 @@ public class ProjectRepository {
                     Project project = new Project();
                     project.setProject_id(resultSet.getLong("project_id")); // Set projectId as int
                     project.setProjectName(resultSet.getString("name")); // Set ProjectName
+                    project.setStartDate(resultSet.getDate("startDate").toLocalDate()); // Set startDate
+                    project.setProjectDeadline(resultSet.getDate("deadline").toLocalDate());
                     projects.add(project);
                 }
             }

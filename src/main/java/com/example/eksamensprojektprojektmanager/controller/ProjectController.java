@@ -48,7 +48,6 @@ public class ProjectController {
     public String addProject(@RequestParam("projectName") String projectName,
                              @RequestParam("startDate") String startDate,
                              @RequestParam("projectDeadline") String projectDeadline,
-                             @RequestParam("projectStatus") String projectStatus,
                              HttpServletRequest request,
                              RedirectAttributes redirectAttributes) {
         String userIdString = (String) request.getSession().getAttribute("userId");
@@ -72,10 +71,6 @@ public class ProjectController {
                 project.setProjectDeadline(LocalDate.parse(projectDeadline));
             }
 
-            // Make sure the projectStatus is not null or empty before setting it in the Project object
-            if (projectStatus != null && !projectStatus.isEmpty()) {
-                project.setProjectStatus(projectStatus);
-            }
 
             Project addedProject = projectService.addProject(project, userIdString);
 
