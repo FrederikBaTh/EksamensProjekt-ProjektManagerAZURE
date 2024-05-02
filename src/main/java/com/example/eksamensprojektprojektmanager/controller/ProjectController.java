@@ -37,7 +37,7 @@ public class ProjectController {
 
         model.addAttribute("projects", userProjects);
 
-        return "projects"; // This should match the name of your HTML template file.
+        return "seeProjects"; // This should match the name of your HTML template file.
     }
 
 
@@ -86,7 +86,7 @@ public class ProjectController {
 
     @GetMapping("/project")
     public String showProjectPage() {
-        return "project";
+        return "addProject";
     }
 
 
