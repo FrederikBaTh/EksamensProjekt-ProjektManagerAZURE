@@ -3,17 +3,18 @@ package com.example.eksamensprojektprojektmanager.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Task")
+@Table(name = "tasks")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long task_id;
 
     @Column(name = "project_id")
-    private Long projectId;
+    private Integer projectId;
 
     @Column(nullable = false)
     private String name;
@@ -39,8 +40,8 @@ public class Task {
     }
 
     //getters
-    public Long getId() {
-        return id;
+    public Long getTask_id() {
+        return task_id;
     }
 
     public String getName() {
@@ -60,8 +61,8 @@ public class Task {
     }
 
     //Setters
-    public void setId(Long id) {
-        this.id = id;
+    public void setTask_id(Long id) {
+        this.task_id = id;
     }
 
     public void setName(String name) {
@@ -80,7 +81,10 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public Task(String name, String description, LocalDateTime date, LocalDateTime deadline, Long projectId) {
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+    public Task(String name, String description, LocalDateTime date, LocalDateTime deadline, Integer projectId) {
         this.name = name;
         this.description = description;
         this.date = date;

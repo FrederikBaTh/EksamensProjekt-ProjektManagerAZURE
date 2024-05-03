@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -29,7 +26,7 @@ public class TaskRepository {
     public TaskRepository() {
     }
 
-    public void addTask(Task task, Long projectId) {
+    public void addTask(Task task, Integer projectId) {
         String insertQuery = "INSERT INTO tasks (project_id, name, description, date, deadline) VALUES (?, ?, ?, ?, ?)";
         int rowsInserted = jdbcTemplate.update(insertQuery, projectId,
                 task.getName(), task.getDescription(), task.getDate(), task.getDeadline());
@@ -43,7 +40,7 @@ public class TaskRepository {
         String query = "SELECT * FROM tasks WHERE project_id = ?";
         return jdbcTemplate.query(query, new Object[]{projectId}, (resultSet, i) -> {
             Task task = new Task();
-            task.setId(resultSet.getLong("id"));
+            task.setTask_id(resultSet.getLong("task_id"));
             task.setName(resultSet.getString("name"));
             task.setDescription(resultSet.getString("description"));
             task.setDate(resultSet.getTimestamp("date").toLocalDateTime());

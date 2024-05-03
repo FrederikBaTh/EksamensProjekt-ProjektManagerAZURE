@@ -17,7 +17,7 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public void addTask(Task task, Long projectId) {
+    public void addTask(Task task, Integer projectId) {
         taskRepository.addTask(task, projectId);
     }
 

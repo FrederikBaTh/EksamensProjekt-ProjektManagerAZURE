@@ -33,7 +33,7 @@ public class ProjectController {
 
         List<Project> userProjects = projectService.getProjectsByUserId(userId);
 
-
+        // Log the retrieved projects
         System.out.println("Retrieved projects: " + userProjects);
 
         model.addAttribute("projects", userProjects);
@@ -64,6 +64,7 @@ public class ProjectController {
             int userId = Integer.parseInt(userIdString);
             project.setUserId(userId);
 
+            // Parse the startDate and projectDeadline from the request parameters and set them in the Project object
             if (startDate != null && !startDate.isEmpty()) {
                 project.setStartDate(LocalDate.parse(startDate));
             }

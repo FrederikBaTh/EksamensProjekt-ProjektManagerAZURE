@@ -2,9 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Task List</title>
 </head>
 <body>
-
+<h1>Task List</h1>
+<!-- Display a table to show the list of tasks -->
+<table border="1">
+    <thead>
+    <tr>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Deadline</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over tasks and display each task -->
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.name}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${#temporals.format(task.date, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${#temporals.format(task.deadline, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+</table>
+<!-- Add a button to redirect to the addTask page -->
+<a th:href="@{/addTask/{projectId}(projectId=${projectId})}" class="btn">Add Task</a>
 </body>
 </html>
