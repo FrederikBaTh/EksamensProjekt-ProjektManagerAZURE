@@ -19,6 +19,10 @@
             <span th:if="${project.projectDeadline != null}" th:text="${#temporals.format(project.projectDeadline, 'dd-MM-yyyy')}"></span>
             <span th:unless="${project.projectDeadline != null}">Deadline Not Provided</span>
         </a>
+        <!-- Update button for each project -->
+        <form th:action="@{/updateProject/{id}(id=${project.project_id})}" method="get">
+            <button type="submit" class="btn">Update</button>
+        </form>
     </li>
 </ul>
 </body>

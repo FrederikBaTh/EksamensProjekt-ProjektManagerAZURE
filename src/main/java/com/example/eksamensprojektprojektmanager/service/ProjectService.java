@@ -44,6 +44,24 @@ public class ProjectService {
         return projects;
     }
 
+    public Project updateProject(Project project, String userIdString) {
+        if (userIdString != null && !userIdString.isEmpty()) {
+            int user_id = Integer.parseInt(userIdString);
+            project.setUserId(user_id);
+
+            if (project.getProjectName() == null || project.getProjectName().isEmpty() || project.getProjectName().length() > 100) {
+                throw new IllegalArgumentException("Project name must be between 1 and 100 characters.");
+            }
+
+            return projectRepository.updateProject(project);
+        } else {
+            throw new IllegalArgumentException("User ID is null or empty.");
+        }
+    }
+
+    public Project getProjectById(Long projectId) {
+        return projectRepository.getProjectById(projectId);
+    }
 
 
 }

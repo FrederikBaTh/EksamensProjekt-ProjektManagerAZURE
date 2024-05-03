@@ -7,7 +7,10 @@
 </head>
 <body>
 <h1>Add Project</h1>
-<form action="/addProject" method="post">
+<form th:action="${project != null ? '/updateProject' : '/addProject'}" method="post">
+    <div>
+    <input type="hidden" th:if="${project != null}" th:value="${project.project_id}" name="projectId">
+    </div>
     <div>
         <label for="projectName">Project Name:</label><br>
         <input type="text" id="projectName" name="projectName" required>

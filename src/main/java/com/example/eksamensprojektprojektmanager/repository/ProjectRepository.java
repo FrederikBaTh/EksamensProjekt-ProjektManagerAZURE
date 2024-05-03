@@ -62,6 +62,33 @@ public class ProjectRepository {
             return project;
         }, userId);
     }
+    public Project updateProject(Project project) {
+        String updateQuery = "UPDATE projects SET name = ?, startDate = ?, deadline = ? WHERE project_id = ?";
+        int rowsUpdated = jdbcTemplate.update(updateQuery, project.getProjectName(),
+                java.sql.Date.valueOf(project.getStartDate()),
+                java.sql.Date.valueOf(project.getProjectDeadline()),
+                project.getProject_id());
+        if (rowsUpdated > 0) {
+            System.out.println("Project was updated successfully!");
+            return project;
+        }
+        return null;
+    }
+
+    public Project getProjectById(Long projectId) {
+        String query = "SELECT * FROM projects WHERE project_id = ?";
+        return jdbcTemplate.queryForObject(query, new Object[]{projectId}, (resultSet, rowNum) -> {
+            Project project = new Project();
+            project.setProject_id(resultSet.getLong("project_id"));
+            project.setProjectName(resultSet.getString("name"));
+            project.setStartDate(resultSet.getDate("startDate").toLocalDate());
+            project.setProjectDeadline(resultSet.getDate("deadline").toLocalDate());
+            return project;
+        });
+    }
+
+
+
 
 
 }
