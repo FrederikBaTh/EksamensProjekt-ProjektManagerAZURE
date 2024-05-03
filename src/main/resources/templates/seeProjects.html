@@ -11,7 +11,7 @@
     <a href="/addProject" class="btn">Add Project</a>
     <!-- Iterate over projects and display them -->
     <li th:each="project : ${projects}">
-        <a th:href="@{/task/{id}(id=${project.project_id})}">
+        <a th:href="@{/tasks/{id}(id=${project.project_id})}">
             <span th:text="${project.projectName}"></span> -
             <span th:if="${project.startDate != null}" th:text="${#temporals.format(project.startDate, 'dd-MM-yyyy')}"></span>
             <span th:unless="${project.startDate != null}">Start Date Not Provided</span>
