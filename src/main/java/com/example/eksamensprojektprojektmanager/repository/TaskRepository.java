@@ -49,9 +49,23 @@ public class TaskRepository {
         });
     }
 
-    public void deleteTasks(int projectId) {
-        String query = "DELETE FROM tasks WHERE project_id = ?";
-        jdbcTemplate.update(query, projectId);
+    public void deleteTaskById(Long task_id) {
+        String query = "DELETE FROM tasks WHERE task_id = ?";
+        jdbcTemplate.update(query, task_id);
     }
+
+    public Task findById(Long task_id) {
+        String query = "SELECT * FROM tasks WHERE task_id = ?";
+        return jdbcTemplate.queryForObject(query, new Object[]{task_id}, (resultSet, i) -> {
+            Task task = new Task();
+            task.setTask_id(resultSet.getLong("task_id"));
+            task.setName(resultSet.getString("name"));
+            task.setDescription(resultSet.getString("description"));
+            task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
+            task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+            return task;
+        });
+    }
+
 
 }

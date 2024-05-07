@@ -86,12 +86,11 @@ public class ProjectRepository {
         });
     }
 
-    public boolean deleteProject(int projectId) {
+    public boolean deleteProjectById(Long projectId) {
         try {
-            taskRepository.deleteTasks(projectId);
+            taskRepository.deleteTaskById(projectId);
 
             String query = "DELETE FROM projects WHERE project_id = ?";
-            String query2 = "DELETE FROM tasks WHERE task_id = ?";
             int rowsDeleted = jdbcTemplate.update(query, projectId);
             if (rowsDeleted > 0) {
                 return true;

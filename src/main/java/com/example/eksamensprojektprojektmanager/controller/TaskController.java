@@ -53,5 +53,15 @@ public class TaskController {
         return "redirect:/tasks/" + projectId;
     }
 
-
+    @PostMapping("/deleteTask/{projectId}/{taskId}")
+    public String deleteTask(@PathVariable Long projectId, @PathVariable Long taskId, RedirectAttributes redirectAttributes) {
+        Task task = taskService.getTaskById(taskId);
+        if (task == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
+            return "redirect:/tasks/" + projectId;
+        }
+        taskService.deleteTaskById(taskId);
+        redirectAttributes.addFlashAttribute("successMessage", "Task deleted successfully.");
+        return "redirect:/tasks/" + projectId;
+    }
 }

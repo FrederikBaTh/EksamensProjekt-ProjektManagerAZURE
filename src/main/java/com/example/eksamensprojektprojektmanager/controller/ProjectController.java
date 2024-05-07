@@ -1,7 +1,9 @@
 package com.example.eksamensprojektprojektmanager.controller;
 
 import com.example.eksamensprojektprojektmanager.model.Project;
+import com.example.eksamensprojektprojektmanager.model.Task;
 import com.example.eksamensprojektprojektmanager.service.ProjectService;
+import com.example.eksamensprojektprojektmanager.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +20,14 @@ import java.util.List;
 
 @Controller
 public class ProjectController {
+
+
     private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
     @Autowired
     public ProjectService projectService;
+    @Autowired
+    private TaskService taskService;
+
 
     @GetMapping("/seeProjects")
     public String showProjects(HttpServletRequest request, Model model) {
@@ -86,7 +93,12 @@ public class ProjectController {
     }
 
     @PostMapping("/updateProject")
-    public String updateProject(@RequestParam("projectId") Long projectId, @RequestParam("projectName") String projectName, @RequestParam("startDate") String startDate, @RequestParam("projectDeadline") String projectDeadline, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String updateProject(@RequestParam("projectId") Long projectId,
+                                @RequestParam("projectName") String projectName,
+                                @RequestParam("startDate") String startDate,
+                                @RequestParam("projectDeadline") String projectDeadline,
+                                HttpServletRequest request,
+                                RedirectAttributes redirectAttributes) {
         String userIdString = (String) request.getSession().getAttribute("userId");
 
         if (userIdString == null || userIdString.isEmpty()) {
@@ -131,6 +143,35 @@ public class ProjectController {
     }
 
 
+    @PostMapping("/deleteProject/{id}")
+    public String deleteProject(@PathVariable("id") String projectIdStr, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String userIdString = (String) request.getSession().getAttribute("userId");
 
+        if (userIdString == null || userIdString.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "User ID is missing. Please log in again.");
+            return "redirect:/seeProjects";
+        }
+
+        try {
+            Long projectId = Long.parseLong(projectIdStr);
+
+            List<Task> projectTasks = taskService.getTasksByProjectId(projectId);
+            if (!projectTasks.isEmpty()) {
+                for (Task task : projectTasks) {
+                    taskService.deleteTaskById(task.getTask_id());
+                }
+            }
+
+            projectService.deleteProjectById(projectId);
+            redirectAttributes.addFlashAttribute("successMessage", "Project and its tasks deleted successfully.");
+        } catch (NumberFormatException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid project ID.");
+        } catch (IllegalArgumentException e) {
+            logger.error("Error while deleting project", e);
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+
+        return "redirect:/seeProjects";
+    }
 
 }
