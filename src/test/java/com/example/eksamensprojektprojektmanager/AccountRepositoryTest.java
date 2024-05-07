@@ -32,9 +32,8 @@ public class AccountRepositoryTest {
     @InjectMocks
     private AccountRepository accountRepository;
 
-    @InjectMocks
+    // Removed @InjectMocks annotation
     private AccountService accountService;
-
 
     @Test
     public void testSave() {
@@ -51,23 +50,24 @@ public class AccountRepositoryTest {
         );
     }
 
-
     @Test
     public void testIsValidUser() {
         // Given
         String username = "testUser";
         String password = "testPassword";
 
-        // Stubbing the jdbcTemplate's query method to return a list of integers
-        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class)))
-                .thenReturn(Collections.singletonList(1)); // Assuming the query returns a count of 1
+        // Stubbing the jdbcTemplate's queryForObject method to return 1
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), anyString(), anyString()))
+                .thenReturn(1); // Assuming the query returns a count of 1
+
+        // When
+        boolean isValid = accountRepository.isValidUser(username, password);
 
         // Then
-        assertTrue(accountService.isValidUser(username, password));
+        assertTrue(isValid);
+        verify(jdbcTemplate).queryForObject(
+                eq("SELECT COUNT(*) FROM users WHERE username = ? AND password = ?"),
+                eq(Integer.class), eq(username), eq(password)
+        );
     }
-
-
 }
-
-
-

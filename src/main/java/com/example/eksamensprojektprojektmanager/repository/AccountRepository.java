@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public class AccountRepository {
     private final JdbcTemplate jdbcTemplate;
@@ -27,8 +25,8 @@ public class AccountRepository {
 
     public boolean isValidUser(String username, String password) {
         String sql = "SELECT COUNT(*) FROM users WHERE username = ? AND password = ?";
-        List<Integer> counts = jdbcTemplate.query(sql, new Object[]{username, password}, (rs, rowNum) -> rs.next() ? rs.getInt(1) : 0);
-        return !counts.isEmpty() && counts.get(0) > 0;
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, username, password);
+        return count > 0;
     }
 
     public String getUserIdByUsername(String username) {
