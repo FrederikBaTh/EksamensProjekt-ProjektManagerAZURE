@@ -49,4 +49,9 @@ public class TaskRepository {
         });
     }
 
+    public void deleteTasks(int projectId) {
+        String query = "DELETE FROM tasks WHERE project_id = ?";
+        jdbcTemplate.update(query, projectId);
+    }
+
 }

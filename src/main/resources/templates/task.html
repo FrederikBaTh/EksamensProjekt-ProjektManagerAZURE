@@ -28,5 +28,11 @@
 </table>
 <!-- Add a button to redirect to the addTask page -->
 <a th:href="@{/addTask/{projectId}(projectId=${projectId})}" class="btn">Add Task</a>
+
+<form th:action="@{/deleteTask/{id}(id=${task.task_id})}" method="post">
+    <button type="submit" class="btn">Delete</button>
+</form>
+
+<p th:if="${noTasksMessage}" th:text="${noTasksMessage}"></p>
 </body>
 </html>
