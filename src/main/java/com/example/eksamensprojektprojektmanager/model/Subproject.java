@@ -9,7 +9,7 @@ public class Subproject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "name")
+    @Column(name = "subproject_id")
     private int subproject_id;
 
     @Column(name = "project_id",nullable = false)
