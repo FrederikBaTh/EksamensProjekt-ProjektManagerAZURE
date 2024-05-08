@@ -142,13 +142,13 @@ public class ProjectController {
     }
 
 
-    @PostMapping("/deleteProject/{id}")
-    public String deleteProject(@PathVariable("id") String projectIdStr, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    @PostMapping("/deleteProject")
+    public String deleteProject(@RequestParam("id") String projectIdStr, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String userIdString = (String) request.getSession().getAttribute("userId");
 
         if (userIdString == null || userIdString.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "User ID is missing. Please log in again.");
-            return "redirect:/seeProjects";
+            return "redirect:/login";
         }
 
         try {
@@ -169,8 +169,8 @@ public class ProjectController {
             logger.error("Error while deleting project", e);
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
-
         return "redirect:/seeProjects";
     }
+
 
 }

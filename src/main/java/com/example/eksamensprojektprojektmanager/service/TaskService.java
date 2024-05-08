@@ -30,8 +30,9 @@ public class TaskService {
     }
 
 
-public Task getTaskById(Long task_id) {
-    return taskRepository.findById(task_id);
-}
+    public Task getTaskById(Long task_id) {
+        return taskRepository.findById(task_id);
+    }
+
 
 }

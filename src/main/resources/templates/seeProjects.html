@@ -24,10 +24,10 @@
             <button type="submit" class="btn">Update</button>
         </form>
         <!-- Delete button for each project -->
-        <form action="/deleteProject/{projectId}" method="post">
-            <input type="hidden" name="_method" value="delete" />
-            <button type="submit">Delete Project</button>
-        </form>
+<form action="/deleteProject" method="post">
+    <input type="hidden" name="id" th:value="${project.project_id}" />
+    <button type="submit">Delete Project</button>
+</form>
 
 
     </li>
