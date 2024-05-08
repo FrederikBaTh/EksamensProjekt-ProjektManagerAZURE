@@ -10,21 +10,29 @@ public class Project {
 
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "project_id")
     private Long project_id;
 
-    @Column(nullable = false, unique = false)
+    @Column(name = "user_id")
+    private int user_id;
+
+    @Column(name = "name",nullable = false, unique = false)
     public String projectName;
 
-    @Column(nullable = false)
+    //TODO ikke i datebasen endnu
+    public String description;
+
+    @Column(name = "startDate",nullable = false)
     public LocalDate startDate;
 
-    @Column(nullable = true)
+    @Column(name = "deadline",nullable = true)
     public LocalDate projectDeadline;
 
+    //TODO ikke i datebasen endnu
     @Column(nullable = true)
     public String projectStatus;
 
-    private int user_id;
+
 
     public int getUser_id() {
         return user_id;
