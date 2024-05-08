@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class ProjectRepository {
 
-    public TaskRepository taskRepository;
+
 
     @Value("${spring.datasource.url}")
     private String db_url;
@@ -22,6 +22,10 @@ public class ProjectRepository {
 
     @Value("${spring.datasource.password}")
     private String password;
+
+    @Autowired
+    public TaskRepository taskRepository;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

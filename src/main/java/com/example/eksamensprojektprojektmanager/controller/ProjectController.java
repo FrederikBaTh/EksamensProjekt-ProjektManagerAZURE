@@ -40,7 +40,6 @@ public class ProjectController {
 
         List<Project> userProjects = projectService.getProjectsByUserId(userId);
 
-        // Log the retrieved projects
         System.out.println("Retrieved projects: " + userProjects);
 
         model.addAttribute("projects", userProjects);
