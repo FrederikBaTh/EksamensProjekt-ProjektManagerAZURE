@@ -64,4 +64,10 @@ public class ProjectService {
     }
 
 
+    public void deleteProjectById(Long project_id) {
+        projectRepository.deleteProjectById(project_id);
+    }
+
+
+
 }

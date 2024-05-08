@@ -3,16 +3,15 @@ package com.example.eksamensprojektprojektmanager.repository;
 import com.example.eksamensprojektprojektmanager.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
 @Repository
 public class ProjectRepository {
+
 
 
     @Value("${spring.datasource.url}")
@@ -23,6 +22,10 @@ public class ProjectRepository {
 
     @Value("${spring.datasource.password}")
     private String password;
+
+    @Autowired
+    public TaskRepository taskRepository;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -87,8 +90,20 @@ public class ProjectRepository {
         });
     }
 
+    public boolean deleteProjectById(Long projectId) {
+        try {
+            taskRepository.deleteTaskById(projectId);
 
-
+            String query = "DELETE FROM projects WHERE project_id = ?";
+            int rowsDeleted = jdbcTemplate.update(query, projectId);
+            if (rowsDeleted > 0) {
+                return true;
+            }
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 
 }

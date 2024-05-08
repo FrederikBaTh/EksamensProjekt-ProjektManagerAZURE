@@ -23,6 +23,13 @@
         <form th:action="@{/updateProject/{id}(id=${project.project_id})}" method="get">
             <button type="submit" class="btn">Update</button>
         </form>
+        <!-- Delete button for each project -->
+        <form action="/deleteProject/{projectId}" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <button type="submit">Delete Project</button>
+        </form>
+
+
     </li>
 </ul>
 </body>
