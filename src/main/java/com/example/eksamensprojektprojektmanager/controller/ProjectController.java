@@ -70,7 +70,7 @@ public class ProjectController {
             Long userId = Long.parseLong(userIdString);
             project.setUserId(userId);
 
-            // Parse the startDate and projectDeadline from the request parameters and set them in the Project object
+
             if (startDate != null && !startDate.isEmpty()) {
                 project.setStartDate(LocalDate.parse(startDate));
             }

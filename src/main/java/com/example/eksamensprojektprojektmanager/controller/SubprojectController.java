@@ -79,7 +79,7 @@ public class SubprojectController {
             redirectAttributes.addFlashAttribute("errorMessage", "Subproject not found.");
             return "redirect:/subprojects/" + updatedSubproject.getProject_id();
         }
-        updatedSubproject.setSubproject_id(subprojectId); // Ensure the id is set to the existing subproject
+        updatedSubproject.setSubproject_id(subprojectId);
         updatedSubproject.setProject_id(existingSubproject.getProject_id());
         Subproject updatedSubprojectInDb = subprojectService.updateSubproject(updatedSubproject);
         redirectAttributes.addFlashAttribute("successMessage", "Subproject updated successfully with ID: " + updatedSubprojectInDb.getSubproject_id());
