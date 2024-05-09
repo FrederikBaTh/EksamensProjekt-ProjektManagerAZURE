@@ -32,4 +32,9 @@ public class SubprojectService {
     public Subproject getSubprojectById(Long subprojectId) {
         return subprojectRepository.findById(subprojectId);
     }
+
+    public Subproject updateSubproject(Subproject subproject) {
+        return subprojectRepository.updateSubproject(subproject);
+    }
+
 }

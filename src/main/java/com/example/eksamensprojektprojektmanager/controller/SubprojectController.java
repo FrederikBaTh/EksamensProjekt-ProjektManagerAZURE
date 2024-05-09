@@ -65,4 +65,17 @@ public class SubprojectController {
         redirectAttributes.addFlashAttribute("successMessage", "Subproject deleted successfully.");
         return "redirect:/subprojects/" + projectId;
     }
+
+    @GetMapping("/updateSubproject/{id}")
+    public String showUpdateForm(@PathVariable("id") Long subprojectId, Model model) {
+        Subproject subproject = subprojectService.getSubprojectById(subprojectId);
+
+        model.addAttribute("subproject", subproject);
+
+        return "addSubproject";
+    }
+
+
+
+
 }

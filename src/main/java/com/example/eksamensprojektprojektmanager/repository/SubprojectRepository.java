@@ -55,10 +55,8 @@ public class SubprojectRepository {
 
 
     public void deleteSubprojectsByProjectId(Long projectId) {
-
         List<Subproject> subprojects = getSubprojectsByProjectId(projectId);
 
-        // For each subproject, delete its tasks and then delete the subproject
         for (Subproject subproject : subprojects) {
             taskRepository.deleteTasksBySubprojectId(subproject.getSubproject_id());
 
@@ -78,6 +76,7 @@ public class SubprojectRepository {
             return subproject;
         });
     }
+
     public List<Subproject> getSubprojectsByProjectId(Long projectId) {
         String query = "SELECT * FROM subprojects WHERE project_id = ?";
         return jdbcTemplate.query(query, new Object[]{projectId}, (resultSet, i) -> {
@@ -91,5 +90,18 @@ public class SubprojectRepository {
         });
     }
 
+    public Subproject updateSubproject(Subproject subproject) {
+        String updateQuery = "UPDATE subprojects SET name = ?, description = ?, startDate = ?, deadline = ? WHERE subproject_id = ?";
+        int rowsUpdated = jdbcTemplate.update(updateQuery, subproject.getSubprojectname(),
+                subproject.getDescription(),
+                java.sql.Date.valueOf(subproject.getStartDate()),
+                java.sql.Date.valueOf(subproject.getDeadline()),
+                subproject.getSubproject_id());
+        if (rowsUpdated > 0) {
+            System.out.println("Subproject was updated successfully!");
+            return subproject;
+        }
+        return null;
+    }
 
 }

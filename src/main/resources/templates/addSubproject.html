@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Add Subproject</h1>
-<form th:action="@{/addSubproject/{projectId}(projectId=${projectId})}" method="post">
+<form th:action="${subproject != null ? '@{/updateSubproject/{id}(id=${subproject.subproject_id})}' : '@{/addSubproject/{projectId}(projectId=${projectId})}'}" method="post">
     <div>
         <label for="subprojectname">Subproject Name:</label><br>
         <input type="text" id="subprojectname" name="subprojectname" required>
