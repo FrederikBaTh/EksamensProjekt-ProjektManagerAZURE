@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Add Task</h1>
-<form th:action="@{/addTask/{projectId}(projectId=${projectId})}" method="post">
+<form th:action="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" method="post">
     <input type="hidden" name="projectId" th:value="${projectId}">
     <label for="taskName">Task Name:</label>
     <input type="text" id="taskName" name="taskName" required><br>

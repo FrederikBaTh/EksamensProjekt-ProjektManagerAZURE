@@ -68,7 +68,7 @@ public class TaskController {
         task.setProjectId(subprojectId);
         taskService.addTask(task, projectId,subprojectId);
         redirectAttributes.addFlashAttribute("successMessage", "Task added successfully.");
-        return "redirect:/tasks/" + projectId;
+        return "redirect:/tasks/" + projectId + "/" + subprojectId;
     }
 
     @PostMapping("/deleteTask/{projectId}/{taskId}")

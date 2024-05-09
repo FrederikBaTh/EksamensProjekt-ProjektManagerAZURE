@@ -32,7 +32,7 @@
     </tbody>
 </table>
 <!-- Add a button to redirect to the addTask page -->
-<a th:href="@{/addTask/{projectId}(projectId=${projectId})}" class="btn">Add Task</a>
+<a th:href="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" class="btn">Add Task</a>
 
 
 
