@@ -90,6 +90,16 @@ public class ProjectController {
             return "redirect:/seeProjects";
         }
     }
+    @GetMapping("/updateProject/{id}")
+    public String showUpdateForm(@PathVariable("id") Long projectId, Model model) {
+        Project project = projectService.getProjectById(projectId);
+
+        model.addAttribute("project", project);
+
+        return "addProject";
+    }
+
+
 
     @PostMapping("/updateProject")
     public String updateProject(@RequestParam("projectId") Long projectId,
@@ -131,15 +141,6 @@ public class ProjectController {
         }
     }
 
-
-    @GetMapping("/updateProject/{id}")
-    public String showUpdateForm(@PathVariable("id") Long projectId, Model model) {
-        Project project = projectService.getProjectById(projectId);
-
-        model.addAttribute("project", project);
-
-        return "addProject";
-    }
 
 
     @PostMapping("/deleteProject")
