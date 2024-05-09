@@ -24,15 +24,6 @@ public class SubprojectController {
     public String showSubprojects(@PathVariable Long projectId, Model model) {
         List<Subproject> subprojects = subprojectService.getSubprojectsByProjectId(projectId);
 
-        // Check if each subproject has a subproject_id
-        for (Subproject subproject : subprojects) {
-            if (subproject.getSubproject_id() == null) {
-                // Handle the case where subproject_id is null
-                // This could be throwing an exception, logging an error, etc.
-                System.out.println("Subproject with null id found");
-            }
-        }
-
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("projectId", projectId);
         return "subprojects";
