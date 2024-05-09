@@ -69,6 +69,8 @@ public class SubprojectRepository {
         String query = "SELECT * FROM subprojects WHERE subproject_id = ?";
         return jdbcTemplate.queryForObject(query, new Object[]{subprojectId}, (resultSet, i) -> {
             Subproject subproject = new Subproject();
+            subproject.setSubproject_id(resultSet.getLong("subproject_id"));
+            subproject.setProject_id(resultSet.getLong("project_id"));
             subproject.setSubprojectname(resultSet.getString("name"));
             subproject.setDescription(resultSet.getString("description"));
             subproject.setStartDate(resultSet.getDate("startDate").toLocalDate());
