@@ -22,7 +22,7 @@ public class ProjectService {
 
     public Project addProject(Project project, String userIdString) {
         if (userIdString != null && !userIdString.isEmpty()) {
-            int user_id = Integer.parseInt(userIdString);
+            Long user_id = Long.parseLong(userIdString);;
             project.setUserId(user_id);
 
             if (project.getProjectName() == null || project.getProjectName().isEmpty() || project.getProjectName().length() > 100) {
@@ -46,7 +46,7 @@ public class ProjectService {
 
     public Project updateProject(Project project, String userIdString) {
         if (userIdString != null && !userIdString.isEmpty()) {
-            int user_id = Integer.parseInt(userIdString);
+            Long user_id = Long.parseLong(userIdString);
             project.setUserId(user_id);
 
             if (project.getProjectName() == null || project.getProjectName().isEmpty() || project.getProjectName().length() > 100) {

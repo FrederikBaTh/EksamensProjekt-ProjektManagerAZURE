@@ -47,7 +47,7 @@ public class ProjectRepository {
     }
 
 
-    public boolean existsByNameAndUserId(String name, int userId) {
+    public boolean existsByNameAndUserId(String name, Long userId) {
         String query = "SELECT COUNT(*) FROM projects WHERE name = ? AND user_id = ?";
         Integer count = jdbcTemplate.queryForObject(query, Integer.class, name, userId);
         return count != null && count > 0;

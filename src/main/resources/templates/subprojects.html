@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Subprojects</title>
+</head>
+<body>
+<h1>Subprojects</h1>
+<ul>
+    <a th:href="@{/addSubproject/{projectId}(projectId=${projectId})}" class="btn">Add Subproject</a>
+
+    <li th:each="subproject : ${subprojects}">
+        <!-- Adjusted form action expression -->
+        <form th:action="${projectId != null && subproject.subproject_id != null} ? '/tasks/' + ${projectId} + '/' + ${subproject.subproject_id} : '#'" method="get">
+            <button type="submit" th:text="${subproject.subprojectname}" th:disabled="${projectId == null || subproject.subproject_id == null}"></button>
+        </form>
+    </li>
+</ul>
+</body>
+</html>

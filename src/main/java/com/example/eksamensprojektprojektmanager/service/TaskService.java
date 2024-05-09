@@ -17,12 +17,12 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public void addTask(Task task, Integer projectId) {
-        taskRepository.addTask(task, projectId);
+    public void addTask(Task task, Long projectId, Long subprojectId) {
+        taskRepository.addTask(task, projectId,subprojectId);
     }
 
-    public List<Task> getTasksByProjectId(Long projectId) {
-        return taskRepository.findByProjectId(projectId);
+    public List<Task> getTasksByProjectIdAndSubprojectId(Long projectId,Long subprojectId) {
+        return taskRepository.findByProjectIdAndSubprojectId(projectId,subprojectId);
     }
 
     public void deleteTaskById(Long task_id) {

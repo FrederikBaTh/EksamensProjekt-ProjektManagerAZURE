@@ -26,19 +26,16 @@ public class TaskRepository {
     public TaskRepository() {
     }
 
-    public void addTask(Task task, Integer projectId) {
-        String insertQuery = "INSERT INTO tasks (project_id, name, description, date, deadline) VALUES (?, ?, ?, ?, ?)";
-        int rowsInserted = jdbcTemplate.update(insertQuery, projectId,
+    public void addTask(Task task, Long projectId, Long subprojectId) {
+        String insertQuery = "INSERT INTO tasks (project_id, subproject_id, name, description, date, deadline) VALUES (?, ?, ?, ?, ?, ?)";
+        int rowsInserted = jdbcTemplate.update(insertQuery, projectId, subprojectId,
                 task.getName(), task.getDescription(), task.getDate(), task.getDeadline());
-        if (rowsInserted > 0) {
-            System.out.println("A new task was added successfully!");
-        }
     }
 
 
-    public List<Task> findByProjectId(Long projectId) {
-        String query = "SELECT * FROM tasks WHERE project_id = ?";
-        return jdbcTemplate.query(query, new Object[]{projectId}, (resultSet, i) -> {
+    public List<Task> findByProjectIdAndSubprojectId(Long projectId, Long subprojectId) {
+        String query = "SELECT * FROM tasks WHERE project_id = ? AND subproject_id = ?";
+        return jdbcTemplate.query(query, new Object[]{projectId, subprojectId}, (resultSet, i) -> {
             Task task = new Task();
             task.setTask_id(resultSet.getLong("task_id"));
             task.setName(resultSet.getString("name"));
