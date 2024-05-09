@@ -24,7 +24,7 @@
         <td th:text="${#temporals.format(task.date, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#temporals.format(task.deadline, 'yyyy-MM-dd HH:mm')}"></td>
         <td>
-            <form th:action="@{/deleteTask/{projectId}/{taskId}(projectId=${projectId}, taskId=${task.task_id})}" method="post">
+            <form th:action="@{/deleteTask/{projectId}/{taskId}/{subprojectId}(projectId=${projectId}, taskId=${task.task_id}, subprojectId=${subprojectId})}" method="post">
                 <button type="submit" class="btn">Delete</button>
             </form>
         </td>
