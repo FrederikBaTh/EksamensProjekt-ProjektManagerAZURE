@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -32,6 +34,22 @@ public class AccountService {
 
     public String getUserIdByUsername(String username) {
         return accountRepository.getUserIdByUsername(username);
+    }
+
+    public List<Account> getAllUsers() {
+        return accountRepository.getAllUsers();
+    }
+
+    public Account getUserById(Long userId) {
+        return accountRepository.getUserById(userId);
+    }
+
+    public boolean usernameExists(String username) {
+        return accountRepository.usernameExists(username);
+    }
+
+    public void updateAccount(Account account) {
+        accountRepository.updateAccount(account);
     }
 }
 

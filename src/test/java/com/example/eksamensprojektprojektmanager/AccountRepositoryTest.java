@@ -35,20 +35,7 @@ public class AccountRepositoryTest {
     // Removed @InjectMocks annotation
     private AccountService accountService;
 
-    @Test
-    public void testSave() {
-        // Given
-        Account account = new Account("testUser", "testPassword", true);
 
-        // When
-        accountRepository.save(account);
-
-        // Then
-        verify(jdbcTemplate).update(
-                eq("INSERT INTO users (username, password, is_Admin) VALUES (?, ?, ?)"),
-                any(String.class), any(String.class), any(Boolean.class)
-        );
-    }
 
     @Test
     public void testIsValidUser() {

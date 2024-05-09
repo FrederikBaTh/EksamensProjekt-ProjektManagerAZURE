@@ -23,7 +23,6 @@ public class SubprojectController {
     @GetMapping("/subprojects/{projectId}")
     public String showSubprojects(@PathVariable Long projectId, Model model) {
         List<Subproject> subprojects = subprojectService.getSubprojectsByProjectId(projectId);
-
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("projectId", projectId);
         return "subprojects";
@@ -66,7 +65,20 @@ public class SubprojectController {
         return "addSubproject";
     }
 
-
+    @PostMapping("/updateSubproject/{id}")
+    public String updateSubproject(@PathVariable("id") Long subprojectId,
+                                   @ModelAttribute Subproject updatedSubproject,
+                                   RedirectAttributes redirectAttributes) {
+        Subproject existingSubproject = subprojectService.getSubprojectById(subprojectId);
+        if (existingSubproject == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Subproject not found.");
+            return "redirect:/subprojects/" + updatedSubproject.getProject_id();
+        }
+        updatedSubproject.setSubproject_id(subprojectId); // Ensure the id is set to the existing subproject
+        subprojectService.updateSubproject(updatedSubproject);
+        redirectAttributes.addFlashAttribute("successMessage", "Subproject updated successfully.");
+        return "redirect:/subprojects/" + updatedSubproject.getProject_id();
+    }
 
 
 }

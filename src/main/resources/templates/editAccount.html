@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Edit Account</h1>
+    <form action="/editUser" method="post">
+        <input type="hidden" name="userId" th:value="${user.user_id}"/>
+        <input type="hidden" name="username" th:value="${user.username}"/> <!-- Hidden field for username -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="${user.name}"/>
+        <label for="company">Company:</label>
+        <input type="text" id="company" name="company" th:value="${user.company}"/>
+        <label for="jobTitle">Job Title:</label>
+        <input type="text" id="jobTitle" name="jobTitle" th:value="${user.jobTitle}"/>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" th:value="${user.description}"/>
+        <input type="submit" value="Save Changes"/>
+    </form>
+</div>
+</body>
+</html>

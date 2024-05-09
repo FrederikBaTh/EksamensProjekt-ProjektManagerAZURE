@@ -20,14 +20,32 @@ public class Account {
     @Column(name = "is_admin",nullable = false)
     private boolean isAdmin;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "company")
+    private String company;
+
+    @Column(name = "job_title")
+    private String jobTitle;
+
+    @Column(name = "description")
+    private String description;
+
+
+
 
     public Account() {
     }
 
-    public Account(String username, String password, boolean isAdmin) {
+    public Account(String username, String password, boolean isAdmin, String name, String company, String jobTitle, String description) {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.name = name;
+        this.company = company;
+        this.jobTitle = jobTitle;
+        this.description = description;
     }
 
 
@@ -64,13 +82,49 @@ public class Account {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
-        return "UserAccount{" +
-                "id=" + user_id +
+        return "Account{" +
+                "userId=" + user_id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
+                ", name='" + name + '\'' +
+                ", company='" + company + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

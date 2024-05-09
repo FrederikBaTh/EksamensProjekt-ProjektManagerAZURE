@@ -9,6 +9,9 @@
 <h1>Projects</h1>
 <ul>
     <a href="/addProject" class="btn">Add Project</a>
+    <!-- Button to navigate to userList page -->
+    <a href="/usersList" class="btn">User List</a>
+    <a href="/myAccount" class="btn">Account</a>
     <!-- Iterate over projects and display them -->
     <li th:each="project : ${projects}">
         <a th:href="@{/subprojects/{id}(id=${project.project_id})}">
@@ -24,12 +27,10 @@
             <button type="submit" class="btn">Update</button>
         </form>
         <!-- Delete button for each project -->
-<form action="/deleteProject" method="post">
-    <input type="hidden" name="id" th:value="${project.project_id}" />
-    <button type="submit">Delete Project</button>
-</form>
-
-
+        <form action="/deleteProject" method="post">
+            <input type="hidden" name="id" th:value="${project.project_id}" />
+            <button type="submit">Delete Project</button>
+        </form>
     </li>
 </ul>
 </body>
