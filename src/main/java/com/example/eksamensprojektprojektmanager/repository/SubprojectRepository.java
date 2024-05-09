@@ -23,6 +23,9 @@ public class SubprojectRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    public TaskRepository taskRepository;
+
     public SubprojectRepository() {
     }
 
@@ -50,6 +53,20 @@ public class SubprojectRepository {
         jdbcTemplate.update(query, subprojectId);
     }
 
+
+    public void deleteSubprojectsByProjectId(Long projectId) {
+
+        List<Subproject> subprojects = getSubprojectsByProjectId(projectId);
+
+        // For each subproject, delete its tasks and then delete the subproject
+        for (Subproject subproject : subprojects) {
+            taskRepository.deleteTasksBySubprojectId(subproject.getSubproject_id());
+
+            String query = "DELETE FROM subprojects WHERE subproject_id = ?";
+            jdbcTemplate.update(query, subproject.getSubproject_id());
+        }
+    }
+
     public Subproject findById(Long subprojectId) {
         String query = "SELECT * FROM subprojects WHERE subproject_id = ?";
         return jdbcTemplate.queryForObject(query, new Object[]{subprojectId}, (resultSet, i) -> {
@@ -61,4 +78,18 @@ public class SubprojectRepository {
             return subproject;
         });
     }
+    public List<Subproject> getSubprojectsByProjectId(Long projectId) {
+        String query = "SELECT * FROM subprojects WHERE project_id = ?";
+        return jdbcTemplate.query(query, new Object[]{projectId}, (resultSet, i) -> {
+            Subproject subproject = new Subproject();
+            subproject.setSubproject_id(resultSet.getLong("subproject_id"));
+            subproject.setSubprojectname(resultSet.getString("name"));
+            subproject.setDescription(resultSet.getString("description"));
+            subproject.setStartDate(resultSet.getDate("startDate").toLocalDate());
+            subproject.setDeadline(resultSet.getDate("deadline").toLocalDate());
+            return subproject;
+        });
+    }
+
+
 }

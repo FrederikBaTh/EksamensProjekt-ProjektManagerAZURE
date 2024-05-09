@@ -63,6 +63,9 @@ public class TaskRepository {
             return task;
         });
     }
+    public void deleteTasksBySubprojectId(Long subprojectId) {
 
-
+        String query = "DELETE FROM tasks WHERE subproject_id = ?";
+        jdbcTemplate.update(query, subprojectId);
+    }
 }

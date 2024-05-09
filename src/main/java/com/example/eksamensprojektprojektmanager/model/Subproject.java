@@ -1,10 +1,12 @@
 package com.example.eksamensprojektprojektmanager.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "subproject")
+@Table(name = "subprojects")
 public class Subproject {
 
     @Id
@@ -22,6 +24,7 @@ public class Subproject {
     private String description;
 
     @Column(name = "startDate", nullable = false, unique = false)
+    @ColumnDefault("'1970-01-01'")
     private LocalDate startDate;
 
     @Column(name = "deadline", nullable = false, unique = false)

@@ -27,6 +27,9 @@ public class ProjectRepository {
     public TaskRepository taskRepository;
 
     @Autowired
+    public SubprojectRepository subprojectRepository;
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public ProjectRepository() {
@@ -93,6 +96,7 @@ public class ProjectRepository {
     public boolean deleteProjectById(Long projectId) {
         try {
             taskRepository.deleteTaskById(projectId);
+            subprojectRepository.deleteSubprojectsByProjectId(projectId);
 
             String query = "DELETE FROM projects WHERE project_id = ?";
             int rowsDeleted = jdbcTemplate.update(query, projectId);
