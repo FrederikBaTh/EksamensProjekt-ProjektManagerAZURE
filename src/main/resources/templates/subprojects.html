@@ -12,6 +12,9 @@
         <form th:action="@{'/tasks/' + ${projectId} + '/' + ${subproject.subproject_id}}" method="get">
             <button type="submit" th:text="${subproject.subprojectname}"></button>
         </form>
+        <form th:action="@{/deleteSubproject/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subproject.subproject_id})}" method="post">
+            <button type="submit">Delete</button>
+        </form>
     </li>
 </ul>
 </body>
