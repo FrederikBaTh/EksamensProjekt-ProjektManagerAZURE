@@ -101,18 +101,19 @@ public class TaskController {
     public String updateTask(@PathVariable("id") Long taskId,
                              @ModelAttribute Task updatedTask,
                              RedirectAttributes redirectAttributes) {
-        if (taskId == null) {
-            logger.error("Task ID is null in updateTask");
-        }
         Task existingTask = taskService.getTaskById(taskId);
         if (existingTask == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
             return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
         }
-        updatedTask.setTask_id(taskId);
-        updatedTask.setProjectId(existingTask.getProjectId());
-        updatedTask.setSubprojectId(existingTask.getSubprojectId());
-        Task updatedTaskInDb = taskService.updateTask(updatedTask);
+
+        // Update fields other than IDs
+        existingTask.setName(updatedTask.getName());
+        existingTask.setDescription(updatedTask.getDescription());
+        existingTask.setDate(updatedTask.getDate());
+        existingTask.setDeadline(updatedTask.getDeadline());
+
+        Task updatedTaskInDb = taskService.updateTask(existingTask);
         redirectAttributes.addFlashAttribute("successMessage", "Task updated successfully with ID: " + updatedTaskInDb.getTask_id());
         return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
     }

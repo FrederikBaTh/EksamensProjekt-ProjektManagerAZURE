@@ -27,6 +27,7 @@
 <div th:if="${task != null}">
     <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="post">
         <input type="hidden" name="projectId" th:value="${projectId}">
+        <input type="hidden" name="subprojectId" th:value="${subprojectId}">
         <label for="name">Task Name:</label>
         <input type="text" id="updatename" name="name" required><br>
         <label for="description">Description:</label>
