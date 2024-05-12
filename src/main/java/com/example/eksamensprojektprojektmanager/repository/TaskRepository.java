@@ -68,4 +68,15 @@ public class TaskRepository {
         String query = "DELETE FROM tasks WHERE subproject_id = ?";
         jdbcTemplate.update(query, subprojectId);
     }
+
+    public Task updateTask(Task task) {
+        String updateQuery = "UPDATE tasks SET name = ?, description = ?, date = ?, deadline = ? WHERE task_id = ?";
+        int rowsUpdated = jdbcTemplate.update(updateQuery, task.getName(), task.getDescription(), task.getDate(), task.getDeadline(), task.getTask_id());
+        if (rowsUpdated > 0) {
+            return task;
+        }
+        return null;
+    }
+
+
 }

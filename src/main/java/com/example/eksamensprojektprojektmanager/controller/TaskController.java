@@ -82,4 +82,41 @@ public class TaskController {
         redirectAttributes.addFlashAttribute("successMessage", "Task deleted successfully.");
         return "redirect:/tasks/" + projectId + "/" + subprojectId;
     }
+
+    @GetMapping("/updateTask/{id}")
+    public String showUpdateForm(@PathVariable("id") Long taskId, Model model) {
+        logger.info("Task ID: " + taskId);
+        if (taskId == null) {
+            logger.error("Task ID is null in showUpdateForm");
+        }
+        logger.info("Task ID: " + taskId);
+        Task task = taskService.getTaskById(taskId);
+        logger.info("Retrieved task: " + task);
+        model.addAttribute("task", task);
+        return "addTask";
+    }
+
+
+    @PostMapping("/updateTask/{id}")
+    public String updateTask(@PathVariable("id") Long taskId,
+                             @ModelAttribute Task updatedTask,
+                             RedirectAttributes redirectAttributes) {
+        if (taskId == null) {
+            logger.error("Task ID is null in updateTask");
+        }
+        Task existingTask = taskService.getTaskById(taskId);
+        if (existingTask == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
+            return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
+        }
+        updatedTask.setTask_id(taskId);
+        updatedTask.setProjectId(existingTask.getProjectId());
+        updatedTask.setSubprojectId(existingTask.getSubprojectId());
+        Task updatedTaskInDb = taskService.updateTask(updatedTask);
+        redirectAttributes.addFlashAttribute("successMessage", "Task updated successfully with ID: " + updatedTaskInDb.getTask_id());
+        return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
+    }
+
+
+
 }
