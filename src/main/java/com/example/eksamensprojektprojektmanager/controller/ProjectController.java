@@ -5,6 +5,7 @@ import com.example.eksamensprojektprojektmanager.model.Task;
 import com.example.eksamensprojektprojektmanager.service.ProjectService;
 import com.example.eksamensprojektprojektmanager.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,6 +173,17 @@ public class ProjectController {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
         return "redirect:/seeProjects";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return "redirect:/login";
     }
 
 

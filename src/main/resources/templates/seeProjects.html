@@ -24,13 +24,12 @@
             <button type="submit" class="btn">Update</button>
         </form>
         <!-- Delete button for each project -->
-<form action="/deleteProject" method="post">
-    <input type="hidden" name="id" th:value="${project.project_id}" />
-    <button type="submit">Delete Project</button>
-</form>
-
-
+        <form action="/deleteProject" method="post">
+            <input type="hidden" name="id" th:value="${project.project_id}" />
+            <button type="submit">Delete Project</button>
+        </form>
     </li>
 </ul>
+<a href="/logout" class="btn">Logout</a> <!-- Logout link -->
 </body>
 </html>
