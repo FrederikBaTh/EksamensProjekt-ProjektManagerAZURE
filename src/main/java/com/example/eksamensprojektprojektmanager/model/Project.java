@@ -1,6 +1,7 @@
 package com.example.eksamensprojektprojektmanager.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 @Entity
@@ -22,6 +23,7 @@ public class Project {
     public String description;
 
     @Column(name = "startDate",nullable = false)
+    @ColumnDefault("'1970-01-01'")
     public LocalDate startDate;
 
     @Column(name = "deadline",nullable = true)
