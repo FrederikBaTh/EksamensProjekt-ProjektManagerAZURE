@@ -49,6 +49,7 @@ public class TaskController {
         model.addAttribute("projectId", projectId);
         model.addAttribute("subprojectId", subprojectId);
 
+
         return "addTask";
     }
 
@@ -93,6 +94,8 @@ public class TaskController {
         Task task = taskService.getTaskById(taskId);
         logger.info("Retrieved task: " + task);
         model.addAttribute("task", task);
+        model.addAttribute("projectId", task.getProjectId());
+        model.addAttribute("subprojectId", task.getSubprojectId());
         return "addTask";
     }
 
@@ -112,6 +115,9 @@ public class TaskController {
         existingTask.setDescription(updatedTask.getDescription());
         existingTask.setDate(updatedTask.getDate());
         existingTask.setDeadline(updatedTask.getDeadline());
+
+        existingTask.setProjectId(updatedTask.getProjectId());
+        existingTask.setSubprojectId(updatedTask.getSubprojectId());
 
         Task updatedTaskInDb = taskService.updateTask(existingTask);
         redirectAttributes.addFlashAttribute("successMessage", "Task updated successfully with ID: " + updatedTaskInDb.getTask_id());

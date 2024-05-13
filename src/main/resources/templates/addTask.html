@@ -11,14 +11,14 @@
 <div th:if="${task == null}">
     <form th:action="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" method="post">
         <input type="hidden" name="projectId" th:value="${projectId}">
-        <label for="name">Task Name:</label>
-        <input type="text" id="name" name="name" required><br>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description"></textarea><br>
-        <label for="date">Date:</label>
-        <input type="datetime-local" id="date" name="date" required><br>
-        <label for="deadline">Deadline:</label>
-        <input type="datetime-local" id="deadline" name="deadline" required><br>
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName" required><br>
+        <label for="taskDescription">Description:</label>
+        <textarea id="taskDescription" name="taskDescription"></textarea><br>
+        <label for="taskDate">Date:</label>
+        <input type="datetime-local" id="taskDate" name="taskDate" required><br>
+        <label for="taskDeadline">Deadline:</label>
+        <input type="datetime-local" id="taskDeadline" name="taskDeadline" required><br>
         <input type="submit" value="Add Task">
     </form>
 </div>
@@ -28,13 +28,13 @@
     <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="post">
         <input type="hidden" name="projectId" th:value="${projectId}">
         <input type="hidden" name="subprojectId" th:value="${subprojectId}">
-        <label for="name">Task Name:</label>
+        <label for="taskName">Task Name:</label>
         <input type="text" id="updatename" name="name" required><br>
-        <label for="description">Description:</label>
+        <label for="taskDescription">Description:</label>
         <textarea id="updatedescription" name="description"></textarea><br>
-        <label for="date">Date:</label>
+        <label for="taskDate">Date:</label>
         <input type="datetime-local" id="updatedate" name="date" required><br>
-        <label for="deadline">Deadline:</label>
+        <label for="taskDeadline">Deadline:</label>
         <input type="datetime-local" id="updatedeadline" name="deadline" required><br>
         <input type="submit" value="Update Task">
     </form>
