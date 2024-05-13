@@ -3,18 +3,19 @@ package com.example.eksamensprojektprojektmanager.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
 public class Project {
 
-
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_id")
     private Long project_id;
 
     @Column(name = "user_id")
-    private int user_id;
+    private Long user_id;
 
     @Column(name = "name",nullable = false, unique = false)
     public String projectName;
@@ -34,11 +35,11 @@ public class Project {
 
 
 
-    public int getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUserId(int user_id) {
+    public void setUserId(Long user_id) {
         this.user_id = user_id;
     }
     public Project(String projectName, LocalDate startDate, LocalDate projectDeadline ) {

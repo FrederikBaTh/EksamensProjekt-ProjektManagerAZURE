@@ -67,10 +67,10 @@ public class ProjectController {
         try {
             Project project = new Project();
             project.setProjectName(projectName);
-            int userId = Integer.parseInt(userIdString);
+            Long userId = Long.parseLong(userIdString);
             project.setUserId(userId);
 
-            // Parse the startDate and projectDeadline from the request parameters and set them in the Project object
+
             if (startDate != null && !startDate.isEmpty()) {
                 project.setStartDate(LocalDate.parse(startDate));
             }
@@ -90,6 +90,16 @@ public class ProjectController {
             return "redirect:/seeProjects";
         }
     }
+    @GetMapping("/updateProject/{id}")
+    public String showUpdateForm(@PathVariable("id") Long projectId, Model model) {
+        Project project = projectService.getProjectById(projectId);
+
+        model.addAttribute("project", project);
+
+        return "addProject";
+    }
+
+
 
     @PostMapping("/updateProject")
     public String updateProject(@RequestParam("projectId") Long projectId,
@@ -109,7 +119,7 @@ public class ProjectController {
             Project project = new Project();
             project.setProject_id(projectId);
             project.setProjectName(projectName);
-            int userId = Integer.parseInt(userIdString);
+            Long userId = Long.parseLong(userIdString);
             project.setUserId(userId);
 
             if (startDate != null && !startDate.isEmpty()) {
@@ -132,15 +142,6 @@ public class ProjectController {
     }
 
 
-    @GetMapping("/updateProject/{id}")
-    public String showUpdateForm(@PathVariable("id") Long projectId, Model model) {
-        Project project = projectService.getProjectById(projectId);
-
-        model.addAttribute("project", project);
-
-        return "addProject";
-    }
-
 
     @PostMapping("/deleteProject")
     public String deleteProject(@RequestParam("id") String projectIdStr, HttpServletRequest request, RedirectAttributes redirectAttributes) {
@@ -153,8 +154,9 @@ public class ProjectController {
 
         try {
             Long projectId = Long.parseLong(projectIdStr);
+            Long subprojectId = Long.parseLong(projectIdStr);
 
-            List<Task> projectTasks = taskService.getTasksByProjectId(projectId);
+            List<Task> projectTasks = taskService.getTasksByProjectIdAndSubprojectId(projectId,subprojectId);
             if (!projectTasks.isEmpty()) {
                 for (Task task : projectTasks) {
                     taskService.deleteTaskById(task.getTask_id());

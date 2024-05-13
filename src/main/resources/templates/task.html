@@ -14,6 +14,7 @@
         <th>Description</th>
         <th>Date</th>
         <th>Deadline</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -24,7 +25,10 @@
         <td th:text="${#temporals.format(task.date, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#temporals.format(task.deadline, 'yyyy-MM-dd HH:mm')}"></td>
         <td>
-            <form th:action="@{/deleteTask/{projectId}/{taskId}(projectId=${projectId}, taskId=${task.task_id})}" method="post">
+            <!-- Update Task Button -->
+            <a th:href="@{/updateTask/{id}(id=${task.task_id})}" class="btn">Update</a>
+            <!-- Delete Task Form -->
+            <form th:action="@{/deleteTask/{projectId}/{taskId}/{subprojectId}(projectId=${projectId}, taskId=${task.task_id}, subprojectId=${subprojectId})}" method="post">
                 <button type="submit" class="btn">Delete</button>
             </form>
         </td>
@@ -32,9 +36,7 @@
     </tbody>
 </table>
 <!-- Add a button to redirect to the addTask page -->
-<a th:href="@{/addTask/{projectId}(projectId=${projectId})}" class="btn">Add Task</a>
-
-
+<a th:href="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" class="btn">Add Task</a>
 
 <p th:if="${noTasksMessage}" th:text="${noTasksMessage}"></p>
 </body>

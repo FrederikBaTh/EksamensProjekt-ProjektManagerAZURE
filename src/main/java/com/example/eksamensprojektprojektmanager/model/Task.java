@@ -13,8 +13,11 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long task_id;
 
-    @Column(name = "project_id")
-    private Integer projectId;
+    @Column(name = "project_id",nullable = false)
+    private Long projectId;
+
+    @Column(name = "subproject_id",nullable = false)
+    private Long subprojectId;
 
     @Column(nullable = false)
     private String name;
@@ -59,7 +62,13 @@ public class Task {
     public LocalDateTime getDeadline() {
         return deadline;
     }
+    public Long getProjectId() {
+        return projectId;
+    }
 
+    public Long getSubprojectId() {
+        return subprojectId;
+    }
     //Setters
     public void setTask_id(Long id) {
         this.task_id = id;
@@ -81,10 +90,13 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
-    public Task(String name, String description, LocalDateTime date, LocalDateTime deadline, Integer projectId) {
+    public void setSubprojectId(Long subprojectId) {
+        this.subprojectId = subprojectId;
+    }
+    public Task(String name, String description, LocalDateTime date, LocalDateTime deadline, Long projectId) {
         this.name = name;
         this.description = description;
         this.date = date;

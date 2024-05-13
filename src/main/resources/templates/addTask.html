@@ -5,18 +5,40 @@
     <title>Add Task</title>
 </head>
 <body>
-<h1>Add Task</h1>
-<form th:action="@{/addTask/{projectId}(projectId=${projectId})}" method="post">
-    <input type="hidden" name="projectId" th:value="${projectId}">
-    <label for="taskName">Task Name:</label>
-    <input type="text" id="taskName" name="taskName" required><br>
-    <label for="taskDescription">Description:</label>
-    <textarea id="taskDescription" name="taskDescription"></textarea><br>
-    <label for="taskDate">Date:</label>
-    <input type="datetime-local" id="taskDate" name="taskDate" required><br>
-    <label for="taskDeadline">Deadline:</label>
-    <input type="datetime-local" id="taskDeadline" name="taskDeadline" required><br>
-    <input type="submit" value="Add Task">
-</form>
+<h1 th:text="${task != null ? 'Update Task' : 'Add Task'}"></h1>
+
+<!-- Add Task Form -->
+<div th:if="${task == null}">
+    <form th:action="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" method="post">
+        <input type="hidden" name="projectId" th:value="${projectId}">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName" required><br>
+        <label for="taskDescription">Description:</label>
+        <textarea id="taskDescription" name="taskDescription"></textarea><br>
+        <label for="taskDate">Date:</label>
+        <input type="datetime-local" id="taskDate" name="taskDate" required><br>
+        <label for="taskDeadline">Deadline:</label>
+        <input type="datetime-local" id="taskDeadline" name="taskDeadline" required><br>
+        <input type="submit" value="Add Task">
+    </form>
+</div>
+
+<!-- Update Task Form -->
+<div th:if="${task != null}">
+    <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="post">
+        <input type="hidden" name="projectId" th:value="${projectId}">
+        <input type="hidden" name="subprojectId" th:value="${subprojectId}">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="updatename" name="name" required><br>
+        <label for="taskDescription">Description:</label>
+        <textarea id="updatedescription" name="description"></textarea><br>
+        <label for="taskDate">Date:</label>
+        <input type="datetime-local" id="updatedate" name="date" required><br>
+        <label for="taskDeadline">Deadline:</label>
+        <input type="datetime-local" id="updatedeadline" name="deadline" required><br>
+        <input type="submit" value="Update Task">
+    </form>
+</div>
+
 </body>
 </html>
