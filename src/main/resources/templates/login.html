@@ -5,13 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="layout.css">
+
 </head>
 <body>
 
-<div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1>LOGIN PAGE</h1>
-    <p>Login to your account!</p>
-</div>
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>LOGINSIDE</h1>
+        <p>Log ind på din konto!</p>
+    </div>
+</header>
+
 <div class="login-container">
     <form id="login-form" method="post" action="/login">
         <div class="input-group">
@@ -26,20 +31,6 @@
     </form>
     <form th:action="@{/register}" method="get">
         <p>Don't have an account? <button type="submit">Register</button></p>
-    </form>
-</div>
-<div class="register-container" style="display:none;">
-    <h2>Register</h2>
-    <form id="register-form">
-        <div class="input-group">
-            <label for="new-username">Username:</label>
-            <input type="text" id="new-username" name="new-username" required>
-        </div>
-        <div class="input-group">
-            <label for="new-password">Password:</label>
-            <input type="password" id="new-password" name="new-password" required>
-        </div>
-        <button type="submit">Register</button>
     </form>
 </div>
 </body>
