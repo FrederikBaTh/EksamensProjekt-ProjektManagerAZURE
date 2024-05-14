@@ -34,5 +34,7 @@ public class TaskService {
         return taskRepository.findById(task_id);
     }
 
-
+    public Task updateTask(Task task) {
+        return taskRepository.updateTask(task);
+    }
 }

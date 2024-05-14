@@ -1,12 +1,11 @@
 package com.example.eksamensprojektprojektmanager.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
-
+@Entity
+@Table(name = "projects")
 public class Project {
 
     @Id
@@ -24,6 +23,7 @@ public class Project {
     public String description;
 
     @Column(name = "startDate",nullable = false)
+    @ColumnDefault("'1970-01-01'")
     public LocalDate startDate;
 
     @Column(name = "deadline",nullable = true)

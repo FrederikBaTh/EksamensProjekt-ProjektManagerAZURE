@@ -49,6 +49,7 @@ public class TaskController {
         model.addAttribute("projectId", projectId);
         model.addAttribute("subprojectId", subprojectId);
 
+
         return "addTask";
     }
 
@@ -82,4 +83,47 @@ public class TaskController {
         redirectAttributes.addFlashAttribute("successMessage", "Task deleted successfully.");
         return "redirect:/tasks/" + projectId + "/" + subprojectId;
     }
+
+    @GetMapping("/updateTask/{id}")
+    public String showUpdateForm(@PathVariable("id") Long taskId, Model model) {
+        logger.info("Task ID: " + taskId);
+        if (taskId == null) {
+            logger.error("Task ID is null in showUpdateForm");
+        }
+        logger.info("Task ID: " + taskId);
+        Task task = taskService.getTaskById(taskId);
+        logger.info("Retrieved task: " + task);
+        model.addAttribute("task", task);
+        model.addAttribute("projectId", task.getProjectId());
+        model.addAttribute("subprojectId", task.getSubprojectId());
+        return "addTask";
+    }
+
+
+    @PostMapping("/updateTask/{id}")
+    public String updateTask(@PathVariable("id") Long taskId,
+                             @ModelAttribute Task updatedTask,
+                             RedirectAttributes redirectAttributes) {
+        Task existingTask = taskService.getTaskById(taskId);
+        if (existingTask == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
+            return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
+        }
+
+        // Update fields other than IDs
+        existingTask.setName(updatedTask.getName());
+        existingTask.setDescription(updatedTask.getDescription());
+        existingTask.setDate(updatedTask.getDate());
+        existingTask.setDeadline(updatedTask.getDeadline());
+
+        existingTask.setProjectId(updatedTask.getProjectId());
+        existingTask.setSubprojectId(updatedTask.getSubprojectId());
+
+        Task updatedTaskInDb = taskService.updateTask(existingTask);
+        redirectAttributes.addFlashAttribute("successMessage", "Task updated successfully with ID: " + updatedTaskInDb.getTask_id());
+        return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
+    }
+
+
+
 }
