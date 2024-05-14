@@ -12,6 +12,9 @@
     <!-- Button to navigate to userList page -->
     <a href="/usersList" class="btn">User List</a>
     <a href="/myAccount" class="btn">Account</a>
+    <a href="/invitedProjects" class="btn">Show Invited Projects</a>
+    <a href="/invites" class="btn">Invites</a>
+
     <!-- Iterate over projects and display them -->
     <li th:each="project : ${projects}">
         <a th:href="@{/subprojects/{id}(id=${project.project_id})}">

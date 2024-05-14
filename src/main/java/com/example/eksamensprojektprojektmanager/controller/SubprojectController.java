@@ -32,7 +32,7 @@ public class SubprojectController {
 
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("projectId", projectId);
-        return "subprojects";
+        return "seeSubprojects";
     }
 
     @GetMapping("/addSubproject/{projectId}")

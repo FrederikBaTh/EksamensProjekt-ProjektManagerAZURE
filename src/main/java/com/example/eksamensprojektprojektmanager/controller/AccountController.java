@@ -1,5 +1,8 @@
 package com.example.eksamensprojektprojektmanager.controller;
 
+import com.example.eksamensprojektprojektmanager.model.Project;
+import com.example.eksamensprojektprojektmanager.service.ProjectInvitationService;
+import com.example.eksamensprojektprojektmanager.service.ProjectService;
 import org.springframework.ui.Model;
 import com.example.eksamensprojektprojektmanager.model.Account;
 import com.example.eksamensprojektprojektmanager.service.AccountService;
@@ -21,7 +24,10 @@ public class AccountController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
     @Autowired
     private AccountService accountService;
-
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private ProjectInvitationService projectInvitationService;
 
     @GetMapping("/")
     public RedirectView redirectToLogin() {
@@ -77,9 +83,26 @@ public class AccountController {
     }
 
     @GetMapping("/usersList")
-    public String showUserList(Model model) {
+    public String showUserList(Model model, HttpServletRequest request) {
         List<Account> userList = accountService.getAllUsers(); // Assuming you have a method to retrieve all users
         model.addAttribute("users", userList);
+
+
+        // Retrieve the logged in user's ID from the session
+        String loggedInUserId = (String) request.getSession().getAttribute("userId");
+        model.addAttribute("loggedInUserId", loggedInUserId);
+
+        // Retrieve the project ID from the session
+        String projectIdString = (String) request.getSession().getAttribute("projectId");
+        if (projectIdString != null) {
+            Long projectId = Long.parseLong(projectIdString);
+            model.addAttribute("projectId", projectId);
+        }
+        String userIdString = (String) request.getSession().getAttribute("userId");
+        Long userId = Long.parseLong(userIdString);
+        List<Project> userProjects = projectService.getProjectsByUserId(userId);
+        model.addAttribute("projects", userProjects);
+
         return "userList";
     }
 
@@ -132,4 +155,23 @@ public class AccountController {
             return "redirect:/login";
         }
     }
+
+
+    @PostMapping("/acceptInvite")
+    public String acceptInvite(@RequestParam("inviteId") Long inviteId) {
+        // Assuming you have a method in your service to accept an invite
+        projectInvitationService.acceptInvite(inviteId);
+        return "redirect:/seeProjects"; // Redirect to projects page after accepting the invite
+    }
+
+
+
+
+
+
+
+
 }
+
+
+

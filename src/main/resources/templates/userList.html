@@ -28,6 +28,7 @@
         <th>Username</th>
         <th>Company</th>
         <th>Job Title</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -36,6 +37,16 @@
         <td th:text="${user.username}">Username</td>
         <td th:text="${user.company}">Company</td>
         <td th:text="${user.jobTitle}">Job Title</td>
+        <td>
+            <form action="/inviteUserToProject" method="post">
+                <input type="hidden" name="receiverUserId" th:value="${user.user_id}" />
+                <select name="projectId">
+                    <option th:each="project : ${projects}" th:value="${project.project_id}" th:text="${project.projectName}"></option>
+                </select>
+                <input type="hidden" name="senderUserId" th:value="${loggedInUserId}" />
+                <button type="submit">Invite</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
