@@ -11,9 +11,9 @@ import java.util.List;
 @Service
 public class ProjectInvitationService {
 
-    @Autowired
-    private ProjectInvitationRepository projectInvitationRepository;
 
+    private ProjectInvitationRepository projectInvitationRepository;
+    @Autowired
     public ProjectInvitationService(ProjectInvitationRepository projectInvitationRepository) {
         this.projectInvitationRepository = projectInvitationRepository;
     }

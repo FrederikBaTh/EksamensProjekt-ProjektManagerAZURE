@@ -12,8 +12,14 @@ import java.util.List;
 public class AccountService {
 
 
-    @Autowired
+
     private AccountRepository accountRepository;
+
+
+    @Autowired
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
 
     @Value("${spring.datasource.url}")
