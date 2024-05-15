@@ -1,7 +1,9 @@
 package com.example.eksamensprojektprojektmanager.service;
 
+import com.example.eksamensprojektprojektmanager.model.Account;
 import com.example.eksamensprojektprojektmanager.model.Subproject;
 import com.example.eksamensprojektprojektmanager.repository.SubprojectRepository;
+import com.example.eksamensprojektprojektmanager.repository.UserSubprojectAssignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,12 @@ import java.util.List;
 public class SubprojectService {
 
     private final SubprojectRepository subprojectRepository;
+    private final UserSubprojectAssignmentRepository userSubprojectAssignmentRepository;
 
     @Autowired
-    public SubprojectService(SubprojectRepository subprojectRepository) {
+    public SubprojectService(SubprojectRepository subprojectRepository, UserSubprojectAssignmentRepository userSubprojectAssignmentRepository) {
         this.subprojectRepository = subprojectRepository;
+        this.userSubprojectAssignmentRepository = userSubprojectAssignmentRepository;
     }
 
     public void addSubproject(Subproject subproject, Long projectId) {
@@ -36,5 +40,11 @@ public class SubprojectService {
     public Subproject updateSubproject(Subproject subproject) {
         return subprojectRepository.updateSubproject(subproject);
     }
+
+    public List<Account> getAssignedUsers(Long subprojectId) {
+        return userSubprojectAssignmentRepository.findAssignedUsersBySubprojectId(subprojectId);
+    }
+
+
 
 }

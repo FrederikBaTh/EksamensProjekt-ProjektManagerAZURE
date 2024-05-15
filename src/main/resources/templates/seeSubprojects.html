@@ -18,6 +18,21 @@
         <form th:action="@{/deleteSubproject/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subproject.subproject_id})}" method="post">
             <button type="submit">Delete</button>
         </form>
+
+
+        <form th:action="@{/assignUserToSubproject}" method="post">
+            <select name="userId">
+                <option th:each="user : ${users}" th:value="${user.user_id}" th:text="${user.username}"></option>
+            </select>
+            <input type="hidden" name="subprojectId" th:value="${subproject.subproject_id}">
+            <button type="submit">Assign User</button>
+        </form>
+        <p th:if="${subprojectAssignedUsers[subproject.subproject_id] != null and !subprojectAssignedUsers[subproject.subproject_id].isEmpty()}">
+            Assigned Users:
+        <ul>
+            <li th:each="user : ${subprojectAssignedUsers[subproject.subproject_id]}" th:text="${user.username}"></li>
+        </ul>
+
     </li>
 </ul>
 </body>

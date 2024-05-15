@@ -53,6 +53,9 @@ public class ProjectInvitationRepository {
             return invitation;
         });
     }
-
+    public List<Long> getAcceptedUserIdsByProjectId(Long projectId) {
+        String sql = "SELECT receiver_user_id FROM project_invitations WHERE project_id = ? AND status = 'ACCEPTED'";
+        return jdbcTemplate.queryForList(sql, new Object[]{projectId}, Long.class);
+    }
 
 }

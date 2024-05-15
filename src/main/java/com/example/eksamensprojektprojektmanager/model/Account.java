@@ -1,6 +1,9 @@
 package com.example.eksamensprojektprojektmanager.model;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class Account {
@@ -32,9 +35,16 @@ public class Account {
     @Column(name = "description")
     private String description;
 
+    @ManyToMany(mappedBy = "assignedUsers")
+    private List<Subproject> assignedSubprojects;
 
-
-
+    public void assignSubproject(Subproject subproject) {
+        if (assignedSubprojects == null) {
+            assignedSubprojects = new ArrayList<>();
+        }
+        assignedSubprojects.add(subproject);
+        subproject.getAssignedUsers().add(this);
+    }
     public Account() {
     }
 
@@ -80,6 +90,18 @@ public class Account {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
+
+
+    public void setAssignedSubprojects(List<Subproject> assignedSubprojects) {
+        this.assignedSubprojects = assignedSubprojects;
+    }
+
+    public List<Subproject> getAssignedSubprojects() {
+        return assignedSubprojects;
+    }
+
+
+
 
 
     public String getName() {

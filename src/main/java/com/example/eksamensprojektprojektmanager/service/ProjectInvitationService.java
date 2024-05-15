@@ -37,5 +37,11 @@ public class ProjectInvitationService {
         return projectInvitationRepository.getInvitesByUserId(userId);
     }
 
+    public List<Long> getAcceptedUserIdsByProjectId(Long projectId) {
+        return projectInvitationRepository.getAcceptedUserIdsByProjectId(projectId);
+    }
+
+
+
 
 }
