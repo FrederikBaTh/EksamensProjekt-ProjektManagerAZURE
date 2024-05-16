@@ -5,6 +5,7 @@ import com.example.eksamensprojektprojektmanager.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,6 +124,33 @@ public class TaskController {
         return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
     }
 
+    @PostMapping("/tasks/{taskId}")
+    public String updateTaskStatus(@PathVariable Long taskId, @RequestParam("status") String status, RedirectAttributes redirectAttributes) {
+        Task task = null;
+        try {
+            task = taskService.getTaskById(taskId);
+            if (task == null) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
+                return "redirect:/task";
+            }
+            taskService.updateTaskStatus(taskId, status);
+            redirectAttributes.addFlashAttribute("successMessage", "Task status updated successfully.");
+        } catch (DataAccessException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error updating task status.");
+        }
+        if (task.getProjectId() == null || task.getSubprojectId() == null) {
+            return "redirect:/tasks";
+        } else {
+            return "redirect:/tasks/" + task.getProjectId() + "/" + task.getSubprojectId();
+        }
+    }
+
+    @GetMapping("/tasks")
+    public String showAllTasks(Model model) {
+        List<Task> tasks = taskService.getAllTasks();
+        model.addAttribute("tasks", tasks);
+        return "task";
+    }
 
 
 }

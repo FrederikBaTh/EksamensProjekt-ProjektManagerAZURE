@@ -79,4 +79,25 @@ public class TaskRepository {
     }
 
 
+    public void updateTaskStatus(Long task_id, String status) {
+        String updateQuery = "UPDATE tasks SET status = ? WHERE task_id = ?";
+        int rowsUpdated = jdbcTemplate.update(updateQuery, status, task_id);
+        if (rowsUpdated > 0) {
+            System.out.println("Task status was updated successfully!");
+        }
+    }
+
+    public List<Task> findAll() {
+        String query = "SELECT * FROM tasks";
+        return jdbcTemplate.query(query, (resultSet, i) -> {
+            Task task = new Task();
+            task.setTask_id(resultSet.getLong("task_id"));
+            task.setName(resultSet.getString("name"));
+            task.setDescription(resultSet.getString("description"));
+            task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
+            task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+            return task;
+        });
+    }
+
 }

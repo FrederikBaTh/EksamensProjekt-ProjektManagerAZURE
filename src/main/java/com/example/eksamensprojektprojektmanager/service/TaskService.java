@@ -37,4 +37,12 @@ public class TaskService {
     public Task updateTask(Task task) {
         return taskRepository.updateTask(task);
     }
+
+    public void updateTaskStatus(Long task_id, String status) {
+        taskRepository.updateTaskStatus(task_id, status);
+    }
+
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
+    }
 }
