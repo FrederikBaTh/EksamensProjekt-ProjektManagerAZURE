@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "subprojects")
@@ -30,7 +32,21 @@ public class Subproject {
     @Column(name = "deadline", nullable = false, unique = false)
     private LocalDate deadline;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_subproject_assignments",
+            joinColumns = @JoinColumn(name = "subproject_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<Account> assignedUsers;
 
+    public void assignAccount(Account account) {
+        if (assignedUsers == null) {
+            assignedUsers = new ArrayList<>();
+        }
+        assignedUsers.add(account);
+        account.getAssignedSubprojects().add(this);
+    }
 
     public Subproject() {
     }
@@ -68,6 +84,9 @@ public class Subproject {
         return deadline;
     }
 
+    public List<Account> getAssignedUsers() {
+        return assignedUsers;
+    }
     // Setters
     public void setSubproject_id(Long subproject_id) {
         this.subproject_id = subproject_id;
@@ -93,6 +112,9 @@ public class Subproject {
         this.deadline = deadline;
     }
 
+    public void setAssignedUsers(List<Account> assignedUsers) {
+        this.assignedUsers = assignedUsers;
+    }
 
     @Override
     public String toString() {

@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class TaskController {
         model.addAttribute("tasks", tasks);
         model.addAttribute("projectId", projectId);
         model.addAttribute("subprojectId", subprojectId);
-        return "task";
+        return "seeTask";
     }
 
 

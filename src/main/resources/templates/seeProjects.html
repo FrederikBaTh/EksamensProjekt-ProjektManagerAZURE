@@ -18,6 +18,8 @@
         <a href="/addProject">Add Project</a>
         <a href="/usersList">User List</a>
         <a href="/myAccount">Account</a>
+        <a href="/invitedProjects" class="btn">Show Invited Projects</a>
+        <a href="/invites" class="btn">Invites</a>
     </div>
     <div class="topnav-right">
         <a href="/logout">Logout</a>
@@ -34,25 +36,26 @@
     </thead>
     <tbody>
     <!-- Iterate over projects and display them -->
-    <tr th:each="project : ${projects}">
-        <td>
-            <a th:href="@{/subprojects/{id}(id=${project.project_id})}" th:text="${project.projectName}">Project Name</a>
-        </td>
-        <td th:text="${project.startDate != null ? #temporals.format(project.startDate, 'dd-MM-yyyy') : 'Start Date Not Provided'}"></td>
-        <td th:text="${project.projectDeadline != null ? #temporals.format(project.projectDeadline, 'dd-MM-yyyy') : 'Deadline Not Provided'}"></td>
-        <td>
-            <!-- Update button for each project -->
-            <form th:action="@{/updateProject/{id}(id=${project.project_id})}" method="get">
-                <button type="submit" class="btn">Update</button>
-            </form>
-            <!-- Delete button for each project -->
-            <form action="/deleteProject" method="post">
-                <input type="hidden" name="id" th:value="${project.project_id}" />
-                <button type="submit" class="btn">Delete Project</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <li th:each="project : ${projects}">
+        <a th:href="@{/subprojects/{id}(id=${project.project_id})}">
+            <span th:text="${project.projectName}"></span> -
+            <span th:if="${project.startDate != null}" th:text="${#temporals.format(project.startDate, 'dd-MM-yyyy')}"></span>
+            <span th:unless="${project.startDate != null}">Start Date Not Provided</span>
+            to
+            <span th:if="${project.projectDeadline != null}" th:text="${#temporals.format(project.projectDeadline, 'dd-MM-yyyy')}"></span>
+            <span th:unless="${project.projectDeadline != null}">Deadline Not Provided</span>
+        </a>
+        <!-- Update button for each project -->
+        <form th:action="@{/updateProject/{id}(id=${project.project_id})}" method="get">
+            <button type="submit" class="btn">Update</button>
+        </form>
+        <!-- Delete button for each project -->
+        <form action="/deleteProject" method="post">
+            <input type="hidden" name="id" th:value="${project.project_id}" />
+            <button type="submit">Delete Project</button>
+        </form>
+    </li>
+</ul>
+<a href="/logout" class="btn">Logout</a> <!-- Logout link -->
 </body>
 </html>

@@ -1,11 +1,15 @@
 package com.example.eksamensprojektprojektmanager.repository;
 
+import com.example.eksamensprojektprojektmanager.model.InvitationStatus;
 import com.example.eksamensprojektprojektmanager.model.Project;
+import com.example.eksamensprojektprojektmanager.model.ProjectInvitation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -57,7 +61,7 @@ public class ProjectRepository {
     }
 
 
-    public List<Project> getProjectsByUserId(int userId) {
+    public List<Project> getProjectsByUserId(Long userId) {
         String query = "SELECT * FROM projects WHERE user_id = ?";
         return jdbcTemplate.query(query, (resultSet, rowNum) -> {
             Project project = new Project();
@@ -93,6 +97,19 @@ public class ProjectRepository {
         });
     }
 
+    public List<Project> getProjectsByProjectIds(List<Long> projectIds) {
+        List<Project> projects = new ArrayList<>();
+        for (Long projectId : projectIds) {
+            Project project = getProjectById(projectId);
+            if (project != null) {
+                projects.add(project);
+            }
+        }
+        return projects;
+    }
+
+
+
     public boolean deleteProjectById(Long projectId) {
         try {
             taskRepository.deleteTaskById(projectId);
@@ -108,6 +125,10 @@ public class ProjectRepository {
         }
         return false;
     }
+
+
+
+
 
 
 }

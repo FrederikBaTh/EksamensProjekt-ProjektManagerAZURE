@@ -2,6 +2,7 @@ package com.example.eksamensprojektprojektmanager.controller;
 
 import com.example.eksamensprojektprojektmanager.model.Project;
 import com.example.eksamensprojektprojektmanager.model.Task;
+import com.example.eksamensprojektprojektmanager.service.ProjectInvitationService;
 import com.example.eksamensprojektprojektmanager.service.ProjectService;
 import com.example.eksamensprojektprojektmanager.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +29,8 @@ public class ProjectController {
     public ProjectService projectService;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private ProjectInvitationService projectInvitationService;
 
 
     @GetMapping("/seeProjects")
@@ -37,7 +40,7 @@ public class ProjectController {
             return "redirect:/login";
         }
 
-        int userId = Integer.parseInt(userIdString);
+        Long userId = Long.parseLong(userIdString);
 
         List<Project> userProjects = projectService.getProjectsByUserId(userId);
 
@@ -185,6 +188,54 @@ public class ProjectController {
 
         return "redirect:/login";
     }
+
+    //-------------------------------------------invited---------------------------------------------------------------
+
+
+
+
+    @PostMapping("/inviteUserToProject")
+    public String inviteUserToProject(@RequestParam("projectId") long projectId,
+                                      @RequestParam("senderUserId") long senderUserId,
+                                      @RequestParam("receiverUserId") long receiverUserId,
+                                      RedirectAttributes redirectAttributes) {
+        try {
+            projectInvitationService.inviteUserToProject(projectId, senderUserId, receiverUserId);
+            redirectAttributes.addFlashAttribute("successMessage", "User invited to project successfully.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error while inviting user to project.");
+        }
+        return "redirect:/seeProjects";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

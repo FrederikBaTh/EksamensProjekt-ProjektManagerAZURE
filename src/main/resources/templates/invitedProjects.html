@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invited Projects</title>
+</head>
+<body>
+<h1>Invited Projects</h1>
+<ul>
+    <li th:each="project : ${invitedProjects}">
+        <p th:text="${project.projectName}"></p>
+        <!-- Display other project details as needed -->
+        <a th:href="@{/subprojects/{id}(id=${project.project_id})}">View Details</a>
+    </li>
+</ul>
+</body>
+</html>

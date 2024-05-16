@@ -39,7 +39,7 @@ public class ProjectService {
         }
     }
 
-    public List<Project> getProjectsByUserId(int userId) {
+    public List<Project> getProjectsByUserId(Long userId) {
         List<Project> projects = projectRepository.getProjectsByUserId(userId);
         return projects;
     }
@@ -63,10 +63,17 @@ public class ProjectService {
         return projectRepository.getProjectById(projectId);
     }
 
+    public List<Project> getProjectsByProjectIds(List<Long> projectIds) {
+        return projectRepository.getProjectsByProjectIds(projectIds);
+    }
 
     public void deleteProjectById(Long project_id) {
         projectRepository.deleteProjectById(project_id);
     }
+
+
+
+
 
 
 
