@@ -3,7 +3,6 @@ package com.example.eksamensprojektprojektmanager.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,7 +34,7 @@ public class Task {
     private String status;
 
 
-    public Task(String name, String description, LocalDateTime date, LocalDateTime deadline) {
+    public Task(String name, String description, LocalDateTime date, LocalDateTime deadline, String status) {
         this.name = name;
         this.description = description;
         this.date = date;

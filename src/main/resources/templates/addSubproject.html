@@ -28,7 +28,7 @@
         </div>
         <div>
             <label for="subprojectname">Subproject Name:</label><br>
-            <input type="text" id="subprojectname" name="subprojectname" th:value="${subproject != null ? subproject.subproject_name : ''}" required>
+            <input type="text" id="subprojectname" name="subprojectname" th:value="${subproject != null ? subproject.subprojectname : ''}" required>
         </div>
         <div>
             <label for="description">Description:</label><br>
@@ -47,28 +47,7 @@
     </form>
 
     <!-- Update Subproject Form -->
-    <div th:if="${subproject != null}">
-        <form th:action="@{/updateSubproject/{id}(id=${subproject.subproject_id})}" method="post">
-            <div>
-                <label for="subprojectname">Subproject Name:</label><br>
-                <input type="text" id="updatesubprojectname" name="subprojectname" required>
-            </div>
-            <div>
-                <label for="description">Description:</label><br>
-                <input type="text" id="updatedescription" name="description" required>
-            </div>
-            <div>
-                <label for="startDate">Start Date:</label><br>
-                <input type="date" id="updatestartDate" name="startDate" required>
-            </div>
-            <div>
-                <label for="deadline">Deadline:</label><br>
-                <input type="date" id="updatedeadline" name="deadline">
-            </div>
-            <br>
-            <button type="submit">Update Subproject</button>
-        </form>
-    </div>
+
 </div>
 </body>
 </html>

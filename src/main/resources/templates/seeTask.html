@@ -38,7 +38,7 @@
         <td th:text="${#temporals.format(task.date, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#temporals.format(task.deadline, 'yyyy-MM-dd HH:mm')}"></td>
         <td>
-            <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="post">
+            <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="get">
                 <button type="submit" class="btn">Update Task</button>
             </form>
 
@@ -49,8 +49,9 @@
                 <select name="status">
                     <option value="Backlog">Backlog</option>
                     <option value="Sprint backlog">Sprint backlog</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Done">Done</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="In Review">In Review</option>
+                    <option value="Completed">Completed</option>
                 </select>
                 <button type="submit">Update task status</button>
             </form>
