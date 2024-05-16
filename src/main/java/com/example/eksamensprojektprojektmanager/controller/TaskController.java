@@ -124,20 +124,15 @@ public class TaskController {
         return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
     }
 
-    @PostMapping("/tasks/{taskId}")
+    @PostMapping("/updateTaskStatus/{taskId}")
     public String updateTaskStatus(@PathVariable Long taskId, @RequestParam("status") String status, RedirectAttributes redirectAttributes) {
-        Task task = null;
-        try {
-            task = taskService.getTaskById(taskId);
-            if (task == null) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
-                return "redirect:/task";
-            }
-            taskService.updateTaskStatus(taskId, status);
-            redirectAttributes.addFlashAttribute("successMessage", "Task status updated successfully.");
-        } catch (DataAccessException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error updating task status.");
+        Task task = taskService.getTaskById(taskId);
+        if (task == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
+            return "redirect:/tasks";
         }
+        taskService.updateTaskStatus(taskId, status);
+        redirectAttributes.addFlashAttribute("successMessage", "Task status updated successfully.");
         if (task.getProjectId() == null || task.getSubprojectId() == null) {
             return "redirect:/tasks";
         } else {
@@ -149,7 +144,7 @@ public class TaskController {
     public String showAllTasks(Model model) {
         List<Task> tasks = taskService.getAllTasks();
         model.addAttribute("tasks", tasks);
-        return "task";
+        return "seeTask"; // Changed from "task" to "seeTask"
     }
 
 

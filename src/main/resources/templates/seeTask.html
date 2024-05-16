@@ -27,6 +27,21 @@
         <td>
             <!-- Update Task Button -->
             <a th:href="@{/updateTask/{id}(id=${task.task_id})}" class="btn">Update</a>
+
+
+            <!-- Update Task Status Button -->
+            <form th:action="@{/updateTaskStatus/{taskId}(taskId=${task.task_id})}" method="post">
+                <!-- Status Dropdown -->
+                <select name="status">
+                    <option value="Backlog">Backlog</option>
+                    <option value="Sprint backlog">Sprint backlog</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Done">Done</option>
+                </select>
+
+                <button type="submit">Update the task status</button>
+            </form>
+
             <!-- Delete Task Form -->
             <form th:action="@{/deleteTask/{projectId}/{taskId}/{subprojectId}(projectId=${projectId}, taskId=${task.task_id}, subprojectId=${subprojectId})}" method="post">
                 <button type="submit" class="btn">Delete</button>
