@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
-    <title>Add Project</title>
+    <link rel="stylesheet" href="/main.css">
+    <title>Tilføj Projekt</title>
 </head>
 <body>
 <header>
@@ -15,11 +15,13 @@
 </header>
 <nav class="topnav">
     <div class="topnav-left">
-        <a href="/usersList">User List</a>
-        <a href="/myAccount">Account</a>
+
+        <a href="/seeProjects">Tilbage til Projektoversigt</a>
+        <a href="/usersList">Bruger Liste</a>
+        <a href="/myAccount">Konto</a>
     </div>
     <div class="topnav-right">
-        <a href="/logout">Logout</a>
+        <a href="/logout">Logud</a>
     </div>
 </nav>
 <div class="project-container">
@@ -28,23 +30,23 @@
             <input type="hidden" th:if="${project != null}" th:value="${project.project_id}" name="projectId">
         </div>
         <div>
-            <label for="projectName">Project Name:</label><br>
+            <label for="projectName">Projekt Navn:</label><br>
             <input type="text" id="projectName" name="projectName" required>
         </div>
         <div>
-            <label for="startDate">Start Date:</label><br>
+            <label for="startDate">Start Dato:</label><br>
             <input type="date" id="startDate" name="startDate" required>
         </div>
         <div>
-            <label for="projectDeadline">Project Deadline:</label><br>
+            <label for="projectDeadline">Projekt Deadline:</label><br>
             <input type="date" id="projectDeadline" name="projectDeadline">
         </div>
         <div>
-            <label for="projectStatus">Project Status:</label><br>
+            <label for="projectStatus">Projekt Status:</label><br>
             <input type="text" id="projectStatus" name="projectStatus">
         </div>
         <br>
-        <button type="submit">Add Project</button>
+        <button type="submit">Tilføj Projekt</button>
     </form>
 </div>
 </body>

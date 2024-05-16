@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Account</title>
+    <title>Rediger Konto</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,17 +48,17 @@
 </head>
 <body>
 <div class="container">
-    <h1>Edit Account</h1>
+    <h1>Rediger Konto</h1>
     <form action="/editUser" method="post">
         <input type="hidden" name="userId" th:value="${user.user_id}"/>
         <input type="hidden" name="username" th:value="${user.username}"/> <!-- Hidden field for username -->
-        <label for="name">Name:</label>
+        <label for="name">Navn:</label>
         <input type="text" id="name" name="name" th:value="${user.name}"/>
-        <label for="company">Company:</label>
+        <label for="company">Virksomhed:</label>
         <input type="text" id="company" name="company" th:value="${user.company}"/>
-        <label for="jobTitle">Job Title:</label>
+        <label for="jobTitle">Job Titel:</label>
         <input type="text" id="jobTitle" name="jobTitle" th:value="${user.jobTitle}"/>
-        <label for="description">Description:</label>
+        <label for="description">Beskrivelse:</label>
         <input type="text" id="description" name="description" th:value="${user.description}"/>
         <input type="submit" value="Save Changes"/>
     </form>

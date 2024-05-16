@@ -18,7 +18,7 @@
 <div class="register-container">
     <form id="register-form" action="/register" method="post">
         <div class="input-group">
-            <label for="username">Username:</label>
+            <label for="username">Brugernavn:</label>
             <input type="text" id="username" name="username" required>
         </div>
         <div class="input-group">
@@ -29,10 +29,10 @@
             <label for="isAdmin">Admin:</label>
             <input type="checkbox" id="isAdmin" name="isAdmin">
         </div>
-        <button type="submit">Register</button>
+        <button type="submit">Registrer</button>
     </form>
     <form th:action="@{/login}" method="get">
-        <p>Already have an account? <button type="submit">Login</button></p>
+        <p>Har du allerede en konto? <button type="submit">Login</button></p>
     </form>
 </div>
 </body>

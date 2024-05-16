@@ -24,19 +24,19 @@
 <table>
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Company</th>
-        <th>Job Title</th>
-        <th>Action</th>
+        <th>Navn</th>
+        <th>Brugernavn</th>
+        <th>Virksomhed</th>
+        <th>Job Titel</th>
+        <th>Handlinger</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-        <td th:text="${user.name}">Name</td>
-        <td th:text="${user.username}">Username</td>
-        <td th:text="${user.company}">Company</td>
-        <td th:text="${user.jobTitle}">Job Title</td>
+        <td th:text="${user.name}">Navn</td>
+        <td th:text="${user.username}">Brugernavn</td>
+        <td th:text="${user.company}">Virksomhed</td>
+        <td th:text="${user.jobTitle}">Job Titel</td>
         <td>
             <form action="/inviteUserToProject" method="post">
                 <input type="hidden" name="receiverUserId" th:value="${user.user_id}" />

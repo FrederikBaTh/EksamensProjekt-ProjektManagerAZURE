@@ -44,35 +44,35 @@
 </head>
 <body>
 <div class="container">
-    <h1>My Account</h1>
+    <h1>Min Konto</h1>
     <table>
         <tr>
-            <th>Attribute</th>
-            <th>Value</th>
+            <th>Attribut</th>
+            <th>Værdi</th>
         </tr>
         <tr>
-            <td>Name</td>
+            <td>Navn</td>
             <td th:text="${user.name}"></td>
         </tr>
         <tr>
-            <td>Username</td>
+            <td>Brugernavn</td>
             <td th:text="${user.username}"></td>
         </tr>
         <tr>
-            <td>Company</td>
+            <td>Virksomhed</td>
             <td th:text="${user.company}"></td>
         </tr>
         <tr>
-            <td>Job Title</td>
+            <td>Job Titel</td>
             <td th:text="${user.jobTitle}"></td>
         </tr>
         <tr>
-            <td>Description</td>
+            <td>Beskrivelse</td>
             <td th:text="${user.description}"></td>
         </tr>
     </table>
     <div class="edit-button">
-        <a href="/editAccount" class="button">Edit</a>
+        <a href="/editAccount" class="button">Rediger</a>
     </div>
 </div>
 </body>
