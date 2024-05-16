@@ -1,39 +1,67 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
     <title>Subprojects</title>
 </head>
 <body>
-<h1>Subprojects</h1>
-<ul>
-    <a th:href="@{/addSubproject/{projectId}(projectId=${projectId})}" class="btn">Add Subproject</a>
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>Subprojects</h1>
+        <p>Subproject overview</p>
+    </div>
+</header>
+<nav class="topnav">
+    <div class="topnav-left">
+        <a th:href="@{/addSubproject/{projectId}(projectId=${projectId})}" class="btn">Add Subproject</a>
+    </div>
+    <div class="topnav-right">
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+<table>
+    <thead>
+    <tr>
+        <th>Subproject Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over subprojects and display them -->
+    <tr th:each="subproject : ${subprojects}">
+        <td>
+            <form th:action="@{'/tasks/' + ${projectId} + '/' + ${subproject.subproject_id}}" method="get">
+                <button type="submit" th:text="${subproject.subprojectname}" class="btn"></button>
+            </form>
+        </td>
+        <td>
+            <!-- Update button for each subproject -->
+            <form th:action="@{/updateSubproject/{id}(id=${subproject.subproject_id})}" method="get">
+                <button type="submit" class="btn">Update</button>
+            </form>
+            <!-- Delete button for each subproject -->
+            <form th:action="@{/deleteSubproject/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subproject.subproject_id})}" method="post">
+                <button type="submit" class="btn">Delete</button>
+            </form>
+            <form th:action="@{/assignUserToSubproject}" method="post">
+                <select name="userId">
+                    <option th:each="user : ${users}" th:value="${user.user_id}" th:text="${user.username}"></option>
+                </select>
+                <input type="hidden" name="subprojectId" th:value="${subproject.subproject_id}">
+                <button type="submit">Assign User</button>
+            </form>
+            <p th:if="${subprojectAssignedUsers[subproject.subproject_id] != null and !subprojectAssignedUsers[subproject.subproject_id].isEmpty()}">
+                Assigned Users:
+            <ul>
+                <li th:each="user : ${subprojectAssignedUsers[subproject.subproject_id]}" th:text="${user.username}"></li>
+            </ul>
 
-    <li th:each="subproject : ${subprojects}">
-        <form th:action="@{'/tasks/' + ${projectId} + '/' + ${subproject.subproject_id}}" method="get">
-            <button type="submit" th:text="${subproject.subprojectname}"></button>
-        </form>
-        <form th:action="@{/updateSubproject/{id}(id=${subproject.subproject_id})}" method="get">
-            <button type="submit">Update</button>
-        </form>
-        <form th:action="@{/deleteSubproject/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subproject.subproject_id})}" method="post">
-            <button type="submit">Delete</button>
-        </form>
-
-
-        <form th:action="@{/assignUserToSubproject}" method="post">
-            <select name="userId">
-                <option th:each="user : ${users}" th:value="${user.user_id}" th:text="${user.username}"></option>
-            </select>
-            <input type="hidden" name="subprojectId" th:value="${subproject.subproject_id}">
-            <button type="submit">Assign User</button>
-        </form>
-        <p th:if="${subprojectAssignedUsers[subproject.subproject_id] != null and !subprojectAssignedUsers[subproject.subproject_id].isEmpty()}">
-            Assigned Users:
-        <ul>
-            <li th:each="user : ${subprojectAssignedUsers[subproject.subproject_id]}" th:text="${user.username}"></li>
-        </ul>
-
-    </li>
-</ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

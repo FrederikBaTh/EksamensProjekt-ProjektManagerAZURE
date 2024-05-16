@@ -1,3 +1,4 @@
+/* Merged CSS from first HTML */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,17 +7,26 @@ body {
 }
 
 .container-fluid {
-    padding: 20px;
+    padding: 10px;
 }
 
 .login-container,
-.register-container {
+.register-container,
+.project-container {
     max-width: 220px;
     margin: auto;
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 15px;
+}
+
+input[type="date"] {
+    width: 89%;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
 }
 
 input[type="text"],
@@ -24,19 +34,19 @@ input[type="password"],
 button[type="submit"] {
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
     border-radius: 5px;
+    margin-top: 10px;
     border: 1px solid #ccc;
 }
 
 button[type="submit"] {
-    background-color: #007bff;
+    background-color: #708090;
     color: white;
     cursor: pointer;
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #708090;
 }
 
 input:focus,
@@ -44,14 +54,10 @@ button:focus {
     outline: none;
 }
 
-.text-center {
-    text-align: center;
-}
-
 label {
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: -8px;
 }
 
 input[type="text"],
@@ -65,13 +71,13 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border-color: #007bff;
+    border-color: #708090;
 }
 
 button[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #708090;
     color: #fff;
     border: none;
     border-radius: 3px;
@@ -81,4 +87,72 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+header {
+    margin-bottom: 0px;
+}
+
+header .container-fluid {
+    padding: 20px;
+    background-color: #778899;
+    color: #fff;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 0px;
+    font-size: 2.5rem;
+}
+
+header p {
+    font-size: 1.25rem;
+}
+
+/* Top navigation style */
+.topnav {
+    overflow: hidden;
+    background-color: #708090;
+    margin-top: -10px; /* Adjusted */
+}
+
+.topnav-left {
+    float: left;
+}
+
+.topnav-right {
+    float: right;
+}
+
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Table style */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
 }
