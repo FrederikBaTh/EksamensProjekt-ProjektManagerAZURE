@@ -27,9 +27,9 @@ public class TaskRepository {
     }
 
     public void addTask(Task task, Long projectId, Long subprojectId) {
-        String insertQuery = "INSERT INTO tasks (project_id, subproject_id, name, description, date, deadline) VALUES (?, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO tasks (project_id, subproject_id, name, description, date, deadline, status) VALUES (?, ?, ?, ?, ?, ?,?)";
         int rowsInserted = jdbcTemplate.update(insertQuery, projectId, subprojectId,
-                task.getName(), task.getDescription(), task.getDate(), task.getDeadline());
+                task.getName(), task.getDescription(), task.getDate(), task.getDeadline(),task.getStatus());
     }
 
 
