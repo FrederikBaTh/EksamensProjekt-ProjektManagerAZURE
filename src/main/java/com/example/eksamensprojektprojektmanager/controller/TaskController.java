@@ -62,14 +62,12 @@ public class TaskController {
                           @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime taskDateTime,
                           @RequestParam("taskDeadline")
                           @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime taskDeadlineDateTime,
-                          @RequestParam("taskStatus") String status,
                           RedirectAttributes redirectAttributes) {
-
-        Task task = new Task(taskName, taskDescription, taskDateTime, taskDeadlineDateTime, status);
+        Task task = new Task(taskName, taskDescription, taskDateTime, taskDeadlineDateTime, "backlog");
         task.setProjectId(projectId);
         task.setSubprojectId(subprojectId);
-        task.setStatus("Backlog"); // replace "default status" with the actual default status you want to use
-        taskService.addTask(task, projectId,subprojectId);
+        task.setStatus("backlog"); // replace "default status" with the actual default status you want to use
+        taskService.addTask(task, projectId, subprojectId);
         redirectAttributes.addFlashAttribute("successMessage", "Task added successfully.");
         return "redirect:/tasks/" + projectId + "/" + subprojectId;
     }
