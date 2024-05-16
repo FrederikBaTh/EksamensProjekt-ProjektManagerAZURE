@@ -66,7 +66,8 @@ public class TaskController {
 
         Task task = new Task(taskName, taskDescription, taskDateTime, taskDeadlineDateTime);
         task.setProjectId(projectId);
-        task.setProjectId(subprojectId);
+        task.setSubprojectId(subprojectId);
+        task.setStatus("default status"); // replace "default status" with the actual default status you want to use
         taskService.addTask(task, projectId,subprojectId);
         redirectAttributes.addFlashAttribute("successMessage", "Task added successfully.");
         return "redirect:/tasks/" + projectId + "/" + subprojectId;

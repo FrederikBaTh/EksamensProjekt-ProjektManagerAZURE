@@ -27,6 +27,7 @@
         <th>Subproject Name</th>
         <th>Description</th>
         <th>Actions</th>
+        <th>User Assignment</th>
     </tr>
     </thead>
     <tbody>
@@ -37,8 +38,11 @@
                 <button type="submit" th:text="${subproject.subprojectname}" class="btn"></button>
             </form>
         </td>
+
+        <td th:text="${subproject.description}"></td>
+
         <td>
-            <!-- Update button for each subproject -->
+    <!-- Update button for each subproject -->
             <form th:action="@{/updateSubproject/{id}(id=${subproject.subproject_id})}" method="get">
                 <button type="submit" class="btn">Update</button>
             </form>
@@ -46,6 +50,9 @@
             <form th:action="@{/deleteSubproject/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subproject.subproject_id})}" method="post">
                 <button type="submit" class="btn">Delete</button>
             </form>
+
+        </td>
+        <td>
             <form th:action="@{/assignUserToSubproject}" method="post">
                 <select name="userId">
                     <option th:each="user : ${users}" th:value="${user.user_id}" th:text="${user.username}"></option>
@@ -58,8 +65,8 @@
             <ul>
                 <li th:each="user : ${subprojectAssignedUsers[subproject.subproject_id]}" th:text="${user.username}"></li>
             </ul>
-
         </td>
+
     </tr>
     </tbody>
 </table>

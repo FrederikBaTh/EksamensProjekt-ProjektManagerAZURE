@@ -1,13 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
     <title>Task List</title>
 </head>
 <body>
-<h1>Task List</h1>
-<!-- Display a table to show the list of tasks -->
-<table border="1">
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>Task List</h1>
+        <p>Task overview</p>
+    </div>
+</header>
+<nav class="topnav">
+    <div class="topnav-left">
+        <a th:href="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" class="btn">Add Task</a>
+    </div>
+    <div class="topnav-right">
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+<table>
     <thead>
     <tr>
         <th>Task Name</th>
@@ -18,31 +32,30 @@
     </tr>
     </thead>
     <tbody>
-    <!-- Iterate over tasks and display each task -->
     <tr th:each="task : ${tasks}">
         <td th:text="${task.name}"></td>
         <td th:text="${task.description}"></td>
         <td th:text="${#temporals.format(task.date, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#temporals.format(task.deadline, 'yyyy-MM-dd HH:mm')}"></td>
         <td>
-            <!-- Update Task Button -->
-            <a th:href="@{/updateTask/{id}(id=${task.task_id})}" class="btn">Update</a>
+            <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="post">
+                <button type="submit" class="btn">Update Task</button>
+            </form>
 
 
-            <!-- Update Task Status Button -->
+
+
             <form th:action="@{/updateTaskStatus/{taskId}(taskId=${task.task_id})}" method="post">
-                <!-- Status Dropdown -->
                 <select name="status">
                     <option value="Backlog">Backlog</option>
                     <option value="Sprint backlog">Sprint backlog</option>
                     <option value="Pending">Pending</option>
                     <option value="Done">Done</option>
                 </select>
-
-                <button type="submit">Update the task status</button>
+                <button type="submit">Update task status</button>
             </form>
 
-            <!-- Delete Task Form -->
+
             <form th:action="@{/deleteTask/{projectId}/{taskId}/{subprojectId}(projectId=${projectId}, taskId=${task.task_id}, subprojectId=${subprojectId})}" method="post">
                 <button type="submit" class="btn">Delete</button>
             </form>
@@ -50,9 +63,5 @@
     </tr>
     </tbody>
 </table>
-<!-- Add a button to redirect to the addTask page -->
-<a th:href="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" class="btn">Add Task</a>
-
-<p th:if="${noTasksMessage}" th:text="${noTasksMessage}"></p>
 </body>
 </html>

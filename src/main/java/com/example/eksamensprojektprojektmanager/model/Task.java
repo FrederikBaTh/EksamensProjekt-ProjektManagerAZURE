@@ -31,6 +31,10 @@ public class Task {
     @Column(nullable = false)
     private LocalDateTime deadline;
 
+    @Column(nullable = false)
+    private String status;
+
+
     public Task(String name, String description, LocalDateTime date, LocalDateTime deadline) {
         this.name = name;
         this.description = description;
@@ -69,6 +73,10 @@ public class Task {
     public Long getSubprojectId() {
         return subprojectId;
     }
+    public String getStatus() {
+        return status;
+    }
+
     //Setters
     public void setTask_id(Long id) {
         this.task_id = id;
@@ -96,11 +104,18 @@ public class Task {
     public void setSubprojectId(Long subprojectId) {
         this.subprojectId = subprojectId;
     }
-    public Task(String name, String description, LocalDateTime date, LocalDateTime deadline, Long projectId) {
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+    public Task(String name, String description, LocalDateTime date, LocalDateTime deadline, Long projectId, Long subprojectId, String status) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.deadline = deadline;
         this.projectId = projectId;
+        this.subprojectId = subprojectId;
+        this.status = status;
     }
 }

@@ -2,43 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
     <title>Add Task</title>
 </head>
 <body>
-<h1 th:text="${task != null ? 'Update Task' : 'Add Task'}"></h1>
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1 th:text="${task != null ? 'Update Task' : 'Add Task'}"></h1>
+        <p>Create a task here</p>
+    </div>
+</header>
+<nav class="topnav">
+    <div class="topnav-left">
+        <a href="/usersList">User List</a>
+        <a href="/myAccount">Account</a>
+    </div>
+    <div class="topnav-right">
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
 
-<!-- Add Task Form -->
-<div th:if="${task == null}">
-    <form th:action="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" method="post">
-        <input type="hidden" name="projectId" th:value="${projectId}">
-        <label for="taskName">Task Name:</label>
-        <input type="text" id="taskName" name="taskName" required><br>
-        <label for="taskDescription">Description:</label>
-        <textarea id="taskDescription" name="taskDescription"></textarea><br>
-        <label for="taskDate">Date:</label>
-        <input type="datetime-local" id="taskDate" name="taskDate" required><br>
-        <label for="taskDeadline">Deadline:</label>
-        <input type="datetime-local" id="taskDeadline" name="taskDeadline" required><br>
-        <input type="submit" value="Add Task">
-    </form>
+<div class="project-container">
+    <!-- Add Task Form -->
+    <div th:if="${task == null}">
+        <form th:action="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" method="post">
+            <input type="hidden" name="projectId" th:value="${projectId}">
+            <input type="hidden" name="subprojectId" th:value="${subprojectId}">
+            <div>
+                <label for="taskName">Task Name:</label><br>
+                <input type="text" id="taskName" name="taskName" required>
+            </div>
+            <div>
+                <label for="taskDescription">Description:</label><br>
+                <textarea id="taskDescription" name="taskDescription"></textarea>
+            </div>
+            <div>
+                <label for="taskDate">Date:</label><br>
+                <input type="datetime-local" id="taskDate" name="taskDate" required>
+            </div>
+            <div>
+                <label for="taskDeadline">Deadline:</label><br>
+                <input type="datetime-local" id="taskDeadline" name="taskDeadline" required>
+            </div>
+            <br>
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <!-- Update Task Form -->
+    <div th:if="${task != null}">
+        <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="post">
+            <input type="hidden" name="projectId" th:value="${projectId}">
+            <input type="hidden" name="subprojectId" th:value="${subprojectId}">
+            <div>
+                <label for="taskName">Task Name:</label><br>
+                <input type="text" id="updatename" name="name" required th:value="${task.name}">
+            </div>
+            <div>
+                <label for="taskDescription">Description:</label><br>
+                <textarea id="updatedescription" name="description" th:text="${task.description}"></textarea>
+            </div>
+            <div>
+                <label for="taskDate">Date:</label><br>
+                <input type="datetime-local" id="updatedate" name="date" required th:value="${task.date}">
+            </div>
+            <div>
+                <label for="taskDeadline">Deadline:</label><br>
+                <input type="datetime-local" id="updatedeadline" name="deadline" required th:value="${task.deadline}">
+            </div>
+            <br>
+            <button type="submit">Update Task</button>
+        </form>
+    </div>
 </div>
-
-<!-- Update Task Form -->
-<div th:if="${task != null}">
-    <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="post">
-        <input type="hidden" name="projectId" th:value="${projectId}">
-        <input type="hidden" name="subprojectId" th:value="${subprojectId}">
-        <label for="taskName">Task Name:</label>
-        <input type="text" id="updatename" name="name" required><br>
-        <label for="taskDescription">Description:</label>
-        <textarea id="updatedescription" name="description"></textarea><br>
-        <label for="taskDate">Date:</label>
-        <input type="datetime-local" id="updatedate" name="date" required><br>
-        <label for="taskDeadline">Deadline:</label>
-        <input type="datetime-local" id="updatedeadline" name="deadline" required><br>
-        <input type="submit" value="Update Task">
-    </form>
-</div>
-
-</body>
-</html>
