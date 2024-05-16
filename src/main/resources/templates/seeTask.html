@@ -9,26 +9,27 @@
 <body>
 <header>
     <div class="container-fluid p-5 bg-primary text-white text-center">
-        <h1>Task List</h1>
-        <p>Task overview</p>
+        <h1>Task Liste</h1>
+        <p>Task oversigt</p>
     </div>
 </header>
 <nav class="topnav">
     <div class="topnav-left">
-        <a th:href="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}" class="btn">Add Task</a>
+        <a th:href="@{/subprojects/{projectId}(projectId=${projectId})}">Tilbage til Subprojekter</a>
+        <a th:href="@{/addTask/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subprojectId})}">Add Task</a>
     </div>
     <div class="topnav-right">
-        <a href="/logout">Logout</a>
+        <a href="/logout">Logud</a>
     </div>
 </nav>
 <table>
     <thead>
     <tr>
-        <th>Task Name</th>
-        <th>Description</th>
-        <th>Date</th>
+        <th>Task Navn</th>
+        <th>Beskrivelse</th>
+        <th>Dato</th>
         <th>Deadline</th>
-        <th>Actions</th>
+        <th>Handlinger</th>
     </tr>
     </thead>
     <tbody>
@@ -39,7 +40,7 @@
         <td th:text="${#temporals.format(task.deadline, 'yyyy-MM-dd HH:mm')}"></td>
         <td>
             <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="get">
-                <button type="submit" class="btn">Update Task</button>
+                <button type="submit" class="btn">Opdater Task</button>
             </form>
 
 
@@ -49,16 +50,16 @@
                 <select name="status">
                     <option value="Backlog">Backlog</option>
                     <option value="Sprint backlog">Sprint backlog</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="In Review">In Review</option>
-                    <option value="Completed">Completed</option>
+                    <option value="In Progress">Igangværende</option>
+                    <option value="In Review">Reviewes</option>
+                    <option value="Completed">Fuldendt</option>
                 </select>
-                <button type="submit">Update task status</button>
+                <button type="submit">Opdater task status</button>
             </form>
 
 
-            <form th:action="@{/deleteTask/{projectId}/{taskId}/{subprojectId}(projectId=${projectId}, taskId=${task.task_id}, subprojectId=${subprojectId})}" method="post">
-                <button type="submit" class="btn">Delete</button>
+            <form th:action="@{/deleteTask/{projectId}/{taskId}/{subprojectId}(projectId=${projectId}, taskId=${task.task_id}, subprojectId=${subprojectId})}" method="post" onsubmit="return confirm('Er du sikker på, at du vil slette denne opgave?');">
+                <button type="submit" class="btn">Slet</button>
             </form>
         </td>
     </tr>

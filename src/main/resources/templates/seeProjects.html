@@ -15,42 +15,42 @@
 </header>
 <nav class="topnav">
     <div class="topnav-left">
-        <a href="/addProject">Add Project</a>
-        <a href="/usersList">User List</a>
-        <a href="/myAccount">Account</a>
-        <a href="/invitedProjects" >Show Invited Projects</a>
-        <a href="/invites" >Invites</a>
+        <a href="/addProject">Tilføj Projekt</a>
+        <a href="/usersList">Bruger Liste</a>
+        <a href="/myAccount">Konto</a>
+        <a href="/invitedProjects" >Vis Inviterede Projekter</a>
+        <a href="/invites" >Invitationer</a>
     </div>
     <div class="topnav-right">
-        <a href="/logout">Logout</a>
+        <a href="/logout">Logud</a>
     </div>
 </nav>
 <table>
     <thead>
     <tr>
-        <th>Project Name</th>
-        <th>Start Date</th>
+        <th>Project Navn</th>
+        <th>Start Dato</th>
         <th>Deadline</th>
-        <th>Actions</th>
+        <th>Handlinger</th>
     </tr>
     </thead>
     <tbody>
     <!-- Iterate over projects and display them -->
     <tr th:each="project : ${projects}">
         <td>
-            <a th:href="@{/subprojects/{id}(id=${project.project_id})}" th:text="${project.projectName}">Project Name</a>
+            <a th:href="@{/subprojects/{id}(id=${project.project_id})}" th:text="${project.projectName}">Project Navn</a>
         </td>
         <td th:text="${project.startDate != null ? #temporals.format(project.startDate, 'dd-MM-yyyy') : 'Start Date Not Provided'}"></td>
         <td th:text="${project.projectDeadline != null ? #temporals.format(project.projectDeadline, 'dd-MM-yyyy') : 'Deadline Not Provided'}"></td>
         <td>
             <!-- Update button for each project -->
             <form th:action="@{/updateProject/{id}(id=${project.project_id})}" method="get">
-                <button type="submit" class="btn">Update</button>
+                <button type="submit" class="btn">Opdater</button>
             </form>
             <!-- Delete button for each project -->
-            <form action="/deleteProject" method="post">
+            <form action="/deleteProject" method="post" onsubmit="return confirm('Er du sikker på, at du vil slette dette projekt?');">
                 <input type="hidden" name="id" th:value="${project.project_id}" />
-                <button type="submit" class="btn">Delete Project</button>
+                <button type="submit" class="btn">Slet Projekt</button>
             </form>
         </td>
     </tr>

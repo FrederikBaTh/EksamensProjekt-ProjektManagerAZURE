@@ -91,8 +91,10 @@ public class SubprojectController {
     public String showUpdateForm(@PathVariable("id") Long subprojectId, Model model) {
         logger.info("Subproject ID: " + subprojectId);
         Subproject subproject = subprojectService.getSubprojectById(subprojectId);
+        Long projectId = subproject.getProject_id();
 
         model.addAttribute("subproject", subproject);
+        model.addAttribute("projectId", projectId);
 
         return "addSubproject";
     }

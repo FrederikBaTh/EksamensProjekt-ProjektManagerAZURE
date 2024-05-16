@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/main.css">
-    <title>Add Subproject</title>
+    <title>Tilføj Subprojekt</title>
 </head>
 <body>
 <header>
@@ -15,11 +15,12 @@
 </header>
 <nav class="topnav">
     <div class="topnav-left">
-        <a href="/usersList">User List</a>
-        <a href="/myAccount">Account</a>
+        <a th:href="@{/subprojects/{projectId}(projectId=${projectId})}">Tilbage til Subprojekter</a>
+        <a href="/usersList">Bruger Liste</a>
+        <a href="/myAccount">Konto</a>
     </div>
     <div class="topnav-right">
-        <a href="/logout">Logout</a>
+        <a href="/logout">Logud</a>
     </div>
 </nav>
 <div class="project-container">
@@ -28,15 +29,15 @@
             <input type="hidden" th:value="${subproject.subproject_id}" name="id">
         </div>
         <div>
-            <label for="subprojectname">Subproject Name:</label><br>
+            <label for="subprojectname">Subprojekt Navn:</label><br>
             <input type="text" id="subprojectname" name="subprojectname" th:value="${subproject != null ? subproject.subprojectname : ''}" required>
         </div>
         <div>
-            <label for="description">Description:</label><br>
+            <label for="description">Beskrivelse:</label><br>
             <input type="text" id="description" name="description" th:value="${subproject != null ? subproject.description : ''}" required>
         </div>
         <div>
-            <label for="startDate">Start Date:</label><br>
+            <label for="startDate">Start Dato:</label><br>
             <input type="date" id="startDate" name="startDate" th:value="${subproject != null ? subproject.startDate : ''}" required>
         </div>
         <div>
