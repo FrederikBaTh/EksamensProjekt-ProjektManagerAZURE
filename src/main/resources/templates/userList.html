@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
     <title>User List</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
-<h1>User List</h1>
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>Bruger Liste</h1>
+        <p>Se brugere her!</p>
+    </div>
+</header>
+<nav class="topnav">
+    <div class="topnav-left">
+        <a href="/seeProjects">Tilbage til Projekter</a>
+        <a href="/myAccount">Konto</a>
+    </div>
+    <div class="topnav-right">
+        <a href="/logout">Logud</a>
+    </div>
+</nav>
 <table>
     <thead>
     <tr>
@@ -50,5 +51,6 @@
     </tr>
     </tbody>
 </table>
+</div>
 </body>
 </html>
