@@ -23,7 +23,8 @@
     </div>
 </nav>
 <div class="project-container">
-    <form th:action="${subproject != null ? '/updateSubproject/' + subproject.subproject_id : '/addSubproject/' + projectId}" method="post">        <div th:if="${subproject != null}">
+    <form th:action="${subproject != null ? '/updateSubproject/' + subproject.subproject_id : '/addSubproject/' + projectId}" method="post">
+        <div th:if="${subproject != null}">
             <input type="hidden" th:value="${subproject.subproject_id}" name="id">
         </div>
         <div>

@@ -74,6 +74,12 @@
     <div class="edit-button">
         <a href="/editAccount" class="button">Edit</a>
     </div>
+    <div class="delete-button">
+        <form action="/users/delete" method="post">
+            <input type="hidden" name="userId" th:value="${user.user_id}" />
+            <input type="submit" value="Delete Account" />
+        </form>
+    </div>
 </div>
 </body>
 </html>

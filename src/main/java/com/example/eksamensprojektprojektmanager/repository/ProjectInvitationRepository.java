@@ -58,4 +58,12 @@ public class ProjectInvitationRepository {
         return jdbcTemplate.queryForList(sql, new Object[]{projectId}, Long.class);
     }
 
+
+    public void deleteInvitationsForUser(Long userId) {
+        String sql = "DELETE FROM project_invitations WHERE receiver_user_id = ?";
+        jdbcTemplate.update(sql, userId);
+    }
+
+
+
 }

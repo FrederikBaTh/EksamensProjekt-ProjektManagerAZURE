@@ -66,7 +66,9 @@ public class AccountService {
         accountRepository.updateAccount(account);
     }
 
-
+    public void deleteUser(Long userId) {
+        accountRepository.deleteUser(userId);
+    }
 
 }
 

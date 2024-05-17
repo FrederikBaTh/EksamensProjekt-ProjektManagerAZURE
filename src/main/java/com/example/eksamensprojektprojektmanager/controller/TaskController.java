@@ -139,13 +139,13 @@ public class TaskController {
             return "redirect:/tasks/" + task.getProjectId() + "/" + task.getSubprojectId();
         }
     }
-
+/*
     @GetMapping("/tasks")
     public String showAllTasks(Model model) {
         List<Task> tasks = taskService.getAllTasks();
         model.addAttribute("tasks", tasks);
         return "seeTask"; // Changed from "task" to "seeTask"
     }
-
+*/
 
 }

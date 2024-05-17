@@ -165,10 +165,11 @@ public class AccountController {
     }
 
 
-
-
-
-
+    @PostMapping("/users/delete")
+    public String deleteUser(@RequestParam Long userId) {
+        accountService.deleteUser(userId);
+        return "redirect:/login";
+    }
 
 
 }

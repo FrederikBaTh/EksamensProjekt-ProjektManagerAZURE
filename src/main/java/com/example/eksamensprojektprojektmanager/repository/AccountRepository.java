@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public class AccountRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final ProjectInvitationRepository projectInvitationRepository;
+    private final UserSubprojectAssignmentRepository userSubprojectAssignmentRepository;
 
 
     @Value("${spring.datasource.url}")
@@ -21,8 +23,10 @@ public class AccountRepository {
     private String DATABASE_PASSWORD;
 
     @Autowired
-    public AccountRepository(JdbcTemplate jdbcTemplate) {
+    public AccountRepository(JdbcTemplate jdbcTemplate, ProjectInvitationRepository projectInvitationRepository, UserSubprojectAssignmentRepository userSubprojectAssignmentRepository) {
         this.jdbcTemplate = jdbcTemplate;
+        this.projectInvitationRepository = projectInvitationRepository;
+        this.userSubprojectAssignmentRepository = userSubprojectAssignmentRepository;
     }
 
     public boolean isValidUser(String username, String password) {
@@ -83,4 +87,16 @@ public class AccountRepository {
         String sql = "UPDATE users SET name = ?, company = ?, job_title = ?, description = ? WHERE user_id = ?";
         jdbcTemplate.update(sql, account.getName(), account.getCompany(), account.getJobTitle(), account.getDescription(), account.getUser_id());
     }
+
+    public void deleteUser(Long userId) {
+        projectInvitationRepository.deleteInvitationsForUser(userId);
+        userSubprojectAssignmentRepository.deleteUserAssignmentsSubprojects(userId);
+
+        String sql = "DELETE FROM users WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
+    }
+
+
+
+
 }

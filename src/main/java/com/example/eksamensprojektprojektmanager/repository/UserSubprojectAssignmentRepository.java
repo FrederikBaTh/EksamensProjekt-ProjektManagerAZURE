@@ -38,4 +38,9 @@ public class UserSubprojectAssignmentRepository {
             }
         });
     }
+    public void deleteUserAssignmentsSubprojects(Long userId) {
+        String sql = "DELETE FROM user_subproject_assignments WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
+    }
+
 }
