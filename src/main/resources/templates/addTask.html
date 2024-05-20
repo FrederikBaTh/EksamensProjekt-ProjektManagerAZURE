@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/main.css">
-    <title>Add Task</title>
+    <title>Tilføj Task</title>
 </head>
 <body>
 <header>
     <div class="container-fluid p-5 bg-primary text-white text-center">
         <h1 th:text="${task != null ? 'Update Task' : 'Add Task'}"></h1>
-        <p>Create a task here</p>
+        <p>Opret en task her!</p>
     </div>
 </header>
 <nav class="topnav">
     <div class="topnav-left">
-        <a href="/usersList">User List</a>
-        <a href="/myAccount">Account</a>
+        <a href="/usersList">Bruger Liste</a>
+        <a href="/myAccount">Konto</a>
     </div>
     <div class="topnav-right">
-        <a href="/logout">Logout</a>
+        <a href="/logout">Logud</a>
     </div>
 </nav>
 
@@ -30,15 +30,15 @@
             <input type="hidden" name="projectId" th:value="${projectId}">
             <input type="hidden" name="subprojectId" th:value="${subprojectId}">
             <div>
-                <label for="taskName">Task Name:</label><br>
+                <label for="taskName">Task Navn:</label><br>
                 <input type="text" id="taskName" name="taskName" required>
             </div>
             <div>
-                <label for="taskDescription">Description:</label><br>
+                <label for="taskDescription">Beskrivelse:</label><br>
                 <textarea id="taskDescription" name="taskDescription"></textarea>
             </div>
             <div>
-                <label for="taskDate">Date:</label><br>
+                <label for="taskDate">Dato:</label><br>
                 <input type="datetime-local" id="taskDate" name="taskDate" required>
             </div>
             <div>
@@ -47,7 +47,7 @@
             </div>
 
             <br>
-            <button type="submit">Add Task</button>
+            <button type="submit">Tilføj Task</button>
         </form>
     </div>
 
@@ -57,15 +57,15 @@
             <input type="hidden" name="projectId" th:value="${projectId}">
             <input type="hidden" name="subprojectId" th:value="${subprojectId}">
             <div>
-                <label for="taskName">Task Name:</label><br>
+                <label for="taskName">Task Navn:</label><br>
                 <input type="text" id="updatename" name="name" required th:value="${task.name}">
             </div>
             <div>
-                <label for="taskDescription">Description:</label><br>
+                <label for="taskDescription">Beskrivelse:</label><br>
                 <textarea id="updatedescription" name="description" th:text="${task.description}"></textarea>
             </div>
             <div>
-                <label for="taskDate">Date:</label><br>
+                <label for="taskDate">Dato:</label><br>
                 <input type="datetime-local" id="updatedate" name="date" required th:value="${task.date}">
             </div>
             <div>
@@ -73,7 +73,7 @@
                 <input type="datetime-local" id="updatedeadline" name="deadline" required th:value="${task.deadline}">
             </div>
             <br>
-            <button type="submit">Update Task</button>
+            <button type="submit">Opdater Task</button>
         </form>
     </div>
 </div>
