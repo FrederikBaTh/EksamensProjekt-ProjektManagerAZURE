@@ -3,9 +3,10 @@ package com.example.eksamensprojektprojektmanager.service;
 
 import com.example.eksamensprojektprojektmanager.model.Project;
 import com.example.eksamensprojektprojektmanager.repository.ProjectRepository;
+import com.example.eksamensprojektprojektmanager.repository.UserSubprojectAssignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.example.eksamensprojektprojektmanager.model.Role;
 import java.util.List;
 
 @Service
@@ -13,16 +14,20 @@ public class ProjectService {
 
     private ProjectRepository projectRepository;
 
+    private UserSubprojectAssignmentRepository userSubprojectAssignmentRepository;
+
     @Autowired
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository,UserSubprojectAssignmentRepository userSubprojectAssignmentRepository) {
         this.projectRepository = projectRepository;
+        this.userSubprojectAssignmentRepository = userSubprojectAssignmentRepository;
     }
+
 
 
 
     public Project addProject(Project project, String userIdString) {
         if (userIdString != null && !userIdString.isEmpty()) {
-            Long user_id = Long.parseLong(userIdString);;
+            Long user_id = Long.parseLong(userIdString);
             project.setUserId(user_id);
 
             if (project.getProjectName() == null || project.getProjectName().isEmpty() || project.getProjectName().length() > 100) {
@@ -33,7 +38,12 @@ public class ProjectService {
                 throw new IllegalStateException("Project with the same name already exists for this user.");
             }
 
-            return projectRepository.addProject(project);
+            Project createdProject = projectRepository.addProject(project);
+
+            // Assign the user who created the project an admin role
+            userSubprojectAssignmentRepository.assignUserRole(user_id, createdProject.getProject_id(), Role.ADMIN.name());
+
+            return createdProject;
         } else {
             throw new IllegalArgumentException("User ID is null or empty.");
         }

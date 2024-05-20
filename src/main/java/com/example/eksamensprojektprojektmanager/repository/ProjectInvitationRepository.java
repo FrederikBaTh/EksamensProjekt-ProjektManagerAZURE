@@ -25,8 +25,12 @@ public class ProjectInvitationRepository {
         invitation.setStatus(InvitationStatus.PENDING); // Assuming InvitationStatus is an enum
 
         // Save the invitation to the database
-        String insertQuery = "INSERT INTO project_invitations (project_id, sender_user_id, receiver_user_id, status) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(insertQuery, invitation.getProjectId(), invitation.getSenderUserId(), invitation.getReceiverUserId(), invitation.getStatus().toString());
+        String insertInvitationQuery = "INSERT INTO project_invitations (project_id, sender_user_id, receiver_user_id, status) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(insertInvitationQuery, invitation.getProjectId(), invitation.getSenderUserId(), invitation.getReceiverUserId(), invitation.getStatus().toString());
+
+        // Assign the viewer role to the invited user in the user_project_roles table
+        String insertRoleQuery = "INSERT INTO user_project_roles (user_id, project_id, role) VALUES (?, ?, 'viewer')";
+        jdbcTemplate.update(insertRoleQuery, receiverUserId, projectId);
     }
 
 

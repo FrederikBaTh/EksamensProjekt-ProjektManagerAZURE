@@ -6,6 +6,7 @@ import com.example.eksamensprojektprojektmanager.service.AccountService;
 import com.example.eksamensprojektprojektmanager.service.ProjectInvitationService;
 import com.example.eksamensprojektprojektmanager.service.SubprojectService;
 import com.example.eksamensprojektprojektmanager.service.UserSubprojectAssignmentService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +88,7 @@ public class SubprojectController {
         return "redirect:/subprojects/" + projectId;
     }
 
+
     @GetMapping("/updateSubproject/{id}")
     public String showUpdateForm(@PathVariable("id") Long subprojectId, Model model) {
         logger.info("Subproject ID: " + subprojectId);
@@ -96,7 +98,6 @@ public class SubprojectController {
 
         return "addSubproject";
     }
-
     @PostMapping("/updateSubproject/{id}")
     public String updateSubproject(@PathVariable("id") Long subprojectId,
                                    @ModelAttribute Subproject updatedSubproject,

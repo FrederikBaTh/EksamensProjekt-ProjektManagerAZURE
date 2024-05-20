@@ -25,6 +25,8 @@ public class SubprojectRepository {
 
     @Autowired
     public TaskRepository taskRepository;
+    @Autowired
+    private UserProjectRoleRepository userProjectRoleRepository;
 
     public SubprojectRepository() {
     }
@@ -106,7 +108,10 @@ public class SubprojectRepository {
         return null;
     }
 
-
+    public boolean userCanEditSubproject(Long userId, Long projectId) {
+        String role = userProjectRoleRepository.getRoleByUserIdAndProjectId(userId, projectId);
+        return role.equals("admin");
+    }
 
 
 }
