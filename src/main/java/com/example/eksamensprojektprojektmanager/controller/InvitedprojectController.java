@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -70,9 +72,36 @@ public class InvitedprojectController {
 
         return "invitedProjects"; // HTML page name for displaying invited projects
     }
+    @PostMapping("/acceptInvite")
+    public String acceptInvite(@RequestParam("inviteId") Long inviteId) {
+        // Assuming you have a method in your service to accept an invite
+        projectInvitationService.acceptInvite(inviteId);
+        projectInvitationService.deleteInvitationsForUser(inviteId);
+        return "redirect:/seeProjects"; // Redirect to projects page after accepting the invite
+    }
+
+    @PostMapping("/declineInvite")
+    public String declineInvite(@RequestParam("inviteId") Long inviteId) {
+        // Assuming you have a method in your service to decline an invite
+        projectInvitationService.declineInvite(inviteId);
+        return "redirect:/invites"; // Redirect to invites page after declining the invite
+    }
 
 
+    @PostMapping("/deleteInvitations")
+    public String deleteInvitations(HttpServletRequest request) {
+        String userIdString = (String) request.getSession().getAttribute("userId");
+        if (userIdString == null) {
+            return "redirect:/login";
+        }
 
+        long userId = Long.parseLong(userIdString);
+
+        // Assuming you have a method in your service to delete invitations for a user
+        projectInvitationService.deleteInvitationsForUser(userId);
+
+        return "redirect:/invites"; // Redirect to invites page after deleting the invitations
+    }
 
 
 

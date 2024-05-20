@@ -34,15 +34,20 @@ public class ProjectInvitationRepository {
     public void acceptInvite(Long inviteId) {
         String sql = "UPDATE project_invitations SET status = ? WHERE invitation_id = ?";
         jdbcTemplate.update(sql, "ACCEPTED", inviteId);
+        deleteInvitationsForUser(inviteId);
     }
 
+    public String getProjectNameByInviteId(Long inviteId) {
+        String sql = "SELECT projects.name FROM projects JOIN project_invitations ON projects.project_id = project_invitations.project_id WHERE invitation_id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{inviteId}, String.class);
+    }
 
     public List<Long> getAcceptedProjectIdsByUserId(Long userId) {
         String sql = "SELECT project_id FROM project_invitations WHERE receiver_user_id = ? AND status = 'ACCEPTED'";
         return jdbcTemplate.queryForList(sql, new Object[]{userId}, Long.class);
     }
     public List<ProjectInvitation> getInvitesByUserId(Long userId) {
-        String sql = "SELECT * FROM project_invitations WHERE receiver_user_id = ?";
+        String sql = "SELECT project_invitations.*, projects.name AS project_name, sender.username AS sender_user_name, receiver.username AS receiver_user_name FROM project_invitations JOIN projects ON project_invitations.project_id = projects.project_id JOIN users AS sender ON project_invitations.sender_user_id = sender.user_id JOIN users AS receiver ON project_invitations.receiver_user_id = receiver.user_id WHERE receiver_user_id = ?";
         return jdbcTemplate.query(sql, new Object[]{userId}, (resultSet, rowNum) -> {
             ProjectInvitation invitation = new ProjectInvitation();
             invitation.setInvitationId(resultSet.getLong("invitation_id"));
@@ -50,6 +55,9 @@ public class ProjectInvitationRepository {
             invitation.setSenderUserId(resultSet.getLong("sender_user_id"));
             invitation.setReceiverUserId(resultSet.getLong("receiver_user_id"));
             invitation.setStatus(InvitationStatus.valueOf(resultSet.getString("status").toUpperCase()));
+            invitation.setProjectName(resultSet.getString("project_name"));
+            invitation.setSenderUserName(resultSet.getString("sender_user_name"));
+            invitation.setReceiverUserName(resultSet.getString("receiver_user_name"));
             return invitation;
         });
     }
@@ -58,12 +66,17 @@ public class ProjectInvitationRepository {
         return jdbcTemplate.queryForList(sql, new Object[]{projectId}, Long.class);
     }
 
-
     public void deleteInvitationsForUser(Long userId) {
         String sql = "DELETE FROM project_invitations WHERE receiver_user_id = ?";
         jdbcTemplate.update(sql, userId);
     }
 
 
+    public void declineInvite(Long inviteId) {
+        String sql = "UPDATE project_invitations SET status = ? WHERE invitation_id = ?";
+        jdbcTemplate.update(sql, "DECLINED", inviteId);
+        deleteInvitationsForUser(inviteId);
+
+    }
 
 }

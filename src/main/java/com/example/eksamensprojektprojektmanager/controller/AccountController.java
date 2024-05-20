@@ -157,12 +157,7 @@ public class AccountController {
     }
 
 
-    @PostMapping("/acceptInvite")
-    public String acceptInvite(@RequestParam("inviteId") Long inviteId) {
-        // Assuming you have a method in your service to accept an invite
-        projectInvitationService.acceptInvite(inviteId);
-        return "redirect:/seeProjects"; // Redirect to projects page after accepting the invite
-    }
+
 
 
     @PostMapping("/users/delete")

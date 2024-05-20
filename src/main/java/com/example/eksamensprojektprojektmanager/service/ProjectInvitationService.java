@@ -41,7 +41,15 @@ public class ProjectInvitationService {
         return projectInvitationRepository.getAcceptedUserIdsByProjectId(projectId);
     }
 
+    public void declineInvite(Long inviteId){
+        projectInvitationRepository.declineInvite(inviteId);
+    }
 
+
+
+    public void deleteInvitationsForUser(Long userId){
+        projectInvitationRepository.deleteInvitationsForUser(userId);
+    }
 
 
 }

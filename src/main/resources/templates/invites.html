@@ -2,17 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/main.css">
     <title>Title</title>
 </head>
 <body>
-<tr th:each="invite : ${projectInvitation}">
-    <!-- Display invite details here -->
-    <td>
-        <form action="/acceptInvite" method="post">
-            <input type="hidden" name="inviteId" th:value="${invite.invitationId}" />
-            <button type="submit">Accepter Invitation</button>
-        </form>
-    </td>
-</tr>
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>Task Liste</h1>
+        <p>Task oversigt</p>
+    </div>
+</header>
+<nav class="topnav">
+    <div class="topnav-left">
+        <a href="/seeProjects">Tilbage til Projekter</a>
+    </div>
+    <div class="topnav-right">
+        <a href="/logout">Log ud</a>
+    </div>
+</nav>
+<table>
+    <tr>
+        <th>Projekt navn</th>
+        <th>Sender</th>
+        <th>Modtager</th>
+        <th>Status</th>
+        <th>Muligheder</th>
+    </tr>
+    <tr th:each="invite : ${projectInvitation}">
+        <td th:text="${invite.projectName}"></td>
+        <td th:text="${invite.senderUserName}"></td>
+        <td th:text="${invite.receiverUserName}"></td>
+        <td th:text="${invite.status}"></td>
+
+        <!-- <td th:text="${invite.projectId}"></td> -->
+        <td>
+
+            <form th:action="@{/acceptInvite}" method="post">
+                <input type="hidden" th:value="${invite.invitationId}" name="inviteId"/>
+                <input type="submit" value="Accepter"/>
+            </form>
+            <form th:action="@{/deleteInvitations}" method="post">
+                <input type="hidden" th:value="${invite.invitationId}" name="inviteId"/>
+                <input type="submit" value="Afslå"/>
+            </form>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

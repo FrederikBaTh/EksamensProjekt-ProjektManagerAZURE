@@ -124,28 +124,23 @@ public class TaskController {
         return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
     }
 
-    @PostMapping("/updateTaskStatus/{taskId}")
-    public String updateTaskStatus(@PathVariable Long taskId, @RequestParam("status") String status, RedirectAttributes redirectAttributes) {
+    @PostMapping("/updateTaskStatus/{taskId}/{projectId}/{subprojectId}")
+    public String updateTaskStatus(@PathVariable Long taskId,
+                                   @PathVariable Long projectId,
+                                   @PathVariable Long subprojectId,
+                                   @RequestParam("status") String status,
+                                   RedirectAttributes redirectAttributes) {
         Task task = taskService.getTaskById(taskId);
         if (task == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
-            return "redirect:/tasks";
+            return "redirect:/tasks/" + projectId + "/" + subprojectId;
         }
-        taskService.updateTaskStatus(taskId, status);
+        task.setStatus(status);
+        taskService.updateTask(task);
         redirectAttributes.addFlashAttribute("successMessage", "Task status updated successfully.");
-        if (task.getProjectId() == null || task.getSubprojectId() == null) {
-            return "redirect:/tasks";
-        } else {
-            return "redirect:/tasks/" + task.getProjectId() + "/" + task.getSubprojectId();
-        }
+        return "redirect:/tasks/" + task.getProjectId() + "/" + task.getSubprojectId();
     }
-/*
-    @GetMapping("/tasks")
-    public String showAllTasks(Model model) {
-        List<Task> tasks = taskService.getAllTasks();
-        model.addAttribute("tasks", tasks);
-        return "seeTask"; // Changed from "task" to "seeTask"
-    }
-*/
+
+
 
 }

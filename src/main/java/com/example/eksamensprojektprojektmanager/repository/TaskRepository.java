@@ -34,7 +34,7 @@ public class TaskRepository {
 
 
     public List<Task> findByProjectIdAndSubprojectId(Long projectId, Long subprojectId) {
-        String query = "SELECT * FROM tasks WHERE project_id = ? AND subproject_id = ?";
+        String query = "SELECT * FROM tasks WHERE project_id = ? AND subproject_id = ? ORDER BY status";
         return jdbcTemplate.query(query, new Object[]{projectId, subprojectId}, (resultSet, i) -> {
             Task task = new Task();
             task.setTask_id(resultSet.getLong("task_id"));
@@ -42,26 +42,28 @@ public class TaskRepository {
             task.setDescription(resultSet.getString("description"));
             task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
             task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+            task.setStatus(resultSet.getString("status")); // Set the status here
             return task;
         });
     }
+
+public Task findById(Long task_id) {
+    String query = "SELECT * FROM tasks WHERE task_id = ?";
+    return jdbcTemplate.queryForObject(query, new Object[]{task_id}, (resultSet, i) -> {
+        Task task = new Task();
+        task.setTask_id(resultSet.getLong("task_id"));
+        task.setName(resultSet.getString("name"));
+        task.setDescription(resultSet.getString("description"));
+        task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
+        task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+        task.setStatus(resultSet.getString("status")); // Set the status here
+        return task;
+    });
+}
 
     public void deleteTaskById(Long task_id) {
         String query = "DELETE FROM tasks WHERE task_id = ?";
         jdbcTemplate.update(query, task_id);
-    }
-
-    public Task findById(Long task_id) {
-        String query = "SELECT * FROM tasks WHERE task_id = ?";
-        return jdbcTemplate.queryForObject(query, new Object[]{task_id}, (resultSet, i) -> {
-            Task task = new Task();
-            task.setTask_id(resultSet.getLong("task_id"));
-            task.setName(resultSet.getString("name"));
-            task.setDescription(resultSet.getString("description"));
-            task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
-            task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
-            return task;
-        });
     }
     public void deleteTasksBySubprojectId(Long subprojectId) {
 
@@ -87,17 +89,5 @@ public class TaskRepository {
         }
     }
 
-    public List<Task> findAll() {
-        String query = "SELECT * FROM tasks";
-        return jdbcTemplate.query(query, (resultSet, i) -> {
-            Task task = new Task();
-            task.setTask_id(resultSet.getLong("task_id"));
-            task.setName(resultSet.getString("name"));
-            task.setDescription(resultSet.getString("description"));
-            task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
-            task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
-            return task;
-        });
-    }
 
 }

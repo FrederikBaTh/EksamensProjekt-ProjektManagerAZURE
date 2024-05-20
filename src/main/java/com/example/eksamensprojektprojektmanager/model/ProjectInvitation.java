@@ -20,6 +20,17 @@ public class ProjectInvitation {
     @Column(name = "receiver_user_id")
     private Long receiverUserId;
 
+    @Column(name = "projectname")
+    private String projectName;
+
+    @Column(name = "senderUsername")
+    private String senderUserName;
+
+    @Column(name = "recieverUsername")
+    private String receiverUserName;
+
+
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private InvitationStatus status;
@@ -66,6 +77,15 @@ public class ProjectInvitation {
         return receiverUserId;
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
+    public String getSenderUserName() {
+        return senderUserName;
+    }
+    public String getReceiverUserName() {
+        return receiverUserName;
+    }
     public void setReceiverUserId(Long receiverUserId) {
         this.receiverUserId = receiverUserId;
     }
@@ -76,5 +96,15 @@ public class ProjectInvitation {
 
     public void setStatus(InvitationStatus status) {
         this.status = status;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+    public void setSenderUserName(String senderUserName) {
+        this.senderUserName = senderUserName;
+    }
+    public void setReceiverUserName(String receiverUserName) {
+        this.receiverUserName = receiverUserName;
     }
 }

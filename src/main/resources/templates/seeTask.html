@@ -29,6 +29,7 @@
         <th>Beskrivelse</th>
         <th>Dato</th>
         <th>Deadline</th>
+        <th>Status</th>
         <th>Handlinger</th>
     </tr>
     </thead>
@@ -38,9 +39,10 @@
         <td th:text="${task.description}"></td>
         <td th:text="${#temporals.format(task.date, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#temporals.format(task.deadline, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${task.status}"></td>
         <td>
             <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="get">
-                <button type="submit" class="btn">Opdater Task</button>
+                <button type="submit" class="btn">Opdater Opgave</button>
             </form>
 
 
@@ -50,11 +52,11 @@
                 <select name="status">
                     <option value="Backlog">Backlog</option>
                     <option value="Sprint backlog">Sprint backlog</option>
-                    <option value="In Progress">Igangværende</option>
-                    <option value="In Review">Reviewes</option>
-                    <option value="Completed">Fuldendt</option>
+                    <option value="Igangværende">Igangværende</option>
+                    <option value="Under Revision">Under Revision</option>
+                    <option value="Færdig">Færdig</option>
                 </select>
-                <button type="submit">Opdater task status</button>
+                <button type="submit">Opdater Opgave Status</button>
             </form>
 
 
