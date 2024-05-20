@@ -43,4 +43,9 @@ public class UserSubprojectAssignmentRepository {
         jdbcTemplate.update(sql, userId);
     }
 
+    public void assignUserRole(Long userId, Long projectId, String role) {
+        String sql = "INSERT INTO user_project_roles (user_id, project_id, role) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, userId, projectId, role);
+    }
+
 }
