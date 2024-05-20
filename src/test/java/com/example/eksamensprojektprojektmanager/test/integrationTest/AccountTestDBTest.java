@@ -1,4 +1,4 @@
-package com.example.eksamensprojektprojektmanager.test;
+package com.example.eksamensprojektprojektmanager.test.integrationTest;
 
 import com.example.eksamensprojektprojektmanager.testDatabase.AccountTestDB;
 import org.junit.jupiter.api.Assertions;
