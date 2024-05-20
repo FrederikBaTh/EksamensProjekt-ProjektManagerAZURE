@@ -33,9 +33,7 @@
         <input type="text" id="jobTitle" name="jobTitle" th:value="${user.jobTitle}"/>
         <label for="description">Beskrivelse:</label>
         <input type="text" id="description" name="description" th:value="${user.description}"/>
-    </form>
-    <form action="/saveChanges" method="post">
-        <button type="submit" class="btn">Gem Ændringer</button>
+        <input type="submit" value="Save Changes"/>
     </form>
 </div>
 </body>
