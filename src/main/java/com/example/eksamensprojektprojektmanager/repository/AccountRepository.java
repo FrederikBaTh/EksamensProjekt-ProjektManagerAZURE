@@ -1,6 +1,7 @@
 package com.example.eksamensprojektprojektmanager.repository;
 
 import com.example.eksamensprojektprojektmanager.model.Account;
+import com.example.eksamensprojektprojektmanager.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +14,7 @@ public class AccountRepository {
     private final JdbcTemplate jdbcTemplate;
     private final ProjectInvitationRepository projectInvitationRepository;
     private final UserSubprojectAssignmentRepository userSubprojectAssignmentRepository;
+    private final ProjectRepository projectRepository;
 
 
     @Value("${spring.datasource.url}")
@@ -23,10 +25,11 @@ public class AccountRepository {
     private String DATABASE_PASSWORD;
 
     @Autowired
-    public AccountRepository(JdbcTemplate jdbcTemplate, ProjectInvitationRepository projectInvitationRepository, UserSubprojectAssignmentRepository userSubprojectAssignmentRepository) {
+    public AccountRepository(JdbcTemplate jdbcTemplate, ProjectInvitationRepository projectInvitationRepository, UserSubprojectAssignmentRepository userSubprojectAssignmentRepository, ProjectRepository projectRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.projectInvitationRepository = projectInvitationRepository;
         this.userSubprojectAssignmentRepository = userSubprojectAssignmentRepository;
+        this.projectRepository = projectRepository;
     }
 
     public boolean isValidUser(String username, String password) {
@@ -89,9 +92,21 @@ public class AccountRepository {
     }
 
     public void deleteUser(Long userId) {
+        // Delete all invitations for the user
         projectInvitationRepository.deleteInvitationsForUser(userId);
+
+        // Delete all subproject assignments for the user
         userSubprojectAssignmentRepository.deleteUserAssignmentsSubprojects(userId);
 
+        // Get all projects associated with the user
+        List<Project> userProjects = projectRepository.getProjectsByUserId(userId);
+
+        // Delete each project
+        for (Project project : userProjects) {
+            projectRepository.deleteProjectById(project.getProject_id());
+        }
+
+        // Delete the user
         String sql = "DELETE FROM users WHERE user_id = ?";
         jdbcTemplate.update(sql, userId);
     }
