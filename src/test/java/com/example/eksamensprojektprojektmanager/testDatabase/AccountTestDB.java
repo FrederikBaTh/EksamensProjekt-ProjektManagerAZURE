@@ -1,6 +1,7 @@
 package com.example.eksamensprojektprojektmanager.testDatabase;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Component
+@Profile("test")
 public class AccountTestDB {
 
     private final DataSource dataSource;
@@ -30,18 +32,24 @@ public class AccountTestDB {
                 "job_title VARCHAR(100)," +
                 "description TEXT" +
                 ");";
-        try (Connection conn = dataSource.getConnection();
-             Statement statement = conn.createStatement()) {
 
-            conn.setAutoCommit(false);
+        // SQL for inserting test data
+        String insertTestDataSQL = "INSERT INTO usersTest (username, password, is_admin, name, company, job_title, description) " +
+                "VALUES ('testUser', 'testPassword', false, 'Test Name', 'Test Company', 'Test Job Title', 'Test Description');";
+
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+
+            connection.setAutoCommit(false);
 
             statement.addBatch("SET foreign_key_checks = 0;");
             statement.addBatch("DROP TABLE IF EXISTS usersTest;");
             statement.addBatch(createTableSQL);
+            statement.addBatch(insertTestDataSQL);  // Add this line
             statement.addBatch("SET foreign_key_checks = 1;");
 
             statement.executeBatch();
-            conn.commit();
+            connection.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
