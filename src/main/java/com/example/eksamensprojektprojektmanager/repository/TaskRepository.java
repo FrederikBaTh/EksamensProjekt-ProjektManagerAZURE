@@ -87,17 +87,23 @@ public class TaskRepository {
         }
     }
 
-    public List<Task> findAll() {
-        String query = "SELECT * FROM tasks";
-        return jdbcTemplate.query(query, (resultSet, i) -> {
-            Task task = new Task();
-            task.setTask_id(resultSet.getLong("task_id"));
-            task.setName(resultSet.getString("name"));
-            task.setDescription(resultSet.getString("description"));
-            task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
-            task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+
+    public List<Task> findByStatus(String status) {
+        String query = "SELECT * FROM tasks WHERE status = ?";
+        List<Task> tasks = jdbcTemplate.query(query, new Object[]{status}, (resultSet, i) -> {
+            Task task = new Task(
+                    resultSet.getString("name"),
+                    resultSet.getString("description"),
+                    resultSet.getTimestamp("date").toLocalDateTime(),
+                    resultSet.getTimestamp("deadline").toLocalDateTime(),
+                    resultSet.getLong("project_id"),
+                    resultSet.getLong("subproject_id"),
+                    resultSet.getString("status")
+            );
             return task;
         });
+        System.out.println("Tasks fetched for status " + status + ": " + tasks.size()); // Log the number of tasks fetched
+        return tasks;
     }
 
 }

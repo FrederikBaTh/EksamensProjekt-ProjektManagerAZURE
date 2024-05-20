@@ -168,3 +168,37 @@ th {
     margin: 4px 2px;
     cursor: pointer;
 }
+
+.task-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.task-card h3 {
+    color: #333;
+}
+
+.task-card p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.container {
+    width: 100%; /* Ensure the container spans the full width */
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping but it should not wrap with 5 columns fitting perfectly */
+    justify-content: space-between; /* This will put equal spacing between columns */
+}
+
+.col {
+    flex: 0 0 18%; /* Sets each column to take 18% of the row width */
+    margin: 0 1%; /* Optional: adds a little margin on each side for spacing */
+    min-width: 160px; /* Optional: Ensure a minimum width for smaller screens, adjust as needed */
+}
+

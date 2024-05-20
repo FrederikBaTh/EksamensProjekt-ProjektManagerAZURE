@@ -53,7 +53,7 @@
 
     <!-- Update Task Form -->
     <div th:if="${task != null}">
-        <form th:action="@{/updateTask/{id}(id=${task.task_id})}" method="post">
+        <form action="#" th:action="@{/updateTask/{id}(id=${task.task_id})}" th:object="${task}" method="post">
             <input type="hidden" name="projectId" th:value="${projectId}">
             <input type="hidden" name="subprojectId" th:value="${subprojectId}">
             <div>

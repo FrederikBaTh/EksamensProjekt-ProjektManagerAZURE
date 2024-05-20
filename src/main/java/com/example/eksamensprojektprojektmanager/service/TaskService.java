@@ -42,7 +42,11 @@ public class TaskService {
         taskRepository.updateTaskStatus(task_id, status);
     }
 
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+
+
+
+    public List<Task> findByStatus(String status) {
+        return taskRepository.findByStatus(status);
     }
+
 }
