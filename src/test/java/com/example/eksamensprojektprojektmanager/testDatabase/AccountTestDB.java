@@ -17,7 +17,7 @@ public class AccountTestDB {
     public AccountTestDB(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
+/*
     public void createAccountTestDB() {
 
         String createTableSQL = "CREATE TABLE usersTest (" +
@@ -48,4 +48,6 @@ public class AccountTestDB {
             throw new RuntimeException("Error creating test database", e);
         }
     }
+    */
+
 }
