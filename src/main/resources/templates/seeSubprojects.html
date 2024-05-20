@@ -9,24 +9,25 @@
 <body>
 <header>
     <div class="container-fluid p-5 bg-primary text-white text-center">
-        <h1>Subprojects</h1>
-        <p>Subproject overview</p>
+        <h1>Subprojekter</h1>
+        <p>Subprojekter oversigt</p>
     </div>
 </header>
 <nav class="topnav">
     <div class="topnav-left">
-        <a th:href="@{/addSubproject/{projectId}(projectId=${projectId})}" class="btn">Add Subproject</a>    </div>
+        <a href="/seeProjects">Tilbage til Projekter</a>
+        <a th:href="@{/addSubproject/{projectId}(projectId=${projectId})}">Tilføj Subprojekt</a>    </div>
     <div class="topnav-right">
-        <a href="/logout">Logout</a>
+        <a href="/logout">Logud</a>
     </div>
 </nav>
 <table>
     <thead>
     <tr>
-        <th>Subproject Name</th>
-        <th>Description</th>
-        <th>Actions</th>
-        <th>User Assignment</th>
+        <th>Subprojekt Navn</th>
+        <th>Beskrivelse</th>
+        <th>Handlinger</th>
+        <th>Brugere Tilkoblet</th>
     </tr>
     </thead>
     <tbody>
@@ -43,11 +44,13 @@
         <td>
     <!-- Update button for each subproject -->
             <form th:action="@{/updateSubproject/{id}(id=${subproject.subproject_id})}" method="get">
-                <button type="submit" class="btn">Update</button>
+                <button type="submit" class="btn">Opdater</button>
             </form>
             <!-- Delete button for each subproject -->
-            <form th:action="@{/deleteSubproject/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subproject.subproject_id})}" method="post">
-                <button type="submit" class="btn">Delete</button>
+            <form th:action="@{/deleteSubproject/{projectId}/{subprojectId}(projectId=${projectId}, subprojectId=${subproject.subproject_id})}"
+                  method="post"
+                  onsubmit="return confirm('Er du sikker på, at du vil slette dette subprojekt?');">
+                <button type="submit" class="btn">Slet</button>
             </form>
 
         </td>
