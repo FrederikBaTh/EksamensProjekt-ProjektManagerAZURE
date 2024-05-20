@@ -3,40 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
     <title>User List</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
-<h1>User List</h1>
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>Bruger Liste</h1>
+        <p>Se brugere her!</p>
+    </div>
+</header>
+<nav class="topnav">
+    <div class="topnav-left">
+        <a href="/seeProjects">Tilbage til Projekter</a>
+        <a href="/myAccount">Konto</a>
+    </div>
+    <div class="topnav-right">
+        <a href="/logout">Logud</a>
+    </div>
+</nav>
 <table>
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Company</th>
-        <th>Job Title</th>
-        <th>Action</th>
+        <th>Navn</th>
+        <th>Brugernavn</th>
+        <th>Virksomhed</th>
+        <th>Job Titel</th>
+        <th>Handlinger</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-        <td th:text="${user.name}">Name</td>
-        <td th:text="${user.username}">Username</td>
-        <td th:text="${user.company}">Company</td>
-        <td th:text="${user.jobTitle}">Job Title</td>
+        <td th:text="${user.name}">Navn</td>
+        <td th:text="${user.username}">Brugernavn</td>
+        <td th:text="${user.company}">Virksomhed</td>
+        <td th:text="${user.jobTitle}">Job Titel</td>
         <td>
             <form action="/inviteUserToProject" method="post">
                 <input type="hidden" name="receiverUserId" th:value="${user.user_id}" />
@@ -50,5 +51,6 @@
     </tr>
     </tbody>
 </table>
+</div>
 </body>
 </html>
