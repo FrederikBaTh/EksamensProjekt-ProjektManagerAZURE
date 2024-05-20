@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
     <title>Inviterede Projekter</title>
 </head>
 <body>
-<h1>Inviterede Projekter</h1>
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>Inviterede Projekter</h1>
+        <p>Her kan du se hvilke projekter du er inviteret til!</p>
+    </div>
+</header>
+<nav class="topnav">
+    <div class="topnav-left">
+        <a href="/seeProjects">Tilbage til Projekter</a>
+        <a href="/usersList">Bruger Liste</a>
+        <a href="/myAccount">Konto</a>
+        <a href="/invites" >Invitationer</a>
+    </div>
+    <div class="topnav-right">
+        <a href="/logout">Logud</a>
+    </div>
+</nav>
 <ul>
     <li th:each="project : ${invitedProjects}">
         <p th:text="${project.projectName}"></p>
