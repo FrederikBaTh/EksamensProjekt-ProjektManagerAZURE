@@ -52,10 +52,10 @@
     <form action="/editAccount" method="get">
         <button type="submit" class="btn">Rediger</button>
     </form>
-        <form action="/users/delete" method="post">
-            <input type="hidden" name="userId" th:value="${user.user_id}" />
-            <input type="submit" value="Delete Account" />
-        </form>
+    <form action="/users/delete" method="post">
+        <input type="hidden" name="userId" th:value="${user.user_id}"/>
+        <button type="submit" class="btn">Slet Konto</button>
+    </form>
 
 </div>
 </body>
