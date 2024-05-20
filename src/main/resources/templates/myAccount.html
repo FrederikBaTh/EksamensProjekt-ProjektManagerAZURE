@@ -3,83 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
     <title>My Account</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .edit-button {
-            margin-top: 20px;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
-<div class="container">
-    <h1>My Account</h1>
+
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>Min Konto</h1>
+        <p>Oplysninger om din konto ses her</p>
+    </div>
+</header>
+<nav class="topnav">
+    <div class="topnav-left">
+        <a href="/seeProjects">Tilbage til Projekter</a>
+    <div class="topnav-right">
+        <a href="/logout">Logud</a>
+    </div>
+    </div>
+</nav>
+<div class="project-container">
     <table>
         <tr>
-            <th>Attribute</th>
-            <th>Value</th>
+            <th>Attribut</th>
+            <th>Værdi</th>
         </tr>
         <tr>
-            <td>Name</td>
+            <td>Navn</td>
             <td th:text="${user.name}"></td>
         </tr>
         <tr>
-            <td>Username</td>
+            <td>Brugernavn</td>
             <td th:text="${user.username}"></td>
         </tr>
         <tr>
-            <td>Company</td>
+            <td>Virksomhed</td>
             <td th:text="${user.company}"></td>
         </tr>
         <tr>
-            <td>Job Title</td>
+            <td>Job Titel</td>
             <td th:text="${user.jobTitle}"></td>
         </tr>
         <tr>
-            <td>Description</td>
+            <td>Beskrivelse</td>
             <td th:text="${user.description}"></td>
         </tr>
     </table>
-    <div class="edit-button">
-        <a href="/editAccount" class="button">Edit</a>
-    </div>
-    <div class="delete-button">
-        <form action="/users/delete" method="post">
-            <input type="hidden" name="userId" th:value="${user.user_id}" />
-            <input type="submit" value="Delete Account" />
-        </form>
-    </div>
+    <form action="/editAccount" method="get">
+        <button type="submit" class="btn">Rediger</button>
+    </form>
 </div>
 </body>
 </html>
