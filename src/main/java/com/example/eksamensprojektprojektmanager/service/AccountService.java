@@ -1,7 +1,9 @@
 package com.example.eksamensprojektprojektmanager.service;
 
 import com.example.eksamensprojektprojektmanager.model.Account;
+import com.example.eksamensprojektprojektmanager.model.Experience;
 import com.example.eksamensprojektprojektmanager.repository.AccountRepository;
+import com.example.eksamensprojektprojektmanager.repository.ExperienceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,8 @@ import java.util.List;
 public class AccountService {
 
 
-
+    @Autowired
+    private ExperienceRepository experienceRepository;
     private AccountRepository accountRepository;
 
 
@@ -68,6 +71,19 @@ public class AccountService {
 
     public void deleteUser(Long userId) {
         accountRepository.deleteUser(userId);
+    }
+
+    public void addExperienceToUser(Long userId, String skill, int yearsOfExperience) {
+        Experience experience = new Experience(userId, skill, yearsOfExperience);
+        experienceRepository.save(experience);
+    }
+
+    public List<Experience> getExperiencesByUserId(Long userId) {
+        return experienceRepository.findByUserId(userId);
+    }
+
+    public void deleteExperience(Long experienceId) {
+        experienceRepository.delete(experienceId);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.eksamensprojektprojektmanager.controller;
 
+import com.example.eksamensprojektprojektmanager.model.Experience;
 import com.example.eksamensprojektprojektmanager.model.Project;
 import com.example.eksamensprojektprojektmanager.service.ProjectInvitationService;
 import com.example.eksamensprojektprojektmanager.service.ProjectService;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AccountController {
@@ -28,6 +32,7 @@ public class AccountController {
     private ProjectService projectService;
     @Autowired
     private ProjectInvitationService projectInvitationService;
+
 
     @GetMapping("/")
     public RedirectView redirectToLogin() {
@@ -73,9 +78,9 @@ public class AccountController {
     @PostMapping("/login")
     public String login(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, RedirectAttributes redirectAttributes) {
         if (accountService.isValidUser(username, password)) {
-            String userId = accountService.getUserIdByUsername(username); // Retrieve user ID
-            request.getSession().setAttribute("userId", userId); // Set user ID in session
-            return "redirect:/seeProjects"; // Redirect to projects page after successful login
+            String userId = accountService.getUserIdByUsername(username);
+            request.getSession().setAttribute("userId", userId);
+            return "redirect:/seeProjects";
         } else {
             redirectAttributes.addFlashAttribute("error", "Invalid login");
             return "redirect:/login";
@@ -84,20 +89,32 @@ public class AccountController {
 
     @GetMapping("/usersList")
     public String showUserList(Model model, HttpServletRequest request) {
-        List<Account> userList = accountService.getAllUsers(); // Assuming you have a method to retrieve all users
+        List<Account> userList = accountService.getAllUsers();
+        Map<Long, Experience> userTopExperiences = new HashMap<>();
+
+        for (Account user : userList) {
+            List<Experience> experiences = accountService.getExperiencesByUserId(user.getUser_id());
+            if (!experiences.isEmpty()) {
+                Experience topExperience = experiences.stream()
+                        .max(Comparator.comparingInt(Experience::getYearsOfExperience))
+                        .orElse(null);
+                userTopExperiences.put(user.getUser_id(), topExperience);
+            }
+        }
+
         model.addAttribute("users", userList);
+        model.addAttribute("userTopExperiences", userTopExperiences);
 
-
-        // Retrieve the logged in user's ID from the session
         String loggedInUserId = (String) request.getSession().getAttribute("userId");
         model.addAttribute("loggedInUserId", loggedInUserId);
 
-        // Retrieve the project ID from the session
         String projectIdString = (String) request.getSession().getAttribute("projectId");
         if (projectIdString != null) {
             Long projectId = Long.parseLong(projectIdString);
             model.addAttribute("projectId", projectId);
         }
+
+        // Retrieve projects for the logged in user
         String userIdString = (String) request.getSession().getAttribute("userId");
         Long userId = Long.parseLong(userIdString);
         List<Project> userProjects = projectService.getProjectsByUserId(userId);
@@ -107,16 +124,18 @@ public class AccountController {
     }
 
     @GetMapping("/myAccount")
-    public String showMyAccount(Model model, HttpServletRequest request) {
-        String userId = (String) request.getSession().getAttribute("userId");
-        if (userId != null) {
-            Account user = accountService.getUserById(Long.valueOf(userId));
-            if (user != null) {
-                model.addAttribute("user", user);
-                return "myAccount";
-            }
+    public String getMyAccount(HttpServletRequest request, Model model) {
+        String userIdStr = (String) request.getSession().getAttribute("userId");
+        if (userIdStr != null) {
+            Long userId = Long.valueOf(userIdStr);
+            Account user = accountService.getUserById(userId);
+            List<Experience> experiences = accountService.getExperiencesByUserId(userId);
+            model.addAttribute("user", user);
+            model.addAttribute("experiences", experiences);
+            return "myAccount";
+        } else {
+            return "redirect:/login";
         }
-        return "redirect:/login";
     }
 
     @GetMapping("/editAccount")
@@ -149,9 +168,8 @@ public class AccountController {
 
             accountService.updateAccount(user);
 
-            return "redirect:/myAccount"; // Redirect to myAccount page after editing
+            return "redirect:/myAccount";
         } else {
-            // User not found, redirect to login page or handle the error accordingly
             return "redirect:/login";
         }
     }
@@ -166,8 +184,46 @@ public class AccountController {
         return "redirect:/login";
     }
 
+    @PostMapping("/addExperience")
+    public String addExperience(HttpServletRequest request,
+                                @RequestParam("skill") String skill,
+                                @RequestParam("yearsOfExperience") int yearsOfExperience,
+                                RedirectAttributes redirectAttributes) {
+        String userIdStr = (String) request.getSession().getAttribute("userId");
+        if (userIdStr != null) {
+            Long userId = Long.valueOf(userIdStr);
+            accountService.addExperienceToUser(userId, skill, yearsOfExperience);
+            redirectAttributes.addFlashAttribute("success", "Experience added successfully");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "User not logged in");
+        }
+        return "redirect:/myAccount";
+    }
 
+    @PostMapping("/deleteExperience")
+    public String deleteExperience(@RequestParam("experienceId") Long experienceId,
+                                   RedirectAttributes redirectAttributes) {
+        accountService.deleteExperience(experienceId);
+        redirectAttributes.addFlashAttribute("success", "Experience deleted successfully");
+        return "redirect:/myAccount";
+    }
+
+    @GetMapping("/userDetails")
+    public String showUserDetails(Model model, @RequestParam("userId") Long userId, HttpServletRequest request) {
+        Account user = accountService.getUserById(userId);
+        List<Experience> experiences = accountService.getExperiencesByUserId(userId);
+        model.addAttribute("user", user);
+        model.addAttribute("experiences", experiences);
+
+        String loggedInUserId = (String) request.getSession().getAttribute("userId");
+        model.addAttribute("loggedInUserId", loggedInUserId);
+
+        return "userDetails";
+    }
 }
+
+
+
 
 
 

@@ -26,18 +26,22 @@
     <thead>
     <tr>
         <th>Navn</th>
-        <th>Brugernavn</th>
         <th>Virksomhed</th>
         <th>Job Titel</th>
+        <th>Top Erfaring</th>
         <th>Handlinger</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.name}">Navn</td>
-        <td th:text="${user.username}">Brugernavn</td>
+    <tr th:each="user : ${users}" th:if="${userTopExperiences[user.user_id] != null}">
+        <td>
+            <a th:href="@{/userDetails(userId=${user.user_id})}" th:text="${user.name}"></a>
+        </td>
         <td th:text="${user.company}">Virksomhed</td>
         <td th:text="${user.jobTitle}">Job Titel</td>
+        <td>
+            <span th:text="${userTopExperiences[user.user_id].skill + ' (' + userTopExperiences[user.user_id].yearsOfExperience + ' år)'}"></span>
+        </td>
         <td>
             <form action="/inviteUserToProject" method="post">
                 <input type="hidden" name="receiverUserId" th:value="${user.user_id}" />
@@ -51,6 +55,5 @@
     </tr>
     </tbody>
 </table>
-</div>
 </body>
 </html>

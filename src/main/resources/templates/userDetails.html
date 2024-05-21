@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
+    <title>User Details</title>
+</head>
+<body>
+<header>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>User Details</h1>
+        <p>User account details</p>
+    </div>
+</header>
+<nav class="topnav">
+    <div class="topnav-left">
+        <a href="/seeProjects">Back to Projects</a>
+    </div>
+    <div class="topnav-right">
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+<div class="project-container">
+    <table>
+        <tr>
+            <th>Attribute</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td th:text="${user.name}"></td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td th:text="${user.username}"></td>
+        </tr>
+        <tr>
+            <td>Company</td>
+            <td th:text="${user.company}"></td>
+        </tr>
+        <tr>
+            <td>Job Title</td>
+            <td th:text="${user.jobTitle}"></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td th:text="${user.description}"></td>
+        </tr>
+    </table>
+
+    <!-- Display list of experiences -->
+    <h2>User Experiences</h2>
+    <table>
+        <tr>
+            <th>Skill</th>
+            <th>Years of Experience</th>
+        </tr>
+        <tr th:each="experience : ${experiences}">
+            <td th:text="${experience.skill}"></td>
+            <td th:text="${experience.yearsOfExperience}"></td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>
