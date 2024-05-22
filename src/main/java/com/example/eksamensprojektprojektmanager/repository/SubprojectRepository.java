@@ -20,9 +20,6 @@ public class SubprojectRepository {
     @Value("${spring.datasource.password}")
     private String dbPassword;
 
-    @Value("${subproject.table.name}")
-    private String subprojectTableName;
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -33,7 +30,7 @@ public class SubprojectRepository {
     }
 
     public void addSubproject(Subproject subproject, Long projectId) {
-        String insertQuery = "INSERT INTO " + subprojectTableName + " (project_id, name, description, startDate, deadline) VALUES (?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO subprojects (project_id, name, description, startDate, deadline) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(insertQuery, projectId,
                 subproject.getSubprojectname(), subproject.getDescription(), subproject.getStartDate(), subproject.getDeadline());
     }
@@ -69,7 +66,7 @@ public class SubprojectRepository {
     }
 
     public Subproject findById(Long subprojectId) {
-        String query = "SELECT * FROM " + subprojectTableName + " WHERE subproject_id = ?";
+        String query = "SELECT * FROM subprojects WHERE subproject_id = ?";
         return jdbcTemplate.queryForObject(query, new Object[]{subprojectId}, (resultSet, i) -> {
             Subproject subproject = new Subproject();
             subproject.setSubproject_id(resultSet.getLong("subproject_id"));
