@@ -6,6 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.transform.Result;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -26,6 +31,8 @@ public class TaskRepository {
     public TaskRepository() {
     }
 
+    private Connection connection;
+
     public void addTask(Task task, Long projectId, Long subprojectId) {
         String insertQuery = "INSERT INTO tasks (project_id, subproject_id, name, description, date, deadline, status) VALUES (?, ?, ?, ?, ?, ?,?)";
         int rowsInserted = jdbcTemplate.update(insertQuery, projectId, subprojectId,
@@ -42,10 +49,37 @@ public class TaskRepository {
             task.setDescription(resultSet.getString("description"));
             task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
             task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
-            task.setStatus(resultSet.getString("status")); // Set the status here
+            task.setStatus(resultSet.getString("status"));
             return task;
         });
     }
+
+    public List<Task> findByProjectIdAndSubProjectIdJPA(Long projectId, Long subprojectId) {
+        String query = "SELECT * FROM tasks WHERE project_id = ? AND subproject_id = ? ORDER BY status";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, projectId.toString());
+            preparedStatement.setString(2, subprojectId.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Task> tasks = new ArrayList<>();
+            while (resultSet.next()) {
+                Long taskId = resultSet.getLong("task_id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
+                LocalDateTime deadline = resultSet.getTimestamp("deadline").toLocalDateTime();
+                String status = resultSet.getString("status");
+
+                tasks.add(new Task(taskId, name, description, date, deadline, status));
+            }
+            return tasks;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
 
 public Task findById(Long task_id) {
     String query = "SELECT * FROM tasks WHERE task_id = ?";
@@ -65,6 +99,27 @@ public Task findById(Long task_id) {
         String query = "DELETE FROM tasks WHERE task_id = ?";
         jdbcTemplate.update(query, task_id);
     }
+
+    public boolean deleteTaskByIdJPA(Long taskId) {
+    String deleteTaskQuery = "DELETE FROM tasks WHERE task_id = ?";
+
+    try (Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+         PreparedStatement deleteTaskStatement = connection.prepareStatement(deleteTaskQuery)) {
+
+        deleteTaskStatement.setLong(1, taskId);
+
+        int taskDeleted = deleteTaskStatement.executeUpdate();
+
+        if (taskDeleted > 0) {
+            return true;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return false;
+}
+
     public void deleteTasksBySubprojectId(Long subprojectId) {
 
         String query = "DELETE FROM tasks WHERE subproject_id = ?";

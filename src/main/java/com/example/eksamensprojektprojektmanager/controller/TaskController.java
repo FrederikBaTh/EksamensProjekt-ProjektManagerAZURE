@@ -110,7 +110,8 @@ public class TaskController {
             return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
         }
 
-        // Update fields other than IDs
+        // Update fields other than ID
+        updatedTask.setTask_id(taskId);
         existingTask.setName(updatedTask.getName());
         existingTask.setDescription(updatedTask.getDescription());
         existingTask.setDate(updatedTask.getDate());
@@ -119,7 +120,7 @@ public class TaskController {
         existingTask.setProjectId(updatedTask.getProjectId());
         existingTask.setSubprojectId(updatedTask.getSubprojectId());
 
-        Task updatedTaskInDb = taskService.updateTask(existingTask);
+        Task updatedTaskInDb = taskService.updateTask(updatedTask);
         redirectAttributes.addFlashAttribute("successMessage", "Task updated successfully with ID: " + updatedTaskInDb.getTask_id());
         return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
     }
