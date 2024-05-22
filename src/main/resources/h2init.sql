@@ -8,8 +8,7 @@ CREATE TABLE users (
     job_title VARCHAR(100),
     description TEXT
 );
-INSERT INTO
-    users (username, password, is_admin, name, company, job_title, description)
+INSERT INTO users (user_id,username, password, is_admin, name, company, job_title, description)
 VALUES
-    ('testUser1', 'testPassword1', false, 'Test User 1', 'Test Company 1', 'Test Job Title 1', 'Test Description 1'),
-    ('testUser2', 'testPassword2', true, 'Test User 2', 'Test Company 2', 'Test Job Title 2', 'Test Description 2');
+    (1,'testUser1', 'testPassword1', false, 'Test User 1', 'Test Company 1', 'Test Job Title 1', 'Test Description 1'),
+    (2,'testUser2', 'testPassword2', true, 'Test User 2', 'Test Company 2', 'Test Job Title 2', 'Test Description 2');

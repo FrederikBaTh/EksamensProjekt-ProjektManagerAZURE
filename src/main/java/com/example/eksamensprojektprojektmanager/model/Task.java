@@ -32,7 +32,7 @@ public class Task {
     private LocalDateTime deadline;
 
     @Column(nullable = false)
-    @ColumnDefault("pending")
+    @ColumnDefault("'pending'")
     private String status;
 
 
