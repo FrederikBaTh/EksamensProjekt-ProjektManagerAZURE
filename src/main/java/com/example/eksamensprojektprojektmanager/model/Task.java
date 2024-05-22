@@ -2,6 +2,7 @@ package com.example.eksamensprojektprojektmanager.model;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class Task {
     private LocalDateTime deadline;
 
     @Column(nullable = false)
+    @ColumnDefault("pending")
     private String status;
 
 

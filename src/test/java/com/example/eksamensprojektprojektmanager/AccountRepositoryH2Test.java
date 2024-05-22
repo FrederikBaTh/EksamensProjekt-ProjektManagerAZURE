@@ -1,4 +1,4 @@
-package com.example.eksamensprojektprojektmanager.test.h2Test;
+package com.example.eksamensprojektprojektmanager;
 
 
 import com.example.eksamensprojektprojektmanager.model.Account;
@@ -22,7 +22,7 @@ public class AccountRepositoryH2Test {
     @Test
     void findAccount(){
         Account found = repository.getUserById(1L);
-        assertEquals("testUser1",found.getName());
+        assertEquals("testUser1",found.getUsername());
     }
 
 

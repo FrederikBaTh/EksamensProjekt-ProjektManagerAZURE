@@ -24,11 +24,6 @@ public class AccountRepository {
     @Value("${spring.datasource.password}")
     private String DATABASE_PASSWORD;
 
-
-    @Value("${account.table.name}")
-    private String accountTableName;
-
-
     @Autowired
     public AccountRepository(JdbcTemplate jdbcTemplate, ProjectInvitationRepository projectInvitationRepository, UserSubprojectAssignmentRepository userSubprojectAssignmentRepository, ProjectRepository projectRepository) {
         this.jdbcTemplate = jdbcTemplate;
@@ -49,7 +44,7 @@ public class AccountRepository {
     }
 
     public void save(Account account) {
-        String sql = "INSERT INTO " + accountTableName + " (username, password, is_Admin, name, company, job_title, description) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, password, is_Admin, name, company, job_title, description) VALUES (?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, account.getUsername(), account.getPassword(), account.isAdmin(), account.getName(), account.getCompany(), account.getJobTitle(), account.getDescription());
     }
 
@@ -115,6 +110,8 @@ public class AccountRepository {
         String sql = "DELETE FROM users WHERE user_id = ?";
         jdbcTemplate.update(sql, userId);
     }
+
+
 
 
 }
