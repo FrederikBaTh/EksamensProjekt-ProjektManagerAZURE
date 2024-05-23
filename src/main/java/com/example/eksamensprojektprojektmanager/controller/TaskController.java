@@ -100,10 +100,8 @@ public class TaskController {
     }
 
 
-    @PostMapping("/updateTask/{taskId}/{projectId}/{subprojectId}")
-    public String updateTask(@PathVariable Long taskId,
-                             @PathVariable Long projectId,
-                             @PathVariable Long subprojectId,
+    @PostMapping("/updateTask/{id}")
+    public String updateTask(@PathVariable("id") Long taskId,
                              @ModelAttribute Task updatedTask,
                              RedirectAttributes redirectAttributes) {
         Task existingTask = taskService.getTaskById(taskId);
@@ -112,6 +110,9 @@ public class TaskController {
             return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
         }
 
+        Task task = taskService.getTaskById(taskId);
+
+        // Update fields other than IDs
         // Update fields other than ID
         updatedTask.setTask_id(taskId);
         existingTask.setName(updatedTask.getName());
@@ -122,9 +123,10 @@ public class TaskController {
         existingTask.setProjectId(updatedTask.getProjectId());
         existingTask.setSubprojectId(updatedTask.getSubprojectId());
 
-        Task updatedTaskInDb = taskService.updateTask(updatedTask);
+        Task updatedTaskInDb = taskService.updateTask(existingTask);
+
         redirectAttributes.addFlashAttribute("successMessage", "Task updated successfully with ID: " + updatedTaskInDb.getTask_id());
-        return "redirect:/tasks/" + existingTask.getProjectId() + "/" + existingTask.getSubprojectId();
+        return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
     }
 
     @PostMapping("/updateTaskStatus/{taskId}/{projectId}/{subprojectId}")
