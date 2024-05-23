@@ -39,6 +39,25 @@ public class TaskRepository {
                 task.getName(), task.getDescription(), task.getDate(), task.getDeadline(),task.getStatus());
     }
 
+    public void addTaskJPA(Task task, Long projectId, Long subprojectId) {
+        String insertTaskQuery = "INSERT INTO tasks (project_id, subproject_id, name, description, date, deadline, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+             PreparedStatement insertTaskStatement = connection.prepareStatement(insertTaskQuery)) {
+
+            insertTaskStatement.setLong(1, projectId);
+            insertTaskStatement.setLong(2, subprojectId);
+            insertTaskStatement.setString(3, task.getName());
+            insertTaskStatement.setString(4, task.getDescription());
+            insertTaskStatement.setTimestamp(5, Timestamp.valueOf(task.getDate()));
+            insertTaskStatement.setTimestamp(6, Timestamp.valueOf(task.getDeadline()));
+            insertTaskStatement.setString(7, task.getStatus());
+
+            insertTaskStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public List<Task> findByProjectIdAndSubprojectId(Long projectId, Long subprojectId) {
         String query = "SELECT * FROM tasks WHERE project_id = ? AND subproject_id = ? ORDER BY status";
@@ -55,29 +74,32 @@ public class TaskRepository {
     }
 
     public List<Task> findByProjectIdAndSubProjectIdJPA(Long projectId, Long subprojectId) {
-        String query = "SELECT * FROM tasks WHERE project_id = ? AND subproject_id = ? ORDER BY status";
+        String selectTasksQuery = "SELECT * FROM tasks WHERE project_id = ? AND subproject_id = ? ORDER BY status";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, projectId.toString());
-            preparedStatement.setString(2, subprojectId.toString());
-            ResultSet resultSet = preparedStatement.executeQuery();
+        List<Task> tasks = new ArrayList<>();
 
-            List<Task> tasks = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+             PreparedStatement selectTasksStatement = connection.prepareStatement(selectTasksQuery)) {
+
+            selectTasksStatement.setLong(1, projectId);
+            selectTasksStatement.setLong(2, subprojectId);
+
+            ResultSet resultSet = selectTasksStatement.executeQuery();
+
             while (resultSet.next()) {
-                Long taskId = resultSet.getLong("task_id");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
-                LocalDateTime deadline = resultSet.getTimestamp("deadline").toLocalDateTime();
-                String status = resultSet.getString("status");
-
-                tasks.add(new Task(taskId, name, description, date, deadline, status));
+                Task task = new Task();
+                task.setTask_id(resultSet.getLong("task_id"));
+                task.setName(resultSet.getString("name"));
+                task.setDescription(resultSet.getString("description"));
+                task.setDate(resultSet.getTimestamp("date").toLocalDateTime());
+                task.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+                task.setStatus(resultSet.getString("status"));
+                tasks.add(task);
             }
-            return tasks;
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<>();
         }
+        return tasks;
     }
 
 
@@ -102,7 +124,6 @@ public Task findById(Long task_id) {
 
     public boolean deleteTaskByIdJPA(Long taskId) {
     String deleteTaskQuery = "DELETE FROM tasks WHERE task_id = ?";
-
     try (Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
          PreparedStatement deleteTaskStatement = connection.prepareStatement(deleteTaskQuery)) {
 
@@ -121,7 +142,6 @@ public Task findById(Long task_id) {
 }
 
     public void deleteTasksBySubprojectId(Long subprojectId) {
-
         String query = "DELETE FROM tasks WHERE subproject_id = ?";
         jdbcTemplate.update(query, subprojectId);
     }
