@@ -66,7 +66,7 @@ public class TaskController {
         Task task = new Task(taskName, taskDescription, taskDateTime, taskDeadlineDateTime, "backlog");
         task.setProjectId(projectId);
         task.setSubprojectId(subprojectId);
-        task.setStatus("backlog"); // replace "default status" with the actual default status you want to use
+        task.setStatus("backlog");
         taskService.addTask(task, projectId, subprojectId);
         redirectAttributes.addFlashAttribute("successMessage", "Task added successfully.");
         return "redirect:/tasks/" + projectId + "/" + subprojectId;
@@ -77,7 +77,7 @@ public class TaskController {
         Task task = taskService.getTaskById(taskId);
         if (task == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
-            return "redirect:/tasks/" + projectId;
+            return "redirect:/tasks/" + projectId + "/" + subprojectId;
         }
         taskService.deleteTaskById(taskId);
         redirectAttributes.addFlashAttribute("successMessage", "Task deleted successfully.");
@@ -110,7 +110,11 @@ public class TaskController {
             return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
         }
 
+        Task task = taskService.getTaskById(taskId);
+
         // Update fields other than IDs
+        // Update fields other than ID
+        updatedTask.setTask_id(taskId);
         existingTask.setName(updatedTask.getName());
         existingTask.setDescription(updatedTask.getDescription());
         existingTask.setDate(updatedTask.getDate());
@@ -120,26 +124,28 @@ public class TaskController {
         existingTask.setSubprojectId(updatedTask.getSubprojectId());
 
         Task updatedTaskInDb = taskService.updateTask(existingTask);
+
         redirectAttributes.addFlashAttribute("successMessage", "Task updated successfully with ID: " + updatedTaskInDb.getTask_id());
         return "redirect:/tasks/" + updatedTask.getProjectId() + "/" + updatedTask.getSubprojectId();
     }
 
-    @PostMapping("/updateTaskStatus/{taskId}/{projectId}/{subprojectId}")
-    public String updateTaskStatus(@PathVariable Long taskId,
-                                   @PathVariable Long projectId,
-                                   @PathVariable Long subprojectId,
-                                   @RequestParam("status") String status,
-                                   RedirectAttributes redirectAttributes) {
-        Task task = taskService.getTaskById(taskId);
-        if (task == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
-            return "redirect:/tasks/" + projectId + "/" + subprojectId;
-        }
-        task.setStatus(status);
-        taskService.updateTask(task);
-        redirectAttributes.addFlashAttribute("successMessage", "Task status updated successfully.");
+
+
+
+    @PostMapping("/updateTaskStatus/{id}")
+public String updateTaskStatus(@PathVariable("id") Long taskId,
+                               @RequestParam("status") String status,
+                               RedirectAttributes redirectAttributes) {
+    Task task = taskService.getTaskById(taskId);
+    if (task == null) {
+        redirectAttributes.addFlashAttribute("errorMessage", "Task not found.");
         return "redirect:/tasks/" + task.getProjectId() + "/" + task.getSubprojectId();
     }
+    task.setStatus(status);
+    taskService.updateTask(task);
+    redirectAttributes.addFlashAttribute("successMessage", "Task status updated successfully.");
+    return "redirect:/tasks/" + task.getProjectId() + "/" + task.getSubprojectId();
+}
 
 
 

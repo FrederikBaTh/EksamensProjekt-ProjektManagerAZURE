@@ -17,19 +17,15 @@ public class ProjectInvitationRepository {
 
 
     public void inviteUserToProject(long projectId, long senderUserId, long receiverUserId) {
-        // Create a new project invitation
         ProjectInvitation invitation = new ProjectInvitation();
         invitation.setProjectId(projectId);
         invitation.setSenderUserId(senderUserId);
         invitation.setReceiverUserId(receiverUserId);
-        invitation.setStatus(InvitationStatus.PENDING); // Assuming InvitationStatus is an enum
+        invitation.setStatus(InvitationStatus.PENDING);
 
-        // Save the invitation to the database
         String insertQuery = "INSERT INTO project_invitations (project_id, sender_user_id, receiver_user_id, status) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(insertQuery, invitation.getProjectId(), invitation.getSenderUserId(), invitation.getReceiverUserId(), invitation.getStatus().toString());
     }
-
-
 
     public void acceptInvite(Long inviteId) {
         String sql = "UPDATE project_invitations SET status = ? WHERE invitation_id = ?";
@@ -46,6 +42,7 @@ public class ProjectInvitationRepository {
         String sql = "SELECT project_id FROM project_invitations WHERE receiver_user_id = ? AND status = 'ACCEPTED'";
         return jdbcTemplate.queryForList(sql, new Object[]{userId}, Long.class);
     }
+
     public List<ProjectInvitation> getInvitesByUserId(Long userId) {
         String sql = "SELECT project_invitations.*, projects.name AS project_name, sender.username AS sender_user_name, receiver.username AS receiver_user_name FROM project_invitations JOIN projects ON project_invitations.project_id = projects.project_id JOIN users AS sender ON project_invitations.sender_user_id = sender.user_id JOIN users AS receiver ON project_invitations.receiver_user_id = receiver.user_id WHERE receiver_user_id = ?";
         return jdbcTemplate.query(sql, new Object[]{userId}, (resultSet, rowNum) -> {
@@ -61,6 +58,7 @@ public class ProjectInvitationRepository {
             return invitation;
         });
     }
+
     public List<Long> getAcceptedUserIdsByProjectId(Long projectId) {
         String sql = "SELECT receiver_user_id FROM project_invitations WHERE project_id = ? AND status = 'ACCEPTED'";
         return jdbcTemplate.queryForList(sql, new Object[]{projectId}, Long.class);
@@ -76,7 +74,6 @@ public class ProjectInvitationRepository {
         String sql = "UPDATE project_invitations SET status = ? WHERE invitation_id = ?";
         jdbcTemplate.update(sql, "DECLINED", inviteId);
         deleteInvitationsForUser(inviteId);
-
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
 import java.util.List;
 
 @Repository
@@ -23,6 +24,8 @@ public class AccountRepository {
     private String DATABASE_USERNAME;
     @Value("${spring.datasource.password}")
     private String DATABASE_PASSWORD;
+
+
 
     @Autowired
     public AccountRepository(JdbcTemplate jdbcTemplate, ProjectInvitationRepository projectInvitationRepository, UserSubprojectAssignmentRepository userSubprojectAssignmentRepository, ProjectRepository projectRepository) {

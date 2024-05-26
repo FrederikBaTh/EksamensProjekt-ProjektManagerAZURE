@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -107,6 +111,32 @@ public class SubprojectRepository {
     }
 
 
+    public Subproject updateSubprojectJPA(Subproject subproject) {
+        String updateQuery = "UPDATE subprojects SET name = ?, description = ?, startDate = ?, deadline = ? WHERE subproject_id = ?";
+
+        try (Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+             PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+
+            updateStatement.setString(1, subproject.getSubprojectname());
+            updateStatement.setString(2, subproject.getDescription());
+            updateStatement.setDate(3, java.sql.Date.valueOf(subproject.getStartDate()));
+            updateStatement.setDate(4, java.sql.Date.valueOf(subproject.getDeadline()));
+            updateStatement.setLong(5, subproject.getSubproject_id());
+
+            int rowsUpdated = updateStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                return subproject;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return subproject;
+    }
+
+
 
 
 }
+

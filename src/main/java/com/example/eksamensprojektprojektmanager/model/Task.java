@@ -44,7 +44,9 @@ public class Task {
     }
 
     public Task() {
+    }
 
+    public Task(Long taskId, String name, String description, LocalDateTime date, LocalDateTime deadline, String status) {
     }
 
     //getters
