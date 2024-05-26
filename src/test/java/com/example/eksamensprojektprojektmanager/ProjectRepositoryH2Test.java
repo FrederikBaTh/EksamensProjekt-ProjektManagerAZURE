@@ -48,7 +48,8 @@ public class ProjectRepositoryH2Test {
 
         // Edit the project
         existingProject.setProjectName("Updated Project");
-        existingProject.setProjectDeadline(LocalDate.of(2023, 12, 31));
+        existingProject.setStartDate(LocalDate.of(2023, 3, 22));
+        existingProject.setProjectDeadline(LocalDate.of(2023, 6, 28));
         existingProject.setProjectStatus("Updated");
 
         // Update the project in the repository
@@ -57,7 +58,8 @@ public class ProjectRepositoryH2Test {
         // Verify that the project was updated successfully
         assertNotNull(updatedProject);
         assertEquals("Updated Project", updatedProject.getProjectName());
-        assertEquals(LocalDate.of(2023, 12, 31), updatedProject.getProjectDeadline());
+        assertEquals(LocalDate.of(2023, 3, 22), updatedProject.getStartDate());
+        assertEquals(LocalDate.of(2023, 6, 28), updatedProject.getProjectDeadline());
         assertEquals("Updated", updatedProject.getProjectStatus());
     }
 

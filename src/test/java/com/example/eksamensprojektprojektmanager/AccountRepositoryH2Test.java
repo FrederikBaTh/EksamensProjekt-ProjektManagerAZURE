@@ -32,12 +32,13 @@ public class AccountRepositoryH2Test {
         Account newAccount = new Account();
         newAccount.setUsername("testUser3");
         newAccount.setPassword("testPassword3");
-        newAccount.setAdmin(false);
-        newAccount.setName("Test User 3");
-        newAccount.setCompany("Test Company 3");
-        newAccount.setJobTitle("Test Job Title 3");
-        newAccount.setDescription("Test Description 3");
-
+        newAccount.setAdmin(true);
+        /*
+        newAccount.setName(null);
+        newAccount.setCompany(null);
+        newAccount.setJobTitle(null);
+        newAccount.setDescription(null);
+*/
         // Save the new account to the repository
         repository.save(newAccount);
 
