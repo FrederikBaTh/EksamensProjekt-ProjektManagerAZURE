@@ -79,7 +79,7 @@ public class InvitedprojectController {
         projectInvitationService.deleteInvitationsForUser(inviteId);
         return "redirect:/seeProjects"; // Redirect to projects page after accepting the invite
     }
-
+   //bliver ikke brugt
     @PostMapping("/declineInvite")
     public String declineInvite(@RequestParam("inviteId") Long inviteId) {
         // Assuming you have a method in your service to decline an invite
