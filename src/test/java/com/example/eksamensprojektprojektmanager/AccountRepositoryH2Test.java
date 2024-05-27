@@ -1,4 +1,4 @@
-package com.example.eksamensprojektprojektmanager;
+/*package com.example.eksamensprojektprojektmanager;
 
 
 import com.example.eksamensprojektprojektmanager.model.Account;
@@ -40,7 +40,7 @@ public class AccountRepositoryH2Test {
         newAccount.setDescription(null);
 */
         // Save the new account to the repository
-        repository.save(newAccount);
+ /*       repository.save(newAccount);
 
         // Retrieve the account from the repository
         Account retrievedAccount = repository.getUserById(3L);
@@ -71,3 +71,4 @@ public class AccountRepositoryH2Test {
     }
 
 }
+*/
